@@ -1,5 +1,12 @@
 const express = require('express');
 const app = express();
+const User = require('./router/User');
+const bodyParser = require('body-parser');
+require('dotenv').config();
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use('/user', User);
 
 app.get('/', (req, res) => {
     res.header('content-type', 'text/html');
