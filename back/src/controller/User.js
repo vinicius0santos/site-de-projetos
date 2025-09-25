@@ -6,14 +6,14 @@ exports.insert = async (req, res) => {
     const password = req.body.password;
 
     try{
-        if(username.trim() == "" || password.trim() == ""){
-            throw new Error("Usuário ou senha em branco!");
+        if(username.trim() == '' || password.trim() == ''){
+            throw new Error('Usuário ou senha em branco!');
         }
 
         const user = await User.get(username);
 
         if(user.data.length > 0){
-            throw new Error("Usuário já existe!");
+            throw new Error('Usuário já existe!');
         }
 
         await User.insert(username, hashcode.genererate(password));
@@ -30,21 +30,27 @@ exports.login = async (req, res) => {
     const password = req.body.password;
 
     try{
-        if(username.trim() == "" || password.trim() == ""){
-            throw new Error("Usuário ou senha em branco!");
+        if(username.trim() == '' || password.trim() == ''){
+            throw new Error('Usuário ou senha em branco!');
         }
 
         const user = await User.get(username);
 
         if(await hashcode.isMatch(password, user.data[0].password)){
-            res.json({user: user.data[0]});
+            res.json({
+                success: true,
+                data: user.data[0]
+            });
         }
         else{
-            throw new Error("Usuário inválido!");
+            throw new Error('Usuário inválido!');
         }
     }
     catch(err){
         console.log(err.message)
-        res.json({user: null});
+        res.json({
+            success: false,
+            data: null
+        });
     }
 }

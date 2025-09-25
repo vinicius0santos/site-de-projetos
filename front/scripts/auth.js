@@ -5,12 +5,12 @@ if (signupForm) {
   signupForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    const btn = loginForm.querySelector('button[type="submit"]');
+    const btn = document.querySelector('button[type="submit"]');
     btn.disabled = true;
 
     try {
       const username = document.getElementById('username').value.trim();
-      const password = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
       const confirm = document.getElementById('confirmPassword').value;
 
       if (!username) {
@@ -31,14 +31,11 @@ if (signupForm) {
       const user = new User(username, password);
       const result = await user.create();
 
-      if (result && result.sucess) {
-        if (result.token) {
-          localStorage.setItem('authToken', result.token);
-        }
+      if (result && result.success) {
         alert('Sua conta foi criada com sucesso!')
         window.location.href = '../index.html';
       } else {
-        alert(result?.message || 'Erro ao criar a conta. Por favor, tente novamente.')
+        alert('Erro ao criar a conta. Por favor, tente novamente.');
       }
     } catch (err) {
       console.error(err);
@@ -69,14 +66,12 @@ if (loginForm) {
       const user = new User(username, password);
       const result = await user.login();
 
-      if (result && result.sucess) {
-        if (result.token) {
-          localStorage.setItem('authToken', result.token);
-        }
+      if (result && result.success) {
         alert('Login realizado com sucesso!');
         window.location.href = '../pages/projects.html';
       } else {
-        alert(result?.message || 'Usuário ou senha inválidos.');
+        console.log(result.data)
+        alert('Usuário ou senha inválidos.');
       }
     } catch (err) {
       console.error(err);
