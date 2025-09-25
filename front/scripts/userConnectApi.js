@@ -21,7 +21,7 @@ class User {
             headers: this.#headers
         });
 
-        return await user.json();
+        return user.json();
     }
 
     async login() {
@@ -36,3 +36,5 @@ class User {
         return user.json();
     }
 }
+
+export default User;
