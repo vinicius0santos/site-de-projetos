@@ -17,11 +17,11 @@ exports.insert = async (req, res) => {
         }
 
         await User.insert(username, hashcode.genererate(password));
-        res.json({message: 'success'});
+        res.json({success: true});
     }
     catch(err){
         console.log(err.message)
-        res.json({message: 'failure'});
+        res.json({success: false});
     }
 }
 
