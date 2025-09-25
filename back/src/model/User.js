@@ -7,9 +7,9 @@ const User = {
             .insert({username: username, password: await password})
     },
     get: async (username) => {
-        await supabase
+        return await supabase
             .from('user')
-            .select('username', 'password')
+            .select('*')
             .eq('username', username)
     },
 }
