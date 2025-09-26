@@ -56,7 +56,7 @@ if (loginForm) {
 
     try {
       const username = document.getElementById('username').value.trim();
-      const password = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
 
       if (!username || !password) {
         alert('Preencha todos os campos.');
@@ -68,7 +68,7 @@ if (loginForm) {
 
       if (result && result.success) {
         alert('Login realizado com sucesso!');
-        window.location.href = '../pages/projects.html';
+        window.location.href = './pages/projects.html';
       } else {
         console.log(result.data)
         alert('Usuário ou senha inválidos.');

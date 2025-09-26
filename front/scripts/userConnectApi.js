@@ -32,8 +32,31 @@ class User {
             body: JSON.stringify(this.data),
             headers: this.#headers
         })
+        
+        const result = await user.json();
 
-        return user.json();
+        if (result && result.success && result.token) {
+            localStorage.setItem('token', result.token);
+        }
+
+        return result;
+    }
+
+    static async fetchWithToken(endpoint, options = {}) {
+        const token = localStorage.getItem('token');
+
+        const headers = {
+            'Content-Type': 'application/json',
+            ...options.headers
+        };
+
+        if (token) {
+            headers['Authorization'] = `Bearer ${token}`;
+        }
+
+        const response = await fetch(apiUrl + endpoint, {...options, headers});
+
+        return response.json();
     }
 }
 

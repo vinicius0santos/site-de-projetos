@@ -1,5 +1,9 @@
 const User = require('../model/User');
 const hashcode = require('../lib/hashcode');
+const jwt = require('jsonwebtoken');
+
+const SECRET = process.env.JWT_SECRET;
+const EXPIRES = process.env.JWT_EXPIRES;
 
 exports.insert = async (req, res) => {
     const username = req.body.username;
@@ -16,7 +20,7 @@ exports.insert = async (req, res) => {
             throw new Error('Usuário já existe!');
         }
 
-        await User.insert(username, hashcode.genererate(password));
+        await User.insert(username, hashcode.generate(password));
         res.json({success: true});
     }
     catch(err){
@@ -37,9 +41,15 @@ exports.login = async (req, res) => {
         const user = await User.get(username);
 
         if(await hashcode.isMatch(password, user.data[0].password)){
+            const token = jwt.sign(
+                {id: user.data[0].id, username: user.data[0].username},
+                SECRET,
+                {expiresIn: EXPIRES}
+            );
+
             res.json({
                 success: true,
-                data: user.data[0]
+                token
             });
         }
         else{

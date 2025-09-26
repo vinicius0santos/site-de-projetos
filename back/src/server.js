@@ -1,14 +1,23 @@
 const express = require('express');
 const app = express();
 const User = require('./router/User');
+const Project = require('./router/Project');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 require('dotenv').config();
 
+const corsOption = {
+    origin: "http://127.0.0.1:5500",
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true
+}
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors())
+app.use(cors(corsOption))
 app.use('/user', User);
+app.use('/projects', Project);
 
 app.get('/', (req, res) => {
     res.header('content-type', 'text/html');
