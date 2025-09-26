@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const User = require('./router/User');
 const Project = require('./router/Project');
+const Comment = require('./router/Comment');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 require('dotenv').config();
@@ -18,6 +19,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors(corsOption))
 app.use('/user', User);
 app.use('/projects', Project);
+app.use('/comment', Comment);
 
 app.get('/', (req, res) => {
     res.header('content-type', 'text/html');
