@@ -1,10 +1,6 @@
-let apiUrl = 'http://localhost:3000';
+import { apiUrl, headers } from "../global.js";
 
 class User {
-    #headers = {
-        'Content-Type': 'application/json'
-    };
-
     constructor(username, password) {
         this.data = {
             username: username,
@@ -18,7 +14,7 @@ class User {
         const user = await fetch(url, {
             method: 'POST',
             body: JSON.stringify(this.data),
-            headers: this.#headers
+            headers: headers
         });
 
         return user.json();
@@ -30,7 +26,7 @@ class User {
         const user = await fetch(url, {
             method: 'POST',
             body: JSON.stringify(this.data),
-            headers: this.#headers
+            headers: headers
         })
         
         const result = await user.json();

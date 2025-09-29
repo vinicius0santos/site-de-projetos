@@ -9,8 +9,14 @@ exports.post = async (req, res) => {
             throw new Error('Comentário em branco!');
         }
 
-        await Comment.post(message, postedBy);
-        res.json({success: true});
+        const comment = await Comment.post(message, postedBy);
+
+        console.log(comment)
+
+        res.json({
+            comment: comment.data[0],
+            success: true
+        });
     }
     catch(err){
         console.log(err.message)
@@ -19,12 +25,12 @@ exports.post = async (req, res) => {
 }
 
 exports.getLatestComments = async (req, res) => {
-    const lastId = req.body.lastId;
+    const lastId = req.body.id;
     
     try{
         const comments = await Comment.getLatestComments(lastId);
 
-        if(user.data[0] != null){
+        if(comments.data.length > 0){
             res.json({
                 sucess: true,
                 data: comments.data
@@ -41,5 +47,30 @@ exports.getLatestComments = async (req, res) => {
             success: false,
             data: null
         });
+    }
+}
+
+exports.getLatest50 = async (req, res) => {
+    try{
+        const comments = await Comment.getLatest50();
+
+        console.log(comments)
+
+        if(comments.data.length > 0){
+            res.json({
+                success: true,
+                data: comments.data
+            })
+        }
+        else throw new Error('Nenhum comentário encontrado');
+        
+    }
+    catch(err){
+        console.log(err.message);
+
+        res.json({
+            success: false,
+            data: null
+        })
     }
 }
