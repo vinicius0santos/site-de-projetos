@@ -5,12 +5,13 @@ const Project = require('./router/Project');
 const Comment = require('./router/Comment');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const origin = 'http://127.0.0.1:5500';
 require('dotenv').config();
 
 const corsOption = {
-    origin: "http://127.0.0.1:5500",
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+    origin: origin,
+    methods: ['GET', 'POST', 'PUT','DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true
 }
 

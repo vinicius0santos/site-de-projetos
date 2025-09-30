@@ -1,6 +1,9 @@
-import User from './userConnectApi.js';
+import User from './UserConnectApi.js';
+import Warning from './warning.js';
 
 const signupForm = document.getElementById('signupForm');
+const warning = new Warning(document);
+
 if (signupForm) {
   signupForm.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -19,7 +22,7 @@ if (signupForm) {
       }
 
       if (password !== confirm) {
-        alert('As senhas não coincidem. Verifique e tente novamente.')
+        warning.create('As senhas não coincidem. Verifique e tente novamente.');
         return;
       }
 

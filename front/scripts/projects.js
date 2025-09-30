@@ -1,4 +1,4 @@
-import User from './userConnectApi.js';
+import User from './UserConnectApi.js';
 
 const projectList = document.getElementById('project-list');
 const usernameSpan = document.getElementById('username');
