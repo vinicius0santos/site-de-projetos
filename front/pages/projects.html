@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projetos - Bundello</title>
     <link rel="stylesheet" href="../styles/projects.css">
+    <link rel="stylesheet" href="../styles/warning.css">
 </head>
 <body>
   <header>
@@ -14,8 +15,14 @@
 
   <main>
     <div id="project-list"></div>
+
+    <form id="create-project">
+      <input type="text" name="projectName" placeholder="Nome do projeto">
+      <input type="file" name="file">
+      <button type="submit">criar projeto</button>
+    </form>
   </main>
 
-  <script type="module" src="../scripts/projects.js"></script>
+  <script type="module" defer src="../scripts/projects.js"></script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-import { apiUrl, headers } from "../global.js";
+import { apiUrl, headers } from "../../global.js";
 
 class Comment {
     constructor(postedBy) {

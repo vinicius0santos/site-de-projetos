@@ -1,4 +1,6 @@
 const express = require('express');
+const multer = require('multer');
+const upload = multer()
 const app = express();
 const User = require('./router/User');
 const Project = require('./router/Project');
@@ -15,11 +17,11 @@ const corsOption = {
     credentials: true
 }
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({ limit: '5mb' }));
+app.use(bodyParser.urlencoded({ extended: true, limit: '5mb' }));
 app.use(cors(corsOption))
 app.use('/user', User);
-app.use('/projects', Project);
+app.use('/project', upload.single('file'), Project);
 app.use('/comment', Comment);
 
 app.get('/', (req, res) => {
@@ -28,5 +30,6 @@ app.get('/', (req, res) => {
 })
 
 app.listen(3000, () => {
+    console.clear()
     console.log('Servidor back-end iniciado');
 })

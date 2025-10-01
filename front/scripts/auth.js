@@ -1,4 +1,4 @@
-import User from './UserConnectApi.js';
+import User from './connectApi/User.js';
 import Warning from './warning.js';
 
 const signupForm = document.getElementById('signupForm');

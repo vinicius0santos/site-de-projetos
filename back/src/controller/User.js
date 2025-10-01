@@ -49,6 +49,11 @@ exports.login = async (req, res) => {
 
             res.json({
                 success: true,
+                data: {
+                    id: user.data[0].id,
+                    username: user.data[0].username,
+                    createdAt: user.data[0].created_at
+                },
                 token
             });
         }

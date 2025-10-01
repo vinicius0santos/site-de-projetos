@@ -1,4 +1,4 @@
-import { apiUrl, headers } from "../global.js";
+import { apiUrl, headers } from "../../global.js";
 
 class User {
     constructor(username, password) {
@@ -30,29 +30,14 @@ class User {
         })
         
         const result = await user.json();
+        console.log(result.data)
 
         if (result && result.success && result.token) {
             localStorage.setItem('token', result.token);
+            localStorage.setItem('userId', result.data.id);
         }
 
         return result;
-    }
-
-    static async fetchWithToken(endpoint, options = {}) {
-        const token = localStorage.getItem('token');
-
-        const headers = {
-            'Content-Type': 'application/json',
-            ...options.headers
-        };
-
-        if (token) {
-            headers['Authorization'] = `Bearer ${token}`;
-        }
-
-        const response = await fetch(apiUrl + endpoint, {...options, headers});
-
-        return response.json();
     }
 }
 
