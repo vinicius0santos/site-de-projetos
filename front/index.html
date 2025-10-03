@@ -3,24 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login - Bundello</title>
-  <link rel="stylesheet" href="styles/globals.css">
+  <title>Bundello</title>
+  <link rel="stylesheet" href="styles/index.css">
 </head>
 <body>
-  <div class="container">
-    <h1>Entre na sua conta</h1>
-    <form id="loginForm">
-      <label for="username">Usuário</label>
-      <input type="text" id="username" required>
-
-      <label for="password">Senha</label>
-      <input type="password" id="password" required>
-
-      <button type="submit">Entrar</button>
-    </form>
-    <p>Novo por aqui? <a href="pages/signup.html">Crie sua conta</a></p>
-  </div>
-
-  <script type="module" src="scripts/auth.js"></script>
+  <header>
+    <div>
+      <h1><a href="index.html" aria-label="Ir para página inicial do Bundello">Bundello</a></h1>
+    </div>
+    <nav id="nav-links">
+      <ul>
+        <li><a href="/front/pages/signup.html" aria-label="Criar uma nova conta">Crie a sua conta</a></li>
+        <li><a href="/front/pages/login.html" aria-label="Entrar em uma conta existente">Entre</a></li>
+      </ul>
+    </nav>
+  </header>
+  <script type="module" src="scripts/index.js"></script>
 </body>
 </html>

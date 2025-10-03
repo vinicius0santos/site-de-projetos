@@ -1,8 +1,9 @@
-:root{
+:root {
     --warning-bg-color: rgb(255, 207, 198);
     --warning-items-color: rgb(255, 94, 94);
     --warning-text-color: red;
 }
+
 @keyframes warning {
     0%{
         opacity: 0%;
@@ -13,7 +14,7 @@
     }
 }
 
-.warning{
+.warning {
     position: fixed;
     top: 0;
     left: 0;
@@ -23,7 +24,7 @@
     justify-content: center;
 }
 
-.warning > div{
+.warning > div {
     animation: warning 0.5s;
     user-select: none;
     display: flex;
@@ -33,7 +34,7 @@
     padding: 15px;
     border-radius: 5px;
 }
-.warning > div::before{
+.warning > div::before {
     content: "";
     position: absolute;
     left: 0;
@@ -45,14 +46,14 @@
     border-bottom-left-radius: 5px;
 }
 
-.warning > div p{
+.warning > div p {
     margin: 0;
     padding-right: 60px;
     padding-left: 10px;
     color: var(--warning-text-color);
 }
 
-.warning > div div{
+.warning > div div {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -67,6 +68,6 @@
     border-radius: 50%;
     cursor: pointer;
 }
-.warning > div div:hover{
+.warning > div div:hover {
     border-width: 2px;
 }

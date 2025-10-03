@@ -1,7 +1,8 @@
-import User from './connectApi/User.js';
-import Warning from './warning.js';
+import User from '../scripts/connectApi/User.js';
+import Warning from '../scripts/Warning.js';
 
 const signupForm = document.getElementById('signupForm');
+const loginForm = document.getElementById('loginForm');
 const warning = new Warning(document);
 
 if (signupForm) {
@@ -49,7 +50,6 @@ if (signupForm) {
   });
 }
 
-const loginForm = document.getElementById('loginForm');
 if (loginForm) {
   loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -71,7 +71,7 @@ if (loginForm) {
 
       if (result && result.success) {
         alert('Login realizado com sucesso!');
-        window.location.href = './pages/projects.html';
+        window.location.href = 'projects.html';
       } else {
         console.log(result.data)
         alert('Usuário ou senha inválidos.');

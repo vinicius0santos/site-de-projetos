@@ -1,6 +1,6 @@
 import Project from './connectApi/Project.js';
 import CompactedImage from './CompactedImage.js';
-import Warning from './warning.js';
+import Warning from './Warning.js';
 
 const projectList = document.getElementById('project-list');
 const createProject = document.getElementById('create-project');

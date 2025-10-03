@@ -1,0 +1,147 @@
+@import "globals.css";
+
+:root {
+  --container-h1-text-color: #ddd;
+
+  --container-label-text-color: #ddd;
+
+  --container-p-text-color: #ccc;
+
+  --container-a-text-color: #b65f3d;
+
+  --container-input-text-color: #eee;
+  --container-input-bg-color: #222;
+  --container-input-border-color: #444;
+  --container-input-focus-border-color: #eee;
+
+  --container-btn-text-color: #eee;
+  --container-btn-bg-color: #b65f3d;
+  --container-btn-hover-bg-color: #7f381b;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  max-width: 26.5rem;
+  padding: 3rem;
+}
+
+.container h1 {
+  font-size: 1.7rem;
+  text-align: center;
+  margin-bottom: 1rem;
+  color: var(--container-h1-text-color);
+}
+
+.container label {
+  display: block;
+  font-size: 1.1rem;
+  margin-top: 1rem;
+  color: var(--container-label-text-color);
+}
+
+.container input {
+  width: 100%;
+  font-size: 1.1rem;
+  color: var(--container-input-text-color);
+  background-color: var(--container-input-bg-color);
+  border: 1px solid var(--container-input-border-color);
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.container input:focus {
+  border-color: var(--container-input-focus-border-color);
+  outline: none;
+}
+
+.container button {
+  width: 100%;
+  font-size: 1.1rem;
+  color: var(--container-btn-text-color);
+  background-color: var(--container-btn-bg-color);
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  padding: 0.65rem;
+  margin-top: 1.5rem;
+}
+
+.container button:hover {
+  background-color: var(--container-btn-hover-bg-color);
+}
+
+.container p {
+  text-align: center;
+  color: var(--container-p-text-color);
+  margin-top: 1rem;
+}
+
+.container a {
+  color: var(--container-a-text-color);
+  text-decoration: none;
+}
+
+.container a:hover {
+  text-decoration: underline;
+}
+
+.container fieldset {
+  border: none;
+}
+
+@media (max-width: 768px) {
+  body {
+    padding: 1rem;
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 100%;
+    padding: 1.5rem;
+  }
+
+  .container h1 {
+    font-size: 2rem;
+  }
+  
+  .container label {
+    font-size: 1.25rem;
+  }
+
+  .container p, a {
+    font-size: 1.15rem;
+  }
+
+  .container input {
+    font-size: 1.25rem;
+  }
+
+  .container button {
+    font-size: 1.25rem;
+  }
+
+  .container input, button {
+    padding: 0.6rem;
+    margin-bottom: 1rem;
+  }
+}
