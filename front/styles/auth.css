@@ -7,16 +7,16 @@
 
   --container-p-text-color: #ccc;
 
-  --container-a-text-color: #b65f3d;
+  --container-a-text-color: #ac7beb;
 
   --container-input-text-color: #eee;
-  --container-input-bg-color: #222;
+  --container-input-bg-color: #222222;
   --container-input-border-color: #444;
   --container-input-focus-border-color: #eee;
 
   --container-btn-text-color: #eee;
-  --container-btn-bg-color: #b65f3d;
-  --container-btn-hover-bg-color: #7f381b;
+  --container-btn-bg-color: #713db6;
+  --container-btn-hover-bg-color: #4f1b7f;
 }
 
 body {
