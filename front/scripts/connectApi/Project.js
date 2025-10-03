@@ -1,12 +1,12 @@
 import { apiUrl, headers } from "../../global.js";
 
 class Project {
-    constructor(projectName, createdBy, userId, imageName, blob) {
+    constructor(projectName, createdBy, userId, imgName, blob) {
         this.data = {
             projectName: projectName,
             createdBy: createdBy,
             userId: userId,
-            imageName: imageName,
+            imgName: imgName,
             blob: blob
         }
     }
@@ -24,6 +24,26 @@ class Project {
         });
 
         return projects.json();
+    }
+
+    static async delete(id, paths){
+        console.log(paths)
+        const url = apiUrl + "/project/delete";
+        const body = JSON.stringify({
+            id: id,
+            paths: paths ? [
+                JSON.parse(paths).path,
+                JSON.parse(paths).fullPath,
+            ] : undefined
+        });
+
+        const result = await fetch(url, {
+            method: 'DELETE',
+            headers: headers,
+            body: body
+        })
+
+        return result.json();
     }
 
     async create() {

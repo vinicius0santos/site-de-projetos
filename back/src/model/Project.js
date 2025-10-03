@@ -16,18 +16,39 @@ const Project = {
             .from('projects icon')
             .getPublicUrl(data.path);
 
-        return url.data.publicUrl;
+        return {
+            url:url.data.publicUrl,
+            data: data
+        };
+    },
+    removeImage: async (paths) => {
+        return await supabase.storage
+            .from('projects icon')
+            .remove(paths);
     },
     getAll: async () => {
         return await supabase
             .from('project')
             .select('*')
     },
-    create: async (name, iconURL, imageName, createdBy, userId) => {
+    create: async (name, iconURL, imgName, iconPaths, createdBy, userId) => {
         return await supabase
             .from('project')
-            .insert({ name: name, icon_url: iconURL, image_name: imageName, created_by: createdBy, user_id: userId })
+            .insert({ 
+                name: name, 
+                icon_url: iconURL, 
+                img_name: imgName, 
+                icon_paths: iconPaths  || '', 
+                created_by: createdBy, 
+                user_id: userId 
+            })
             .select()
+    },
+    delete: async (id) => {
+        return await supabase
+            .from('project')
+            .delete()
+            .eq('id', id)
     }
 }
 
