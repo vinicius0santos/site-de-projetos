@@ -23,7 +23,7 @@ createProject.addEventListener('submit', async (event) => {
   const createdBy = usernameSpan.textContent;
   const userId = localStorage.getItem('userId');
   const file = event.target.file;
-  let imageName = projectName + '_' + usernameSpan.textContent;
+  let imgName = projectName + '_' + usernameSpan.textContent;
   let blob;
 
   if(projectName.trim() == ''){
@@ -35,16 +35,24 @@ createProject.addEventListener('submit', async (event) => {
   }
 
   if(file.files.length){
-    blob = await new CompactedImage(file, document).getBlob()
+    blob = await new CompactedImage(file, document, 400, 0.9).getBlob()
   }
   
-  const project = new Project(projectName, createdBy, userId, imageName, blob);
+  const project = new Project(projectName, createdBy, userId, imgName, blob);
   
   await project.create();
 
   [...event.target].forEach(input => input.value = '');
   fetchProjects()
 })
+
+async function deleteProject({target}){
+  const id = target.parentNode.children.id.value;
+  const paths = target.parentNode.children.iconPaths.value;
+
+  await Project.delete(id, paths);
+  fetchProjects();
+}
 
 function showProjects(projects) {
   projectList.innerHTML = '';
@@ -60,9 +68,14 @@ function showProjects(projects) {
     div.classList.add('project-card');
     div.innerHTML = `
       <h2>${project.name}</h2>
+      <button name='deleteProject'>Deletar</button>
       <img src='${project.icon_url != '' ? project.icon_url : "../default_project_icon.png"}'>
       <h2> Criado por: ${project.created_by}</h2>
+      <input type='hidden' value='${project.icon_paths}' name='iconPaths'/>
+      <input type='hidden' value='${project.id}' name='id'/>
     `;
+
+    div.children.deleteProject.addEventListener('click', deleteProject);
     projectList.appendChild(div);
   });
 }
