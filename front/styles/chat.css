@@ -32,6 +32,7 @@
 #chat-openclose-button::before{
     content: '📮';
     z-index: 99;
+    margin-top: 15px;
     font-size: 25px;
     filter: drop-shadow(0 0 5px #666);
 }

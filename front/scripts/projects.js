@@ -1,18 +1,26 @@
 import Project from './connectApi/Project.js';
 import CompactedImage from './CompactedImage.js';
 import Warning from './Warning.js';
+import Chat from './Chat.js';
 
 const projectList = document.getElementById('projectList');
 const usernameSpan = document.getElementById('username');
 const warning = new Warning(document);
 let projects = [];
+let chat = null;
 
 function createHeader() {
   const token = localStorage.getItem('token');
   if (!token) return;
 
+  
   const payload = JSON.parse(atob(token.split('.')[1]));
   usernameSpan.textContent = payload.username;
+
+  if(chat == null){
+    chat = new Chat(payload.username, document);
+    chat.load();
+  }
 }
 
 function openNewProjectPopup() {
