@@ -1,31 +1,55 @@
 @import "globals.css";
 
+:root {
+  --username-text-color: #eee;
+  
+  --projectcard-bg-color: #333;
+  --projectcard-text-color: #eee;
+  --projectcard-box-shadow-color: rgba(0,0,0,0.3);
+  --projectcard-hover-bg-color: #444;
+  --projectcard-hover-box-shadow-color: rgba(0,0,0,0.5);
+
+  --popup-bg-color: rgba(0, 0, 0, 0.8);
+  
+  --popupcontent-bg-color: white;
+  --popupcontent-box-shadow-color: rgba(0, 0, 0, 0.7);
+
+  --btnclose-text-color: black;
+  --btnclose-hover-text-color: #cc1f0c;
+
+  --newprojectform-label-text-color: #eee;
+  --newprojectform-input-border-color: #ccc;
+  --newprojectform-button-bg-color: #b65f3d;
+  --newprojectform-button-hover-bg-color: #7f381b;
+  --newprojectform-button-text-color: #fff;
+}
+
 #username {
   font-size: 1.2rem;
   font-weight: lighter;
   position: absolute;
-  right: 40px;
-  color: #eee;
+  right: 2.5rem;
+  color: var(--username-text-color);
   display: flex;
   align-items: center;
 }
 
-#project-list {
+#projectList {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(17.5rem, 1fr));
+  gap: 1.25rem;
   width: 100%;
-  max-width: 1200px;
-  margin: 20px auto;
-  padding: 0 10px;
+  max-width: 75rem;
+  margin: 1.25rem auto;
+  padding: 0 0.625rem;
 }
 
 .project-card {
-  background-color: #333;
-  color: #eee;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  background-color: var(--projectcard-bg-color);
+  color: var(--projectcard-text-color);
+  padding: 1.25rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.25rem 0.625rem var(--projectcard-box-shadow-color);
   transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
   cursor: pointer;
   display: flex;
@@ -34,34 +58,130 @@
 }
 
 .project-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.5);
-  background-color: #444;
+  transform: translateY(-0.31rem);
+  box-shadow: 0 0.5rem 1.25rem var(--projectcard-hover-box-shadow-color);
+  background-color: var(--projectcard-hover-bg-color);
 }
 
 .project-card img {
   width: 100%;
-  height: 150px;
+  height: 9.3rem;
   object-fit: cover;
-  border-radius: 8px;
-  margin-bottom: 15px;
+  border-radius: 0.5rem;
+  margin-bottom: 0.9rem;
 }
 
 .project-card p {
   font-size: 1rem;
   line-height: 1.5;
-  margin-bottom: 10px;
+  margin-bottom: 0.625rem;
+}
+
+.popup {
+  position: fixed;
+  inset: 0;
+  background-color: var(--popup-bg-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 1;
+  transition: opacity 0.2s ease;
+}
+
+.popup.closing {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.popup-content {
+  background-color: var(--popupcontent-bg-color);
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  width: 90%;
+  max-width: 25rem;
+  box-shadow: 0 0.625rem 1.875rem var(--popupcontent-box-shadow-color);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.popup-header h2 {
+  font-size: 1.8rem;
+}
+
+.btn-close {
+  border: none;
+  background-color: transparent;
+  color: var(--btnclose-text-color);
+  font-size: 1.25rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-close:hover {
+  color: var(--btnclose-hover-text-color);
+}
+
+#newProjectForm, #newProjectForm fieldset {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+#newProjectForm fieldset {
+  border: none;
+}
+
+#newProjectForm label,
+#newProjectForm input[type="text"],
+#newProjectForm input[type="file"],
+#newProjectForm button[type="submit"] {
+  font-size: 1.1rem;
+}
+
+#newProjectForm input[type="text"] {
+  padding: 0.5rem 0.625rem;
+  border: 1px solid var(--newprojectform-input-border-color);
+  border-radius: 0.5rem;
+}
+
+#newProjectForm input[type="file"] {
+  font-size: 1.05rem;
+}
+
+#newProjectForm button[type="submit"] {
+  margin-top: 0.625rem;
+  padding: 0.5rem 0.75rem;
+  background-color: var(--newprojectform-button-bg-color);
+  color: var(--newprojectform-button-text-color);
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+#newProjectForm button[type="submit"]:hover {
+  background-color: var(--newprojectform-button-hover-bg-color);
 }
 
 @media (max-width: 480px) {
   #username {
     font-size: 1rem;
-    right: 20px;
+    right: 1.25rem;
   }
 }
 
 @media (max-width: 768px) {
   #project-list {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(12.5rem, 1fr));
   }
 }
