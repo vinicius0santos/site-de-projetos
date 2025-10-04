@@ -51,6 +51,7 @@ exports.getLatestComments = async (req, res) => {
 }
 
 exports.getLatest50 = async (req, res) => {
+    console.log(123)
     try{
         const comments = await Comment.getLatest50();
 

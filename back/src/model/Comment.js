@@ -17,7 +17,7 @@ const Comment = {
         return await supabase
             .from('comment')
             .select('*')
-            .order('id')
+            .order('id', {ascending: false})
             .limit(50)
     }
 }

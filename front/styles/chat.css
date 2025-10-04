@@ -1,0 +1,115 @@
+@import "globals.css";
+
+@keyframes openchat{
+    0%{
+        opacity: 0;
+        height: 50%;
+        height: 10vh;
+    }
+    100%{
+        opacity: 80%;
+        height: 70vh;
+
+    }
+}
+
+#chat{
+    position: fixed;
+    top: 0;
+    right: 0;
+}
+#chat-openclose-button{
+    background-color: transparent;
+    position: fixed;
+    top: 0;
+    right: 0;
+    margin: 10px;
+    border: none;
+    display: flex;
+    transition: 0.2s;
+    cursor: pointer;
+}
+#chat-openclose-button::before{
+    content: '📮';
+    z-index: 99;
+    font-size: 25px;
+    filter: drop-shadow(0 0 5px #666);
+}
+#chat-openclose-button:hover{
+    filter: drop-shadow(0 0 0px #aaa);
+}
+#chat-container{
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 40px;
+    background-color: #eee;
+    margin-right: 40px;
+    height: 450px;
+    width: 300px;
+    border-radius: 5px;
+    border: 3px solid #ccc;
+    border-right: none;
+    animation: openchat linear 0.1s;
+}
+#chat-comments{
+    display: flex;
+    flex-direction: column;
+    height: 450px;
+    border-bottom: 3px solid #ccc;
+    padding: 10px 10px 0 10px;
+    font-size: 13px;
+    gap: 10px;
+    overflow-y: scroll;
+}
+#chat-comments::-webkit-scrollbar{
+    background-color: #ddd;
+    width: 7px;
+}
+#chat-comments::-webkit-scrollbar-thumb{
+    background-color: #bbb;
+    cursor: pointer;
+}
+#chat-comments article{
+    outline: 1px solid #ddd;
+    padding: 3px;
+}
+#chat-comments div{
+    margin-bottom: 5px;
+    background-color: #ddd;
+}
+#chat-input-container{
+    width: 100%;
+    padding: 5px;
+    display: flex;
+    align-items: flex-end;
+}
+#chat-input-container div{
+    overflow-y: auto;
+    width: 90%;
+    resize: none;
+    padding: 5px;
+    min-height: 17px;
+    outline: 1px solid #bbb;
+    max-height: 50px;
+    font-size: 13px;
+}
+#chat-input-container div div{
+    outline: none;
+    padding: 0;
+}
+#chat-input-container div::-webkit-scrollbar{
+    display: none;
+}
+#chat-input-container button{
+    height: 27px;
+    width: 10%;
+    border: solid #bbb 1px;
+    margin-bottom: -1px;
+    cursor: pointer;
+}
+#chat-input-container button::before{
+    content: '>';
+}
+
+
