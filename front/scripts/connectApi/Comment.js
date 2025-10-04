@@ -22,7 +22,7 @@ class Comment {
     }
 
     static async getCommentsAfter(id) {
-        const url = apiUrl + '/comment/getLatestComments';
+        const url = apiUrl + '/comment/get-latest-comments';
 
         const comments = await fetch(url, {
             method: 'POST',
@@ -34,7 +34,8 @@ class Comment {
     }
 
     static async getLatest50(){
-        const url = apiUrl + '/comment/getLatest50';
+        const url = apiUrl + '/comment/get-latest50';
+        console.log(url)
 
         const comments = await fetch(url, {
             method: 'GET',

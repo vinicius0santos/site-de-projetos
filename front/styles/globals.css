@@ -1,5 +1,6 @@
 @import "header.css";
 @import "warning.css";
+@import "chat.css";
 
 :root {
   --bg-color: #111;

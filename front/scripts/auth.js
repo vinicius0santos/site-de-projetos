@@ -1,5 +1,6 @@
 import User from '../scripts/connectApi/User.js';
 import Warning from '../scripts/Warning.js';
+import Chat from './Chat.js';
 
 const signupForm = document.getElementById('signupForm');
 const loginForm = document.getElementById('loginForm');

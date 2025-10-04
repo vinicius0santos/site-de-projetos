@@ -1,12 +1,16 @@
 import Project from './connectApi/Project.js';
 import CompactedImage from './CompactedImage.js';
 import Warning from './Warning.js';
+import Chat from './Chat.js';
 
 const projectList = document.getElementById('project-list');
 const createProject = document.getElementById('create-project');
 const usernameSpan = document.getElementById('username');
 const warning = new Warning(document);
 let projects = [];
+
+const chat = new Chat('adm',document);
+chat.load()
 
 function showUsername() {
   const token = localStorage.getItem('token');

@@ -7,7 +7,7 @@ const Project = require('./router/Project');
 const Comment = require('./router/Comment');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const origin = 'http://127.0.0.1:5500';
+const origin = '*';
 require('dotenv').config();
 
 const corsOption = {
