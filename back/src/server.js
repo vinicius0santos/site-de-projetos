@@ -7,6 +7,7 @@ const Project = require('./router/Project');
 const Comment = require('./router/Comment');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const authenticateToken = require('./middleware/auth');
 const origin = '*';
 require('dotenv').config();
 
@@ -23,6 +24,9 @@ app.use(cors(corsOption))
 app.use('/user', User);
 app.use('/project', upload.single('file'), Project);
 app.use('/comment', Comment);
+app.get('/auth', authenticateToken, (req, res) => {
+    res.json({success: true});
+});
 
 app.get('/', (req, res) => {
     res.header('content-type', 'text/html');

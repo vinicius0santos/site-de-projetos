@@ -6,11 +6,11 @@ function authenticateToken(req, res, next) {
   const token = authHeader && authHeader.split(' ')[1];
 
   if (!token) {
-    return res.status(401).json({message: 'Token não encontrado.'});
+    return res.status(401).json({success: false});
   }
 
   jwt.verify(token, SECRET, (err, user) => {
-    if (err) return res.status(403).json({message: 'Token inválido.'});
+    if (err) return res.status(403).json({success: false});
     req.user = user;
 
     next();

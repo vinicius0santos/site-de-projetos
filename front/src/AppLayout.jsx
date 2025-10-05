@@ -4,7 +4,7 @@ import Footer from './components/Footer';
 
 export default function AppLayout(){
   return (
-    <div>
+    <div className='app-layout'>
       <Header />
       <main>
         <Outlet />
