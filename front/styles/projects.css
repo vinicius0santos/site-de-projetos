@@ -3,11 +3,22 @@
 #username {
   font-size: 1.2rem;
   font-weight: lighter;
+  display: flex;
   position: absolute;
-  right: 50px;
+  right: 80px;
+  top: 3px;
+  margin: 3.5vh;
   color: #eee;
   display: flex;
   align-items: center;
+  text-shadow: 2px 2px 0 #555;
+  background-color: #444;
+  border-radius: 5px;
+  padding: 10px;
+  display: none;
+}
+header{
+  justify-content: center;
 }
 
 #projectList {

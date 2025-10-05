@@ -3,6 +3,11 @@ import Comment from "./connectApi/Comment.js";
 class Chat{
     #messages = [];
     #isOpened = false;
+    #isShiftPressed = false;
+    #isEnterPressed = false;
+    #isMessagePosted = false;
+    #commentsHeight = 0;
+    #newComment = true;
     
     constructor(username, document){
         this.username = username
@@ -28,8 +33,12 @@ class Chat{
         const textMessage = document.createElement('p');
 
         user.innerText = postedBy;
-        textMessage.innerText = message;
+        textMessage.innerHTML = message;
         comment.setAttribute('id', 'comment'+id);
+        if(postedBy == this.username){
+            user.setAttribute('class', 'logged-username-title')
+            comment.setAttribute('class', 'logged-username-message')
+        }
         comment.dataset.id = id;
         comment.append(user, textMessage);
 
@@ -44,6 +53,30 @@ class Chat{
         });
         this.sendMessageButton.addEventListener('click', () => this.postMessage());
 
+        this.textarea.addEventListener('keydown', (event) => {
+            if(event.key == 'Enter'){
+                this.#isEnterPressed = true;
+            }
+            else if(event.key == 'Shift'){
+                this.#isShiftPressed = true;
+            }
+            if(this.#isEnterPressed && this.#isShiftPressed && !this.#isMessagePosted){
+                this.postMessage();
+                this.#isMessagePosted = true;
+            }
+        })
+        this.textarea.addEventListener('keyup', (event) => {
+            if(event.key == 'Enter'){
+                this.#isEnterPressed = false;
+            }
+            else if(event.key == 'Shift'){
+                this.#isShiftPressed = false;
+            }
+            if(!this.#isEnterPressed && !this.#isShiftPressed){
+                this.#isMessagePosted = false;
+            }
+        })
+
         this.textarea.contentEditable = true;
         this.chat.setAttribute('id', 'chat');
         this.openButton.setAttribute('id', 'chat-openclose-button');
@@ -52,7 +85,14 @@ class Chat{
         this.inputContainer.setAttribute('id', 'chat-input-container');
 
         this.document.body.append(this.chat);
-        const comments = await Comment.getLatest50();
+
+        let comments;
+        try{
+            comments = await Comment.getLatest50();
+        }
+        catch(err){
+            console.log(err.message);
+        }
 
         if(comments.data){
             comments.data.reverse().forEach(c => {
@@ -68,6 +108,7 @@ class Chat{
 
     open(){
         this.chatContainer.style.display = 'flex';
+        this.comments.scrollBy(0, this.comments.scrollHeight)
     }
     
     close(){
@@ -75,11 +116,19 @@ class Chat{
     }
     
     async update(){
+        let oldCommentsLenght = this.#messages.length;
+
         let lastId = 0;
         if(this.#messages.length > 0){
             lastId = Number(this.#messages[this.#messages.length-1].dataset.id);
         }
-        const comments = await Comment.getCommentsAfter(lastId);
+        let comments;
+        try{
+            comments = await Comment.getCommentsAfter(lastId);
+        }
+        catch(err){
+            console.log(err.message);
+        }
 
         if(comments.data){
             comments.data.forEach(c => {
@@ -92,6 +141,13 @@ class Chat{
         this.#messages.forEach(m => {
             this.comments.append(m);
         });
+
+        if(this.comments.scrollTop + 200 > this.#commentsHeight){
+            if(oldCommentsLenght < this.#messages.length){
+                this.comments.scrollTop = this.comments.scrollHeight
+                this.#commentsHeight = this.comments.scrollTop;
+            }
+        }
     }
 
     async postMessage(){
@@ -99,11 +155,16 @@ class Chat{
         let text = lines[0]?.textContent || '';
 
         for(let i = 1; i < lines.length; i++){
-            text += '</br>' + lines[i].textContent;
+            lines[i].innerHTML = '';
         }
-
-        const post = await this.comment.post(text)
-        console.log(post)
+        
+        try{
+            await this.comment.post(text);
+            this.textarea.innerHTML = '';
+        }
+        catch(err){
+            console.log(err.message);
+        }
     }
 }
 

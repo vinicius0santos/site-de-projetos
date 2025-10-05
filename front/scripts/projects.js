@@ -45,7 +45,7 @@ function openNewProjectPopup() {
       </form>
     </div>
   `;
-
+document.body.attri
   document.body.appendChild(overlay);
 
   const form = overlay.querySelector('#newProjectForm');
@@ -121,14 +121,12 @@ function showProjects(projects) {
     div.classList.add('project-card');
     div.innerHTML = `
       <h2>${project.name}</h2>
-      <button name='deleteProject'>Deletar</button>
       <img src='${project.icon_url != '' ? project.icon_url : "../default_project_icon.png"}'>
       <h2> Criado por: ${project.created_by}</h2>
       <input type='hidden' value='${project.icon_paths}' name='iconPaths'/>
       <input type='hidden' value='${project.id}' name='id'/>
     `;
 
-    div.children.deleteProject.addEventListener('click', deleteProject);
     projectList.appendChild(div);
   });
 }
