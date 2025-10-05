@@ -48,7 +48,7 @@ class CompactedImage{
                         console.log(blob.size/1024, 'kb')
                         resolve(blob);
                     }
-                }, "image/webp", this.#quality);
+                }, 'image/webp', this.#quality);
             })
             
             return blob;
