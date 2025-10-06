@@ -1,0 +1,76 @@
+.projects{
+  padding: 40px 0;
+}
+.project-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 0 10px;
+}
+
+.project-card {
+  user-select: none;
+  position: relative;
+  background-color: #333;
+  color: #eee;
+  padding: 10px;
+  outline: 2px solid #111;
+  text-align: center;
+  border-radius: 10px;
+  transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+  height: 40vh;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.project-card:hover {
+  transform: translateY(-5px);
+}
+
+.project-card img {
+  top: 0;
+  left: 0;
+  position: absolute;
+  height: 40vh;
+  object-fit: cover;
+  width: 100%;
+  border-radius: 8px;
+  z-index: 0;
+}
+.project-card p, .project-card h3{
+  color: #fff;
+  text-shadow: 3px 2px #000;
+  z-index: 1;
+  word-break: break-all;
+}
+.project-card p{
+  font-weight: 600;
+  font-size: 15px;
+}
+.project-card h3::first-line{
+  text-transform: capitalize;
+}
+.new-card{
+  justify-content: center;
+  align-items: center;
+  font-size: 50px;
+  /* outline: none; */
+}
+
+@media (max-width: 480px) {
+  #username {
+    font-size: 1rem;
+    right: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  #project-list {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+}

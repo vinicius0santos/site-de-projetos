@@ -27,7 +27,7 @@ export default function PublicRoute() {
 
   if(loading) return <></>
   
-  else if(isAuth) return <Navigate to='/login' />
+  else if(isAuth) return <Navigate to='/projects' />
   else{
     localStorage.clear();
     return <Outlet />

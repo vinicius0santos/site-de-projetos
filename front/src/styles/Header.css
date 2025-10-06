@@ -1,0 +1,61 @@
+:root {
+
+    --header-bg-color: #111;
+
+    --h1-text-color: #eee;
+    --h1-hover-text-color: #b65f3d;
+
+    --a-text-color: #ccc;
+    --a-hover-text-color: #eee;
+    --a-border-color: transparent;
+    --a-bg-color: #b65f3d;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--header-bg-color);
+  padding: 1.6rem 20%;
+}
+.projects-header{
+  justify-content: center;
+}
+
+header h1 a {
+  font-size: 1.75rem;
+  color: var(--h1-text-color);
+  text-decoration: none;
+}
+
+header h1 a:hover {
+  color: var(--h1-hover-text-color);
+  cursor: pointer;
+}
+
+header nav a {
+  color: var(--a-text-color);
+  text-decoration: none;
+  border: 0.125rem solid transparent;
+  border-radius: 0.5rem;
+  padding: 0.625rem;
+}
+
+header nav a:hover {
+  color: var(--a-hover-text-color);
+  background-color: var(--a-bg-color);
+  border-color: var(--a-border-color);
+}
+
+header nav ul {
+  display: flex;
+  list-style: none;
+  gap: 0.625rem;
+}
+
+.projects-header span{
+  color: #fff;
+  position: absolute;
+  
+  right: 3%;
+}

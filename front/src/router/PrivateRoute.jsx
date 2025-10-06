@@ -26,7 +26,10 @@ export default function PrivateRoute() {
 
   if(loading) return <></>
   
-  else if(isAuth) return <Outlet />
+  else if(isAuth){
+    console.log(1)
+    return <Outlet />
+  }
   else{
     localStorage.clear();
     return <Navigate to='/login' />

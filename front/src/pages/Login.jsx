@@ -1,15 +1,22 @@
-import '../styles/Login.css'
+import '../styles/Auth.css'
 import User from '../api/User';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Login(){
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const loginUser = async (btn) => {
-    btn.disabled = true;
+  const handleUsername = ({target}) => {
+    setUsername(target.value)
+  }
+  const handlePassword = ({target}) => {
+    setPassword(target.value)
+  }
+
+  const loginUser = async ({target}) => {
+    target.disabled = true;
 
     try{
       if(!username || !password){
@@ -31,15 +38,27 @@ export default function Login(){
       console.log(err);
     }
     finally{
-      btn.disabled = false;
+      target.disabled = false;
     }
   }
 
   return (
-    <div className='login'>
-      <input type='text' value={username} onChange={({target}) => setUsername(target.value)}/>
-      <input type='text' value={password} onChange={({target}) => setPassword(target.value)}/>
-      <button onClick={({target}) => loginUser(target)}>Entrar</button>
-    </div>
+    <section className='login'>
+      <article className="container">
+        <h1>Entre na sua conta</h1>
+
+        <form id="login-form" onSubmit={(event) => event.preventDefault()}>
+          <fieldset>
+            <label>Usuário</label>
+            <input type="text" value={username} onChange={handleUsername} />
+            <label>Senha</label>
+            <input type="password" value={password} onChange={handlePassword} />
+          </fieldset>
+          <button onClick={loginUser}>Entrar</button>
+        </form>
+
+        <p>Novo por aqui? <Link to="/signup">Crie sua conta</Link></p>
+      </article>
+    </section>
   )
 }

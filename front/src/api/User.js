@@ -30,11 +30,11 @@ class User {
         })
         
         const result = await user.json();
-        console.log(result.data)
 
         if (result && result.success && result.token) {
             localStorage.setItem('token', result.token);
             localStorage.setItem('userId', result.data.id);
+            localStorage.setItem('username', result.data.username);
         }
 
         return result;

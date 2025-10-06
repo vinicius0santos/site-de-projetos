@@ -2,8 +2,8 @@ import '../styles/Home.css'
 
 export default function Home(){
   return (
-    <div className='home'>
+    <section className='home'>
 
-    </div>
+    </section>
   )
 }
