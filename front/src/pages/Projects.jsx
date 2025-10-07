@@ -1,12 +1,10 @@
 import '../styles/Projects.css'
 import { useEffect, useState } from 'react'
 import Project from '../api/Project'
-import { useNavigate } from 'react-router-dom';
-
-let projects = [];
+import { Link } from 'react-router-dom';
+import { slugify } from '../utils/slugify';
 
 export default function Projects(){
-  const navigate = useNavigate();
   const [projects, setProjects] = useState([]);
   
   useEffect(() => {
@@ -18,7 +16,7 @@ export default function Projects(){
           setProjects(result.data);
         }
         else{
-          logout();
+          // ...
         }
       }
       catch(err){
@@ -28,22 +26,28 @@ export default function Projects(){
   }, [])
 
   const projectListElement = () => {
-    return projects.map((project) => 
-      <div className='project-card'>
-        <h3>{project.name}</h3>
-        <img src={project.icon_url} />
-        <input type="hidden" value={project.id}/>
-      </div>
-    )
+    return projects.map((project) => {
+      const projectSlug = slugify(project.name);
+
+      return (
+        <Link
+          to={`/projects/${projectSlug}`}
+          key={project.id}
+          className='project-card'
+        >
+          <h3>{project.name}</h3>
+          <img src={project.icon_url} alt={`Ícone do projeto ${project.name}`}/>
+        </Link>
+      );
+    })
   }
-  projectListElement()
   
   return (
     <section className='projects'>
       <div className='project-list'>
         {projectListElement()}
         {projects.length &&
-          <div className='project-card new-card'>
+          <div className='project-card new-card' onClick={() => {/*Colocar popup de novo projeto*/}}>
             <h3>+</h3>
           </div>
         }

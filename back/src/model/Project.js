@@ -21,16 +21,27 @@ const Project = {
             data: data
         };
     },
+
     removeImage: async (paths) => {
         return await supabase.storage
             .from('projects icon')
             .remove(paths);
     },
+
+    getById: async(id) => {
+        return await supabase
+            .from('project')
+            .select('*')
+            .eq('id', id)
+            .single()
+    },
+
     getAll: async () => {
         return await supabase
             .from('project')
             .select('*')
     },
+
     create: async (name, iconURL, imgName, iconPaths, createdBy, userId) => {
         return await supabase
             .from('project')
@@ -44,6 +55,7 @@ const Project = {
             })
             .select()
     },
+
     delete: async (id) => {
         return await supabase
             .from('project')

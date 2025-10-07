@@ -6,6 +6,8 @@ import Projects from '../pages/Projects';
 import Home from '../pages/Home';
 import Login from '../pages/Login';
 import Signup from '../pages/Signup';
+import Project from '../pages/Project';
+import NotFound from '../pages/NotFound';
 
 export const router = 
 createBrowserRouter([
@@ -24,8 +26,13 @@ createBrowserRouter([
       {
         element: <PrivateRoute />,
         children: [
-          {path: 'projects', element: <Projects /> }
+          {path: 'projects', element: <Projects /> },
+          {path: 'projects/:slug', element: <Project />}
         ]
+      },
+      {
+        path: '*',
+        element: <NotFound />
       }
     ]
   },

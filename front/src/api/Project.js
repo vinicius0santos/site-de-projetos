@@ -11,6 +11,26 @@ class Project {
         }
     }
 
+    static async getById(id) {
+        const url = `${apiUrl}/project/get/${id}`;
+        const token = localStorage.getItem('token') || '';
+
+        try {
+            const project = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    ...headers,
+                    'Authorization': `Bearer ${token}`
+                }                
+            });
+
+            return project.json();
+        } catch (err) {
+            console.error("Erro em getById:", err);
+            return { success: false, error: err.message };
+        }
+    }
+
     static async getAll() {
         const url = apiUrl + '/project/get-all';
         const token = localStorage.getItem('token') || '';

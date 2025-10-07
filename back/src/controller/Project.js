@@ -1,5 +1,39 @@
 const Project = require('../model/Project');
 
+exports.getById = async (req, res) => {
+  const projectId = req.params.id;
+
+  if (!projectId) {
+    return res.status(400).json({
+      success: false,
+      message: 'ID do projeto obrigatório'
+    });
+  }
+
+  try {
+    const project = await Project.getById(projectId);
+
+    if (!project || !project.data) {
+      return res.status(404).json({
+        success: false,
+        message: `Projeto com ID ${projectId} não encontrado.`
+      });
+    }
+
+    res.json({
+      success: true,
+      data: project.data
+    });
+  } catch (err) {
+    console.error(err);
+
+    res.status(500).json({
+      success: false,
+      message: 'Erro ao buscar pelo projeto.'
+   });
+  }
+};
+
 exports.getAll = async (req, res) => {
   try {
     const projects = await Project.getAll();
@@ -36,7 +70,12 @@ exports.create = async (req, res) => {
     });
   }
   catch(err){
+    console.error(err);
 
+    res.status(500).json({
+      success: false,
+      message: 'Erro ao criar o projeto'
+    });
   }
 }
 
@@ -57,8 +96,9 @@ exports.delete = async (req, res) => {
   catch(err){
     console.log(err);
 
-    res.json({
-      success: true
+    res.status(500).json({
+      success: false,
+      message: 'Falha ao deletar o projeto'
     });
   }
 }
