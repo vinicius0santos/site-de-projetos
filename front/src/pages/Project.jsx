@@ -12,32 +12,22 @@ function Project() {
   useEffect(() => {
     setLoading(true);
 
-    const fetchMappingAndData = async () => {
-      let projectId = null;
-
+    const fetchProjectData = async () => {
       try {
         const listResult = await ProjectApi.getAll();
 
         if (listResult.success && listResult.data) {
-          const projectMap = listResult.data.reduce((map, p) => {
-            const generatedSlug = slugify(p.name);
-            map[generatedSlug] = p.id;
-            return map;
-          }, {});
+          const foundProject = listResult.data.find(p => {
+            return slugify(p.name) === slug;
+          });
 
-          projectId = projectMap[slug];
-        }
-
-        if (!projectId) {
-          return navigate('/404', { replace: true });
-        }
-
-        const projectResult = await ProjectApi.getById(projectId);
-
-        if (projectResult.success) {
-          setProject(projectResult.data);
+          if (foundProject) {
+            setProject(foundProject);
+          } else {
+            return navigate('/404', { replace: true });
+          }
         } else {
-          throw new Error('Dados do projeto não encontrados.');
+          return navigate('/404', { replace: true });
         }
       } catch (err) {
         console.error('Erro durante a busca pelo projeto:', err);
@@ -46,7 +36,7 @@ function Project() {
       }
     };
 
-    fetchMappingAndData();
+    fetchProjectData();
   }, [slug, navigate]);
 
   if (loading) return <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center', height: '100vh', color: '#eee'}}>Carregando...</div>;

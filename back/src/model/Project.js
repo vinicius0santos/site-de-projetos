@@ -28,14 +28,6 @@ const Project = {
             .remove(paths);
     },
 
-    getById: async(id) => {
-        return await supabase
-            .from('project')
-            .select('*')
-            .eq('id', id)
-            .single()
-    },
-
     getAll: async () => {
         return await supabase
             .from('project')
