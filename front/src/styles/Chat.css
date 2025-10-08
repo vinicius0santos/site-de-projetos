@@ -34,7 +34,8 @@
     position: absolute;
     top: 0;
     right: 0;
-    margin: 3.5vh;
+    margin-top: 3vh;
+    margin-right: 5vh;
     border: none;
     display: flex;
     transition: 0.2s;
@@ -128,7 +129,7 @@
     overflow-y: auto;
     width: 90%;
     resize: none;
-    padding: 4px;
+    padding: 4.5px;
     padding-left: 5px;
     min-height: 17px;
     outline: 1px solid #bbb;

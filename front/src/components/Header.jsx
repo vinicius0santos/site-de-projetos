@@ -7,7 +7,7 @@ export default function Header(){
   if(path == '/login' || path == '/signup') return <></>
   if(path == '/'){
     return (
-      <header>
+      <header className='home-header'>
         <div>
           <h1><Link to="/" aria-label="Ir para página inicial do Bundello">Bundello</Link></h1>
         </div>

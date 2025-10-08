@@ -1,9 +1,9 @@
 import '../styles/Projects.css'
 import { useEffect, useState } from 'react'
 import Project from '../api/Project'
-import { useNavigate } from 'react-router-dom';
-
-let projects = [];
+import { Link } from 'react-router-dom'
+import Chat from '../components/Chat';
+import { slugify } from '../utils/slugify';
 
 export default function Projects(){
   const [projects, setProjects] = useState([]);
@@ -17,7 +17,7 @@ export default function Projects(){
           setProjects(result.data);
         }
         else{
-          logout();
+          //...
         }
       }
       catch(err){

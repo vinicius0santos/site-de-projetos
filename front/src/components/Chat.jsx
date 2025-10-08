@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import '../styles/Chat.css';
 import Comment from '../api/Comment';
 import TextAreaAutosize from 'react-textarea-autosize';
@@ -16,7 +16,7 @@ export default function Chat({username}){
 
   useEffect(() => {
     (async () => {
-        let c;
+        let c = [];
         if(comments.length == 0){
           c = await Comment.getLatest50();
         }
@@ -60,6 +60,10 @@ export default function Chat({username}){
   const handleOpenButton = () => {
     if(!isOpen){
       setIsOnBotton(true);
+    }
+    else{
+        commentsRef.current.scrollBy(0, 0);
+        setIsOnBotton(false);
     }
     setIsOpen(!isOpen);
   }

@@ -26,7 +26,7 @@ class Comment {
             comment = [];
         }
 
-        return comment;
+        return comment || [];
     }
 
     static async getCommentsAfter(id) {
@@ -46,13 +46,13 @@ class Comment {
             comments = [];
         }
         
-        return comments;
+        return comments || [];
     }
 
     static async getLatest50(){
         const url = apiUrl + '/comment/get-latest50';
 
-        let comments;
+        let comments = [];
         try{
             const response = await fetch(url, {
                 method: 'GET',
@@ -65,7 +65,7 @@ class Comment {
             comments = [];
         }
 
-        return comments;
+        return comments || [];
     }
 }
 
