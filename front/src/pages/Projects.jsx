@@ -1,8 +1,9 @@
 import '../styles/Projects.css'
 import { useEffect, useState } from 'react'
 import Project from '../api/Project'
-import { Link } from 'react-router-dom';
-import { slugify } from '../utils/slugify';
+import { useNavigate } from 'react-router-dom';
+
+let projects = [];
 
 export default function Projects(){
   const [projects, setProjects] = useState([]);
@@ -16,7 +17,7 @@ export default function Projects(){
           setProjects(result.data);
         }
         else{
-          // ...
+          logout();
         }
       }
       catch(err){
@@ -44,6 +45,7 @@ export default function Projects(){
   
   return (
     <section className='projects'>
+      <Chat username={localStorage.getItem('username')}/>
       <div className='project-list'>
         {projectListElement()}
         {projects.length &&

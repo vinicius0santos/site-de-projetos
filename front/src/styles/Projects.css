@@ -12,6 +12,7 @@
 }
 
 .project-card {
+  z-index: 1;
   user-select: none;
   position: relative;
   background-color: #333;
