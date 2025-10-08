@@ -14,13 +14,16 @@ exports.post = async (req, res) => {
         console.log(comment)
 
         res.json({
-            comment: comment.data[0],
-            success: true
+            success: true,
+            data: comment.data[0]
         });
     }
     catch(err){
         console.log(err.message)
-        res.json({success: false});
+        res.json({
+            success: false,
+            data: []
+        });
     }
 }
 
@@ -32,12 +35,15 @@ exports.getLatestComments = async (req, res) => {
 
         if(comments.data.length > 0){
             res.json({
-                sucess: true,
+                success: true,
                 data: comments.data
             })
         }
         else{
-            throw new Error("Nenhum novo comentário encontrado!")
+            res.json({
+                success: false,
+                data: [],
+            });
         }
     }
     catch(err){
@@ -45,7 +51,7 @@ exports.getLatestComments = async (req, res) => {
         
         res.json({
             success: false,
-            data: null
+            data: []
         });
     }
 }

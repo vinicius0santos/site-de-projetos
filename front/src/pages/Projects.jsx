@@ -2,8 +2,7 @@ import '../styles/Projects.css'
 import { useEffect, useState } from 'react'
 import Project from '../api/Project'
 import { useNavigate } from 'react-router-dom';
-
-let projects = [];
+import Chat from '../components/Chat';
 
 export default function Projects(){
   const navigate = useNavigate();
@@ -18,7 +17,7 @@ export default function Projects(){
           setProjects(result.data);
         }
         else{
-          logout();
+          //...
         }
       }
       catch(err){
@@ -28,18 +27,18 @@ export default function Projects(){
   }, [])
 
   const projectListElement = () => {
-    return projects.map((project) => 
-      <div className='project-card'>
+    return projects.map((project, index) => 
+      <div className='project-card' key={index}>
         <h3>{project.name}</h3>
         <img src={project.icon_url} />
         <input type="hidden" value={project.id}/>
       </div>
     )
   }
-  projectListElement()
   
   return (
     <section className='projects'>
+      <Chat username={localStorage.getItem('username')}/>
       <div className='project-list'>
         {projectListElement()}
         {projects.length &&

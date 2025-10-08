@@ -12,37 +12,60 @@ class Comment {
         const url = apiUrl + '/comment/post';
         this.data.message = message;
 
-        const comment = await fetch(url, {
-            method: 'POST',
-            body: JSON.stringify(this.data),
-            headers: headers
-        });
+        let comment;
+        try{
+            const response = await fetch(url, {
+                method: 'POST',
+                body: JSON.stringify(this.data),
+                headers: headers
+            });
 
-        return comment.json();
+            comment = (await response.json()).data;
+        }
+        catch(err){
+            comment = [];
+        }
+
+        return comment;
     }
 
     static async getCommentsAfter(id) {
         const url = apiUrl + '/comment/get-latest-comments';
 
-        const comments = await fetch(url, {
-            method: 'POST',
-            body: JSON.stringify({id: id}),
-            headers: headers
-        })
+        let comments;
+        try{
+            const response = await fetch(url, {
+                method: 'POST',
+                body: JSON.stringify({id: id}),
+                headers: headers
+            })
+
+            comments = (await response.json()).data;
+        }
+        catch(err){
+            comments = [];
+        }
         
-        return comments.json();
+        return comments;
     }
 
     static async getLatest50(){
         const url = apiUrl + '/comment/get-latest50';
-        console.log(url)
 
-        const comments = await fetch(url, {
-            method: 'GET',
-            headers: headers
-        })
+        let comments;
+        try{
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: headers
+            })
 
-        return comments.json();
+            comments = (await response.json()).data;
+        }
+        catch(err){
+            comments = [];
+        }
+
+        return comments;
     }
 }
 
