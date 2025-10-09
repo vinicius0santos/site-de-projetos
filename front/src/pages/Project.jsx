@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { slugify } from "../utils/slugify";
+import { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { slugify } from '../utils/slugify';
 import ProjectApi from '../api/Project';
 
 function Project() {

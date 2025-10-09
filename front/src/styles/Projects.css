@@ -1,6 +1,7 @@
-.projects{
+.projects {
   padding: 40px 0;
 }
+
 .project-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -43,20 +44,20 @@
   border-radius: 8px;
   z-index: 0;
 }
-.project-card p, .project-card h3{
+.project-card p, .project-card h3 {
   color: #fff;
   text-shadow: 3px 2px #000;
   z-index: 1;
   word-break: break-all;
 }
-.project-card p{
+.project-card p {
   font-weight: 600;
   font-size: 15px;
 }
-.project-card h3::first-line{
+.project-card h3::first-line {
   text-transform: capitalize;
 }
-.new-card{
+.new-card {
   justify-content: center;
   align-items: center;
   font-size: 50px;

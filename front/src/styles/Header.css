@@ -18,7 +18,8 @@ header {
   background-color: var(--header-bg-color);
   padding: 1.6rem 20%;
 }
-.projects-header{
+
+.projects-header {
   justify-content: center;
   gap: 100%;
 }
@@ -54,28 +55,31 @@ header nav ul {
   gap: 0.625rem;
 }
 
-.projects-header span{
+.projects-header span {
   color: #fff;
   display: flex;
 }
 
-@media only screen and (max-device-width:950px){
+@media only screen and (max-device-width:950px) {
   .projects-header{
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
     padding-left: 50px;
   }
-  .home-header{
+
+  .home-header {
     flex-direction: column;
     gap: 50px;
     padding-left: 30px;
     align-items: flex-start;
   }
-  .home-header *{
+
+  .home-header * {
     padding: 0;
   }
-  .home-header nav ul{
+
+  .home-header nav ul {
     display: flex;
     gap: 20px;
     flex-direction: column;

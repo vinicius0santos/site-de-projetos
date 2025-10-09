@@ -1,4 +1,4 @@
-import { apiUrl, headers } from "../global";
+import { apiUrl, headers } from '../global';
 
 class Project {
     constructor(projectName, createdBy, userId, imgName, blob) {

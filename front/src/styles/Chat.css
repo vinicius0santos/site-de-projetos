@@ -1,34 +1,38 @@
-@keyframes openchat{
-    0%{
+@keyframes openchat {
+    0% {
         opacity: 0;
         height: 50%;
         height: 10vh;
     }
-    100%{
+
+    100% {
         opacity: 80%;
         height: 70vh;
 
     }
 }
-@keyframes newMessage{
-    0%{
+
+@keyframes newMessage {
+    0% {
         transform: rotate(10deg) scale(1);
     }
-    50%{
+
+    50% {
         transform: rotate(-0deg) scale(1.2);
     }
-    100%{
+
+    100% {
         transform: rotate(-10deg) scale(1.2);
     }
 }
 
-.chat{
+.chat {
     position: fixed;
     top: 0;
     right: 0;
     z-index: 5;
 }
-.chat .open-button{
+.chat .open-button {
     outline: none;
     background-color: transparent;
     position: absolute;
@@ -46,14 +50,16 @@
     width: 50px;
     filter: drop-shadow(-2px 2px 0 #555);
 }
-.chat .open-button#new-message{
+
+.chat .open-button#new-message {
     animation: newMessage alternate-reverse infinite 0.1s;
 }   
 
-.chat .open-button:hover{
+.chat .open-button:hover {
     transform: rotate(-10deg);
 }
-.chat-container{
+
+.chat-container {
     flex-direction: column;
     justify-content: space-between;
     margin-top: 40px;
@@ -69,7 +75,8 @@
     box-shadow: 0 3px 5px #000;
     z-index: 999;
 }
-.chat-comments{
+
+.chat-comments {
     display: flex;
     flex-direction: column;
     height: 75vh;
@@ -79,33 +86,39 @@
     gap: 10px;
     overflow-y: scroll;
 }
-.chat-comments::-webkit-scrollbar{
+
+.chat-comments::-webkit-scrollbar {
     background-color: #ddd;
     width: 7px;
 }
-.chat-comments::-webkit-scrollbar-thumb{
+
+.chat-comments::-webkit-scrollbar-thumb {
     background-color: #bbb;
     cursor: pointer;
 }
-.chat-comments .comment{
+
+.chat-comments .comment {
     outline: 1px solid #ddd;
     border-radius: 10px;
     width: max-content;
     max-width: fit-content;
     word-break: break-all;
 }
-.chat-comments #logged-user{
+
+.chat-comments #logged-user {
     outline-color: rgb(204, 230, 204);
     align-self: flex-end;
     border-top-right-radius: 0;
     background-color: #d7f3ce;
     word-break: break-all;
 }
-.chat-comments #logged-user div{
+
+.chat-comments #logged-user div {
     align-self: flex-end;
     display: none;
 }
-.chat-comments .comment > div{
+
+.chat-comments .comment > div {
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     padding: 7px;
@@ -113,11 +126,13 @@
     background-color: rgb(52, 69, 107);
     color: #eee;
 }
-.chat-comments .comment p{
+
+.chat-comments .comment p {
     margin: 7px;
     margin-right: 10px;
 }
-.chat-input-container{
+
+.chat-input-container {
     width: 100%;
     padding: 5px;
     border-right: 5px #ddd solid;
@@ -125,7 +140,8 @@
     display: flex;
     align-items: flex-end;
 }
-.chat-input-container .chat-textarea{
+
+.chat-input-container .chat-textarea {
     overflow-y: auto;
     width: 90%;
     resize: none;
@@ -138,14 +154,17 @@
     border-bottom-left-radius: 5px;
     overflow: hidden;
 }
-.chat-input-container div div{
+
+.chat-input-container div div {
     outline: none;
     padding: 0;
 }
-.chat-input-container div::-webkit-scrollbar{
+
+.chat-input-container div::-webkit-scrollbar {
     display: none;
 }
-.chat-input-container button{
+
+.chat-input-container button {
     height: 27px;
     width: 10%;
     border: solid #bbb 1px;
@@ -157,12 +176,13 @@
     align-items: center;
     justify-content: center;
 }
-.chat-input-container button::before{
+
+.chat-input-container button::before {
     content: '>';
 }
 
 @media only screen and (max-device-width: 1000px) {
-    .chat-container{
+    .chat-container {
         width: 80vw;
     }
 }
