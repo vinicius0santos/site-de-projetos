@@ -1,4 +1,4 @@
-import { apiUrl, headers } from '../global';
+import { apiUrl, headers } from "../global.js";
 
 class User {
     constructor(username, password) {
@@ -11,33 +11,49 @@ class User {
     async create() {
         const url = apiUrl + '/user/create';
 
-        const user = await fetch(url, {
-            method: 'POST',
-            body: JSON.stringify(this.data),
-            headers: headers
-        });
+        try {
+            const user = await fetch(url, {
+                method: 'POST',
+                body: JSON.stringify(this.data),
+                headers: headers
+            });
 
-        return user.json();
+            return user.json();
+        }
+        catch (err) {
+            return { 
+                success: false,
+                serverError: true, 
+            }
+        }
     }
 
     async login() {
         const url = apiUrl + '/user/login';
 
-        const user = await fetch(url, {
-            method: 'POST',
-            body: JSON.stringify(this.data),
-            headers: headers
-        })
-        
-        const result = await user.json();
+        try {
+            const user = await fetch(url, {
+                method: 'POST',
+                body: JSON.stringify(this.data),
+                headers: headers
+            })
 
-        if (result && result.success && result.token) {
-            localStorage.setItem('token', result.token);
-            localStorage.setItem('userId', result.data.id);
-            localStorage.setItem('username', result.data.username);
+            const result = await user.json();
+
+            if (result && result.success && result.token) {
+                localStorage.setItem('token', result.token);
+                localStorage.setItem('userId', result.data.id);
+                localStorage.setItem('username', result.data.username);
+            }
+
+            return result;
         }
-
-        return result;
+        catch (err) {
+            return { 
+                success: false,
+                serverError: true, 
+            }
+        }
     }
 }
 

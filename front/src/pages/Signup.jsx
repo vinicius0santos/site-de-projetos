@@ -22,36 +22,29 @@ export default function Signup(){
   const createUser = async ({target}) => {
     target.disabled = true;
 
-    try{
-      if(!username || !password || !confirmPassword){
-        console.log('preencha todos os campos');
-        return;
-      }
-      if(password != confirmPassword){
-        console.log('as senhas não coincidem');
-        return;
-      }
-      if(password.length < 6){
-        console.log('a senha precisa ter no minimo 6 caracteres');
-        return;
-      }
-      
-      const user = new User(username, password);
-      const result = await user.create();
-      
-      if(result && result.success){
-        navigate('/login');
-      }
-      else{
-        console.log('error ao criar a conta, tente novamente');
-      }
+    if(!username || !password || !confirmPassword){
+      console.log('preencha todos os campos');
+      return;
     }
-    catch(err){
-      console.log(err);
+    if(password != confirmPassword){
+      console.log('as senhas não coincidem');
+      return;
     }
-    finally{
-      target.disabled = false;
+    if(password.length < 6){
+      console.log('a senha precisa ter no minimo 6 caracteres');
+      return;
     }
+    
+    const user = new User(username, password);
+    const result = await user.create();
+    
+    if(result.success){
+      navigate('/login');
+    }
+    else{
+      console.log('error ao criar a conta, tente novamente');
+    }
+    target.disabled = false;
   }
 
   return (

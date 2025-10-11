@@ -9,3 +9,23 @@ html, body, #root, .app-layout {
   height: 100%;
   background-color: #222;
 }
+body::-webkit-scrollbar{
+  width: 10px;
+  background-color: #222;
+}
+body::-webkit-scrollbar-thumb{
+  background-color: #444;
+  border: 3px solid #222;
+  cursor: pointer;
+}
+.app-layout{
+  display: flex;
+  flex-direction: column;
+}
+header{
+  flex: 1;
+}
+.app-layout > main{
+  flex: 16;
+  background: linear-gradient(to bottom, #000 0%, #111 50%, #444 95%);
+}

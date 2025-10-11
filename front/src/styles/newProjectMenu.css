@@ -1,0 +1,119 @@
+.new-project-menu{
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+  color: #eee;
+}
+.new-project-menu .overlay{
+  background-color: #000;
+  top: 0;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  opacity: 0.7;
+}
+.new-project-menu main{
+  z-index: 4;
+  background-color: #222;
+  border: solid 4px #888;
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+  align-items: center;
+  width: 30vw;
+  height: max-content;
+  box-shadow: 0 3px 3px #fff;
+}
+.new-project-menu .close{
+  position: absolute;
+  top: 1%;
+  right: 1%;
+  margin: 7px;
+  text-shadow: -2px 2px #555;
+  color: #ddd;
+  cursor: pointer;
+  user-select: none;
+}
+.new-project-menu div{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  text-align: center;
+  gap: 10px;
+}
+.new-project-menu div *{
+  width: 90%;
+}
+.new-project-menu input{
+  height: 1.7rem;
+  font-size: 18px;
+  padding: 0 5px;
+  margin-top: 20px;
+  border-radius: 8px;
+  text-align: center;
+}
+.new-project-menu button{
+  width: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background-color: #b65f3d;
+  height: 2.5rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #eee;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.new-project-menu button:hover{
+  background-color: #e0764c;
+}
+.new-project-menu button:disabled{
+  background-color: #703a25;
+  cursor: auto;
+}
+.new-project-menu label + input[type="file"]{
+  display: none;
+}
+.new-project-menu .file{
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background-color: #616161;
+  height: 2rem;
+  font-size: 1.2rem;
+  color: #eee;
+  margin-bottom: 50px;
+  margin-top: 5px;
+  cursor: pointer;
+  transition: 0.2s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 5%;
+  line-height: 2rem;
+}
+.new-project-menu .file:hover{
+  background-color: #808080;
+}
+.new-project-menu h4{
+  font-size: 1.8rem;
+  margin: 10px;
+}
+
+@media only screen and (max-device-width: 800px) {
+  .new-project-menu main{
+    width: 90vw;
+  }
+}

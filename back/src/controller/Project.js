@@ -20,15 +20,16 @@ exports.getAll = async (req, res) => {
 
 exports.create = async (req, res) => {
   const body = JSON.parse(req.body.project);
-  const projectName = body.projectName;
-  const createdBy = body.createdBy;
-  const imgName = body.imgName;
+  const name = body.name;
+  const slug = body.slug;
   const userId = body.userId;
-  const file = req.file;
+  const buffer = req.file?.buffer || undefined;
 
   try{
-    const img = file ? await Project.uploadImage(imgName, file.buffer) : {url: '', data: ''};
-    const project = await Project.create(projectName, img.url, imgName, img.data, createdBy, userId);
+    if(!name || !slug || !userId) throw new Error("Campos inválidos");
+
+    const img = await Project.uploadImage(name, buffer);
+    const project = await Project.create(name, slug, img?.url, img?.data, userId);
 
     res.json({
       success: true,
@@ -60,11 +61,33 @@ exports.delete = async (req, res) => {
     });
   }
   catch(err){
-    console.log(err);
+    console.error(err);
 
     res.status(500).json({
       success: false,
       message: 'Falha ao deletar o projeto'
     });
+  }
+}
+
+exports.getBySlug = async (req, res) => {
+  const slug = req.params.slug;
+  
+  try{
+    const project = await Project.getBySlug(slug);
+
+    console.log(project.data);
+
+    res.json({
+      success: true,
+      data: project.data
+    });
+  }
+  catch(err){
+    console.log(err.message);
+    res.json({
+      success: false,
+      message: 'Falha ao encontrar o projeto'
+    })
   }
 }

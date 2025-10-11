@@ -11,8 +11,6 @@ exports.post = async (req, res) => {
 
         const comment = await Comment.post(message, postedBy);
 
-        console.log(comment)
-
         res.json({
             success: true,
             data: comment.data[0]
@@ -57,11 +55,8 @@ exports.getLatestComments = async (req, res) => {
 }
 
 exports.getLatest50 = async (req, res) => {
-    console.log(123)
     try{
         const comments = await Comment.getLatest50();
-
-        console.log(comments)
 
         if(comments.data.length > 0){
             res.json({

@@ -18,28 +18,25 @@ export default function Login(){
   const loginUser = async ({target}) => {
     target.disabled = true;
 
-    try{
-      if(!username || !password){
-        console.log('preencha todos os campos');
-        return;
-      }
-      
-      const user = new User(username, password);
-      const result = await user.login();
-      
-      if(result && result.success){
-        navigate('/projects');
-      }
-      else{
-        console.log('usuario ou senha invalidos');
-      }
+    if(!username || !password){
+      console.log('preencha todos os campos');
+      return;
     }
-    catch(err){
-      console.log(err);
+    
+    const user = new User(username, password);
+    const result = await user.login();
+    
+    if(result.success){
+      navigate('/projects');
     }
-    finally{
-      target.disabled = false;
+    else if(result.serverError){
+      console.log('Não foi possível se conectar ao servidor');
     }
+    else{
+      console.log('usuario ou senha invalidos');
+    }
+
+    target.disabled = false;
   }
 
   return (
@@ -47,17 +44,17 @@ export default function Login(){
       <article className="container">
         <h1>Entre na sua conta</h1>
 
-        <form id="login-form" onSubmit={(event) => event.preventDefault()}>
+        <form id='login-form' onSubmit={(event) => event.preventDefault()}>
           <fieldset>
             <label>Usuário</label>
-            <input type="text" value={username} onChange={handleUsername} />
+            <input type='text' value={username} onChange={handleUsername} />
             <label>Senha</label>
-            <input type="password" value={password} onChange={handlePassword} />
+            <input type='password' value={password} onChange={handlePassword} />
           </fieldset>
           <button onClick={loginUser}>Entrar</button>
         </form>
 
-        <p>Novo por aqui? <Link to="/signup">Crie sua conta</Link></p>
+        <p>Novo por aqui? <Link to='/signup'>Crie sua conta</Link></p>
       </article>
     </section>
   )

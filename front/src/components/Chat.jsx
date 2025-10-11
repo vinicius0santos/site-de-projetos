@@ -124,7 +124,7 @@ export default function Chat({username}){
             onKeyUp={handleKeyUp}
             onChange={({target}) => setMessage(target.value)}
           />
-          <button className='chat-send-message' type='submit'></button>
+          <button className='chat-send-message' type='submit' onClick={postComment}></button>
         </div>
       </article>
       }

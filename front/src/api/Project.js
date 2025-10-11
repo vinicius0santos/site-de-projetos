@@ -1,13 +1,13 @@
-import { apiUrl, headers } from '../global';
+import { apiUrl, headers } from "../global.js";
+import { slugify } from '../utils/slugify.js';
 
 class Project {
-    constructor(projectName, createdBy, userId, imgName, blob) {
+    constructor(name, userId, file = undefined) {
         this.data = {
-            projectName: projectName,
-            createdBy: createdBy,
+            name: name,
+            slug: slugify(name),
             userId: userId,
-            imgName: imgName,
-            blob: blob
+            file: file
         }
     }
 
@@ -15,19 +15,46 @@ class Project {
         const url = apiUrl + '/project/get-all';
         const token = localStorage.getItem('token') || '';
 
-        const projects = await fetch(url, {
-            method: 'GET',
-            headers: {
-                ...headers,
-                'Authorization': `Bearer ${token}`
-            }
-        });
+        try {
+            const projects = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    ...headers,
+                    'Authorization': `Bearer ${token}`
+                }
+            });
 
-        return projects.json();
+            return projects.json();
+        }
+        catch (err) {
+            return { 
+                success: false,
+            }
+        }
     }
 
-    static async delete(id, paths){
-        console.log(paths)
+    static async getBySlug(slug){
+        const url = apiUrl + '/project/' + slug;
+
+        try{
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: headers
+            })
+
+            const project = await response.json()
+
+            if(project.success){
+                return project.data[0];
+            }
+            else throw new Error();
+        }
+        catch(err){
+            return null
+        }
+    }
+
+    static async delete(id, paths) {
         const url = apiUrl + "/project/delete";
         const body = JSON.stringify({
             id: id,
@@ -37,30 +64,44 @@ class Project {
             ] : undefined
         });
 
-        const result = await fetch(url, {
-            method: 'DELETE',
-            headers: headers,
-            body: body
-        })
+        try {
+            const result = await fetch(url, {
+                method: 'DELETE',
+                headers: headers,
+                body: body
+            })
 
-        return result.json();
+            return result.json();
+        }
+        catch (err) {
+            return { 
+                success: false,
+            }
+        }
     }
 
     async create() {
         const url = apiUrl + '/project/create';
         const formData = new FormData;
-        console.log(this.data)
-        if(this.data.blob){
-            formData.append('file', this.data.blob, 'img.webp');
-        }
-        formData.append('project', JSON.stringify(this.data))
 
-        const projects = await fetch(url, {
-            method: 'POST',
-            body: formData,
-        })
-        
-        return projects.json();
+        try {
+            if (this.data.file) {
+                formData.append('file', this.data.file, 'img.webp');
+            }
+            formData.append('project', JSON.stringify(this.data))
+
+            const projects = await fetch(url, {
+                method: 'POST',
+                body: formData,
+            })
+
+            return projects.json();
+        }
+        catch (err) {
+            return { 
+                success: false,
+            }
+        }
     }
 }
 

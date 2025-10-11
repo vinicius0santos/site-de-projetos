@@ -102,7 +102,7 @@
     border-radius: 10px;
     width: max-content;
     max-width: fit-content;
-    word-break: break-all;
+    overflow-wrap: anywhere;
 }
 
 .chat-comments #logged-user {
@@ -110,7 +110,7 @@
     align-self: flex-end;
     border-top-right-radius: 0;
     background-color: #d7f3ce;
-    word-break: break-all;
+    overflow-wrap: anywhere;
 }
 
 .chat-comments #logged-user div {
@@ -153,6 +153,7 @@
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
     overflow: hidden;
+    border: none;
 }
 
 .chat-input-container div div {
@@ -163,9 +164,8 @@
 .chat-input-container div::-webkit-scrollbar {
     display: none;
 }
-
-.chat-input-container button {
-    height: 27px;
+.chat-input-container button{
+    height: 25px;
     width: 10%;
     border: solid #bbb 1px;
     border-top-right-radius: 5px;
@@ -175,10 +175,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    color: #444;
 }
 
 .chat-input-container button::before {
     content: '>';
+    font-size: 16px;
+    line-height: 16px;
 }
 
 @media only screen and (max-device-width: 1000px) {

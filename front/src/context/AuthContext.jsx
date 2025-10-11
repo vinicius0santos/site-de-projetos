@@ -8,15 +8,21 @@ export function AuthProvider({ children }) {
     const url = apiUrl + '/auth';
     const token = localStorage.getItem('token') || '';
 
-    const isAuth = await fetch(url, {
-      method: 'GET',
-      headers: {
-        ...headers,
-        'Authorization': `Bearer ${token}`
-      }
-    });
+    try {
 
-    return isAuth.json();
+      const isAuth = await fetch(url, {
+        method: 'GET',
+        headers: {
+          ...headers,
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      return isAuth.json();
+    }
+    catch (err) {
+      return { success: false }
+    }
   }
 
   return (

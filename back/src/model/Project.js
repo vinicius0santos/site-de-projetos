@@ -1,10 +1,12 @@
 const supabase = require("../db");
 
 const Project = {
-    uploadImage: async (fileName, buffer) => {
+    uploadImage: async (name, buffer) => {
+        if(!buffer) return;
+
         const { data, error } = (await supabase.storage
             .from('projects icon')
-            .upload(fileName + '.webp', buffer, {
+            .upload(name + '.webp', buffer, {
                 contentType: 'image/webp',
                 upsert: true
             })
@@ -34,15 +36,14 @@ const Project = {
             .select('*')
     },
 
-    create: async (name, iconURL, imgName, iconPaths, createdBy, userId) => {
+    create: async (name, slug, iconURL, iconPaths, userId) => {
         return await supabase
             .from('project')
-            .insert({ 
+            .insert({
                 name: name, 
-                icon_url: iconURL, 
-                img_name: imgName, 
-                icon_paths: iconPaths  || '', 
-                created_by: createdBy, 
+                slug: slug,
+                icon_url: iconURL,
+                icon_paths: iconPaths, 
                 user_id: userId 
             })
             .select()
@@ -53,7 +54,14 @@ const Project = {
             .from('project')
             .delete()
             .eq('id', id)
-    }
+    },
+
+    getBySlug: async (slug) => {
+        return await supabase
+            .from('project')
+            .select()
+            .eq('slug', slug)
+    } 
 }
 
 module.exports = Project;

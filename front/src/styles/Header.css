@@ -85,4 +85,9 @@ header nav ul {
     flex-direction: column;
     justify-content: center;
   }
+  .home-header nav ul li{
+    text-decoration: underline #eee;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+  }
 }

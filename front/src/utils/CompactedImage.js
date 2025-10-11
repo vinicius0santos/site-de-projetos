@@ -13,7 +13,8 @@ class CompactedImage{
     }
 
     async getBlob(){
-        const data = this.file.files[0];
+        const data = this.file;
+        console.log(data)
 
         if(data){
             const reader = new FileReader();
@@ -53,7 +54,7 @@ class CompactedImage{
             
             return blob;
         }
-        else return false;
+        else return undefined;
     }
 }
 
