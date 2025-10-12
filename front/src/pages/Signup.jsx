@@ -1,12 +1,15 @@
 import '../styles/Auth.css'
 import User from '../api/User';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { AlertContext } from '../context/AlertContext';
 
 export default function Signup(){
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const { _alert } = useContext(AlertContext);
+  
   const navigate = useNavigate();
 
   const handleUsername = ({target}) => {
@@ -23,26 +26,24 @@ export default function Signup(){
     target.disabled = true;
 
     if(!username || !password || !confirmPassword){
-      console.log('preencha todos os campos');
-      return;
+      _alert.show('Preencha todos os campos')
     }
-    if(password != confirmPassword){
-      console.log('as senhas não coincidem');
-      return;
+    else if(password != confirmPassword){
+      _alert.show('As senhas não coincidem')
     }
-    if(password.length < 6){
-      console.log('a senha precisa ter no minimo 6 caracteres');
-      return;
-    }
-    
-    const user = new User(username, password);
-    const result = await user.create();
-    
-    if(result.success){
-      navigate('/login');
+    else if(password.length < 6){
+      _alert.show('A senha precisa ter no mínimo 6 caracteres')
     }
     else{
-      console.log('error ao criar a conta, tente novamente');
+      const user = new User(username, password);
+      const result = await user.create();
+      
+      if(result.success){
+        navigate('/login');
+      }
+      else{
+        _alert.show('Erro ao criar a conta, tente novamente.')
+      }
     }
     target.disabled = false;
   }

@@ -1,0 +1,42 @@
+@keyframes alert {
+  0%{
+    opacity: 0;
+    top: 0%;
+  }
+  50%{
+    opacity: 50%;
+  }
+  100%{
+    opacity: 100%;
+  }
+}
+
+.alert{
+  animation: alert linear 0.3s;
+  position: fixed;
+  z-index: 30;
+  width: 30vw;
+  padding: 0 50px;
+  min-width: max-content;
+  height: 50px;
+  top: 6%;
+  right: 50%;
+  transform: translateX(50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  user-select: none;
+  background-color: rgb(34, 1, 1);
+  border: solid 1px rgb(112, 57, 57);
+  color: rgb(233, 173, 173);
+}
+.alert.warning-alert{
+  filter: hue-rotate(60deg) brightness(130%);
+}
+.alert.success-alert{
+  filter: hue-rotate(120deg) brightness(120%);
+}
+.alert.information-alert{
+  filter: hue-rotate(230deg) brightness(120%);
+}

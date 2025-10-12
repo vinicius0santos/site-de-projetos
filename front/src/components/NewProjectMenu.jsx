@@ -1,4 +1,4 @@
-import '../styles/newProjectMenu.css'
+import '../styles/NewProjectMenu.css'
 import { useState } from "react"
 
 export default function NewProjectMenu({createProject, setShowOverlay, isCreating}){

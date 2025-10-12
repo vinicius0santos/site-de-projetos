@@ -1,42 +1,44 @@
 import '../styles/Auth.css'
 import User from '../api/User';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { AlertContext } from '../context/AlertContext';
 
-export default function Login(){
+export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const { _alert } = useContext(AlertContext);
   const navigate = useNavigate();
 
-  const handleUsername = ({target}) => {
+  const handleUsername = ({ target }) => {
     setUsername(target.value)
   }
-  const handlePassword = ({target}) => {
+  const handlePassword = ({ target }) => {
     setPassword(target.value)
   }
 
-  const loginUser = async ({target}) => {
+  const loginUser = async ({ target }) => {
     target.disabled = true;
 
-    if(!username || !password){
-      console.log('preencha todos os campos');
-      return;
-    }
-    
-    const user = new User(username, password);
-    const result = await user.login();
-    
-    if(result.success){
-      navigate('/projects');
-    }
-    else if(result.serverError){
-      console.log('Não foi possível se conectar ao servidor');
+    if (!username || !password) {
+      _alert.show('Preencha todos os campos');
     }
     else{
-      console.log('usuario ou senha invalidos');
+      const user = new User(username, password);
+      const result = await user.login();
+      
+      if (result.success) {
+        navigate('/projects');
+      }
+      else if (result.serverError) {
+        _alert.show('Não foi possível se conectar ao servidor');
+      }
+      else {
+        _alert.show('Usuário ou senha incorreta');
+      }
     }
-
     target.disabled = false;
+
   }
 
   return (
