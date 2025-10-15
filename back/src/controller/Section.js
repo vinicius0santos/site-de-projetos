@@ -1,5 +1,20 @@
 const Section = require('../model/Section');
 
+exports.getAll = async (req, res) => {
+  try {
+    const response = await Section.getAll();
+
+    if (!response.error) {
+      res.json({ data: response.data, success: true });
+    }
+    else throw new Error('Erro ao criar uma section');
+  }
+  catch (err) {
+    console.error(err);
+    res.json({ data: [], success: false });
+  }
+};
+
 exports.create = async (req, res) => {
   const title = req.body.title;
   const projectId = req.body.projectId;
@@ -11,9 +26,9 @@ exports.create = async (req, res) => {
       if (!response.error) {
         res.json({ success: true });
       }
-      throw new Error('Erro ao criar uma section');
+      else throw new Error('Erro ao criar uma section');
     }
-    throw new Error('Campos inválidos');
+    else throw new Error('Campos inválidos');
   }
   catch (err) {
     console.error(err);
@@ -32,12 +47,12 @@ exports.rename = async (req, res) => {
       if (!response.error) {
         res.json({ success: true });
       }
-      throw new Error('Erro ao editar uma section');
+      else throw new Error('Erro ao editar uma section');
     }
-    throw new Error('Campos inválidos');
+    else throw new Error('Campos inválidos');
   }
   catch (err) {
-    console.error(err.message);
+    console.error(err);
     res.json({ success: false });
   }
 }
@@ -52,12 +67,12 @@ exports.remove = async (req, res) => {
       if (!response.error) {
         res.json({ success: true });
       }
-      throw new Error('Erro ao remover uma section');
+      else throw new Error('Erro ao remover uma section');
     }
-    throw new Error();
+    else throw new Error();
   }
   catch (err) {
-    console.error(err.message);
+    console.error(err);
     res.json({ success: false });
   }
 }
@@ -73,38 +88,38 @@ exports.move = async (req, res) => {
       if (!response.error) {
         res.json({ success: true });
       }
-      throw new Error('Erro ao mover uma section');
+      else throw new Error('Erro ao mover uma section');
     }
-    throw new Error();
+    else throw new Error();
   }
   catch (err) {
-    console.error(err.message);
+    console.error(err);
     res.json({ success: false });
   }
 }
 
-exports.getSectionsAfter = async (req, res) => {
-  const now = req.params.now;
+exports.getLatestSections = async (req, res) => {
+  const lastSectionDate = req.params.lastSectionDate;
 
   try {
-    if (now) {
-      const response = await Section.getSectionsAfter(now);
+    if (lastSectionDate) {
+      const response = await Section.getLatestSections(lastSectionDate);
 
       if (!response.error) {
-        res.json({ 
+        res.json({
           data: response.data,
-          success: true 
+          success: true
         });
       }
-      throw new Error('Erro ao obter sections');
+      else throw new Error('Erro ao obter sections');
     }
-    throw new Error();
+    else throw new Error();
   }
   catch (err) {
-    console.error(err.message);
-    res.json({ 
+    console.error(err);
+    res.json({
       data: [],
-      success: false 
+      success: false
     });
   }
 }

@@ -14,7 +14,7 @@ export default function Header(){
         <nav id="navLinks">
           <ul>
             <li><Link to="/signup">Crie a sua conta</Link></li>
-            <li><Link to="/login">Entre</Link></li>
+            <li><Link to= "/login">Entre</Link></li>
           </ul>
         </nav>
       </header>
