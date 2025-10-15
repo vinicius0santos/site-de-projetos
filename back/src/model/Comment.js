@@ -11,7 +11,7 @@ const Comment = {
         return await supabase
             .from('comment')
             .select('*')
-            .gt("id", lastId)
+            .gt('id', lastId)
     },
     getLatest50: async () => {
         return await supabase

@@ -5,7 +5,7 @@ const Project = {
         if(!buffer) return;
 
         const { data, error } = (await supabase.storage
-            .from('projects icon')
+            .from('projects_icon')
             .upload(name + '.webp', buffer, {
                 contentType: 'image/webp',
                 upsert: true
@@ -15,7 +15,7 @@ const Project = {
         if (error) throw new Error(error.message);
 
         const url = supabase.storage
-            .from('projects icon')
+            .from('projects_icon')
             .getPublicUrl(data.path);
 
         return {

@@ -5,6 +5,7 @@ const app = express();
 const User = require('./router/User');
 const Project = require('./router/Project');
 const Comment = require('./router/Comment');
+const Section = require('./router/Section');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const authenticateToken = require('./middleware/auth');
@@ -24,6 +25,7 @@ app.use(cors(corsOption))
 app.use('/user', User);
 app.use('/project', upload.single('file'), Project);
 app.use('/comment', Comment);
+app.use('/section', Section);
 app.get('/auth', authenticateToken, (req, res) => {
     res.json({success: true});
 });
