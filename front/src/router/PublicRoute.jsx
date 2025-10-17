@@ -3,17 +3,17 @@ import { Navigate, Outlet } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 
 export default function PublicRoute() {
-  const {checkAuth} = useContext(AuthContext);
+  const { checkAuth } = useContext(AuthContext);
   const [isAuth, setIsAuth] = useState(false);
   const [loading, setLoading] = useState(true);
-  
+
   useEffect(() => {
     let active = true;
 
-    (async () => {  
+    (async () => {
       const result = await checkAuth();
 
-      if(active){
+      if (active) {
         setIsAuth(result.success)
         setLoading(false);
       }
@@ -25,11 +25,10 @@ export default function PublicRoute() {
   }, [])
 
 
-  if(loading) return <></>
-  
-  else if(isAuth) return <Navigate to='/projects' />
-  else{
-    localStorage.clear();
+  if (loading) return <></>
+
+  else if (isAuth) return <Navigate to='/projects' />
+  else {
     return <Outlet />
   }
 }

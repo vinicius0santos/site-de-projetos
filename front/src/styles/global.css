@@ -42,10 +42,6 @@ body::-webkit-scrollbar-thumb {
   flex-direction: column;
 }
 
-header {
-  flex: 1;
-}
-
 .app-layout>main {
   flex: 16;
 }

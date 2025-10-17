@@ -10,11 +10,6 @@ function Project() {
   const [project, setProject] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const handleLogout = () => {
-    User.logout();
-    navigate('/');
-  }
-
   useEffect(() => {
     setLoading(true);
 
@@ -22,8 +17,9 @@ function Project() {
       const project = await ProjectApi.getBySlug(slug);
 
       if (project) {
+        localStorage.setItem('currentProject', project.name)
         setProject(project);
-      } 
+      }
       else {
         return navigate('/404', { replace: true });
       }
@@ -38,24 +34,19 @@ function Project() {
 
   return (
     <div className="flex flex-col h-full app-layout">
-      <Header 
-        projectName={project.name}
-        username={localStorage.getItem('username')}
-        onLogout = {handleLogout}
-      ></Header> 
-      
+
       <main className="flex-1" style={{
-          background: 'var(--board-bg))',
+        background: 'var(--board-bg))',
       }}>
-        <div 
+        <div
           className="flex flex-col justify-center items-center text-center h-full gap-3 text-gray-300"
         >
           <h1>{project.name}</h1>
           <p>ID do projeto: {project.id}</p>
           <p>Ícone do projeto:</p>
-          <img 
-            src={project.icon_url} 
-            alt={`Ícone do projeto ${project.name}`} 
+          <img
+            src={project.icon_url}
+            alt={`Ícone do projeto ${project.name}`}
             className="max-w-[150px] h-auto"
           />
         </div>

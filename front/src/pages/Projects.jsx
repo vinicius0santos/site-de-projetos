@@ -55,14 +55,14 @@ export default function Projects(){
  
   return (
     <section className='projects'>
-      <Chat/>
       {
         showOverlay && 
         <NewProjectMenu 
           setShowOverlay={setShowOverlay} 
           createProject={createProject}
           isCreating={isCreating}
-        />}
+        />
+      }
 
       <div className='project-list'>
         {projectListElement()}

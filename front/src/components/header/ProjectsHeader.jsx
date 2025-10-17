@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-function ProjectHeader({ projectName, username, onLogout }) {
+function ProjectsHeader({ username, onLogout }) {
   const userInitial = username ? username.charAt(0).toUpperCase() : '?';
 
   const closeAllMenus = () => {
@@ -50,7 +50,6 @@ function ProjectHeader({ projectName, username, onLogout }) {
 
       document.addEventListener('click', closeAllMenus);
 
-      toggleDropdown('project-dropdown-button', 'project-dropdown-menu', 'project-dropdown-arrow');
       toggleDropdown('user-dropdown-button', 'user-dropdown-menu', 'user-dropdown-arrow');
 
       return () => {
@@ -87,9 +86,8 @@ function ProjectHeader({ projectName, username, onLogout }) {
 
       {/* HEADER DESKTOP */}
       <div id="desktop-full-header" className="min-h-16 hidden md:flex items-center justify-between w-full">
-        {/* Esquerda: logo e projeto atual */}
+        {/* Esquerda: logo e nome do site */}
         <div className="flex items-center space-x-3">
-          {/* Logo e nome do site */}
           <a
           href='/'
           className="flex items-center space-x-3 group cursor-pointer transition duration-200"
@@ -99,30 +97,6 @@ function ProjectHeader({ projectName, username, onLogout }) {
               Bundello
             </h1>
           </a>
-
-          <div className="flex items-center space-x-2 ml-4 pl-4">
-            {/* Botão dos projetos */}
-            <a href="/projects" className="p-1 rounded hover:bg-neutral-800 transition duration-150 text-gray-400 hover:text-white">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
-            </a>
-
-            {/* Botão do projeto atual */}
-            <div className="relative">
-              <button id="project-dropdown-button" className="no-click-hover flex items-center space-x-1 p-1 rounded-lg hover:bg-neutral-800 transition duration-150">
-                <h2 className="text-base font-semibold text-white cursor-pointer">
-                  {projectName || "Projeto não carregado"}
-                </h2>
-                <svg id="project-dropdown-arrow" className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
-              </button>
-
-              {/* Opções dropdown do projeto atual */}
-              <div id="project-dropdown-menu" className="absolute top-full left-0 mt-2 w-48 bg-neutral-900 rounded-lg shadow-xl z-20 hidden border border-neutral-700/50">
-                <a href="#" className="block px-4 py-2 text-base text-gray-200 hover:bg-neutral-800 rounded-t-lg">Renomear</a>
-                <a href="#" className="block px-4 py-2 text-base text-gray-200 hover:bg-neutral-800">Alterar ícone</a>
-                <a href="#" className="block px-4 py-2 text-base text-red-400 hover:bg-neutral-800 rounded-b-lg">Excluir</a>
-              </div>
-            </div>
-          </div>
         </div>
 
         {/* Direita: chat e usuário */}
@@ -162,4 +136,4 @@ function ProjectHeader({ projectName, username, onLogout }) {
   );
 }
 
-export default ProjectHeader;
+export default ProjectsHeader;
