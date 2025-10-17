@@ -1,25 +1,34 @@
-const supabase = require("../db");
+const db = require('../db');
 
-const Comment = {
-    post: async (message, postedBy) => {
-        return await supabase
-            .from('comment')
-            .insert({message: message, posted_by: postedBy})
-            .select()
-    },
-    getLatestComments: async (lastId) => {
-        return await supabase
-            .from('comment')
-            .select('*')
-            .gt('id', lastId)
-    },
-    getLatest50: async () => {
-        return await supabase
-            .from('comment')
-            .select('*')
-            .order('id', {ascending: false})
-            .limit(50)
-    }
+db.prepare(`
+  CREATE TABLE IF NOT EXISTS comment (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    message TEXT NOT NULL,
+    posted_by TEXT NOT NULL,
+    created_at INTEGER NOT NULL,
+    user_id INTEGER NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES user(id)
+  );
+`).run();
+
+class Comment {
+  static getLatestComments(lastCommentId) {
+    const query = db.prepare(`SELECT * FROM comment WHERE id > ?`);
+    return query.all(lastCommentId);
+  }
+
+  static getLatest50() {
+    const query = db.prepare(`SELECT * FROM comment ORDER BY id DESC LIMIT 50`);
+    return query.all();
+  }
+
+  static post(message, postedBy, userId) {
+    const query = db.prepare(
+      `INSERT INTO comment(message, posted_by, user_id, created_at)
+      VALUES (?, ?, ?, ?)
+    `);
+    return query.run(message, postedBy, userId, Date.now());
+  }
 }
 
 module.exports = Comment;

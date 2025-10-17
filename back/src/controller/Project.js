@@ -1,93 +1,75 @@
 const Project = require('../model/Project');
 
-exports.getAll = async (req, res) => {
+exports.getAll = (req, res) => {
   try {
-    const projects = await Project.getAll();
+    const projects = Project.getAll();
 
     res.json({
       success: true,
-      data: projects.data
+      data: projects
     });
   } catch (err) {
     console.error(err);
-
-    res.status(500).json({
-      success: false,
-      message: 'Erro ao buscar projetos.'
-    });
+    res.status(500).json({ success: false });
   }
 };
 
-exports.create = async (req, res) => {
+exports.create = (req, res) => {
   const body = JSON.parse(req.body.project);
   const name = body.name;
   const slug = body.slug;
   const userId = body.userId;
-  const buffer = req.file?.buffer || undefined;
+  const buffer = req?.file?.buffer || null;
 
-  try{
-    if(!name || !slug || !userId) throw new Error("Campos inválidos");
+  try {
+    if (name.trim() == '' || slug.trim() == '' || !userId) {
+      throw new Error("Campos inválidos");
+    }
 
-    const img = await Project.uploadImage(name, buffer);
-    const project = await Project.create(name, slug, img?.url, img?.data, userId);
+    const project = Project.create(name, slug, buffer, userId);
 
     res.json({
       success: true,
-      data: project.data
+      data: project
     });
   }
-  catch(err){
+  catch (err) {
     console.error(err);
-
-    res.status(500).json({
-      success: false,
-      message: 'Erro ao criar o projeto'
-    });
+    res.status(500).json({ success: false, });
   }
 }
 
-exports.delete = async (req, res) => {
-  const paths = req.body.paths;
-  const id = req.body.id;
+exports.delete = (req, res) => {
+  const id = req.params.id;
 
-  try{
-    const project = await Project.delete(id);
-
-    if(project.error) throw new Error('Não foi possível remover o projeto.');
-    if(paths) p_img = await Project.removeImage(paths);
+  try {
+    Project.delete(id);
 
     res.json({
       success: true
     });
   }
-  catch(err){
+  catch (err) {
     console.error(err);
-
-    res.status(500).json({
-      success: false,
-      message: 'Falha ao deletar o projeto'
-    });
+    res.status(500).json({ success: false });
   }
 }
 
-exports.getBySlug = async (req, res) => {
+exports.getBySlug = (req, res) => {
   const slug = req.params.slug;
-  
-  try{
-    const project = await Project.getBySlug(slug);
 
-    console.log(project.data);
+  try {
+    const project = Project.getBySlug(slug);
+
+    if(!project) throw new Error('Projeto não encontrado');
 
     res.json({
       success: true,
-      data: project.data
+      data: project
     });
   }
-  catch(err){
-    console.log(err.message);
-    res.json({
-      success: false,
-      message: 'Falha ao encontrar o projeto'
-    })
+  catch (err) {
+    console.log(err);
+    res.json({ success: false })
   }
 }

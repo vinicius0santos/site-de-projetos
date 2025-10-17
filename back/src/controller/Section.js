@@ -1,13 +1,10 @@
 const Section = require('../model/Section');
 
-exports.getAll = async (req, res) => {
+exports.getAll = (req, res) => {
   try {
-    const response = await Section.getAll();
+    const sections = Section.getAll();
 
-    if (!response.error) {
-      res.json({ data: response.data, success: true });
-    }
-    else throw new Error('Erro ao criar uma section');
+    res.json({ data: sections, success: true });
   }
   catch (err) {
     console.error(err);
@@ -15,18 +12,15 @@ exports.getAll = async (req, res) => {
   }
 };
 
-exports.create = async (req, res) => {
+exports.create = (req, res) => {
   const title = req.body.title;
   const projectId = req.body.projectId;
 
   try {
     if (title.trim() != '' && projectId) {
-      const response = await Section.create(title, projectId);
+      Section.create(title, projectId);
 
-      if (!response.error) {
-        res.json({ success: true });
-      }
-      else throw new Error('Erro ao criar uma section');
+      res.json({ success: true });
     }
     else throw new Error('Campos inválidos');
   }
@@ -36,18 +30,15 @@ exports.create = async (req, res) => {
   }
 };
 
-exports.rename = async (req, res) => {
+exports.rename = (req, res) => {
   const sectionId = req.params.sectionId;
   const newTitle = req.body.newTitle;
 
   try {
-    if (newName.trim() != '' && sectionId) {
-      const response = await Section.rename(sectionId, newTitle);
+    if (newTitle.trim() != '' && sectionId) {
+      Section.rename(sectionId, newTitle);
 
-      if (!response.error) {
-        res.json({ success: true });
-      }
-      else throw new Error('Erro ao editar uma section');
+      res.json({ success: true });
     }
     else throw new Error('Campos inválidos');
   }
@@ -57,17 +48,14 @@ exports.rename = async (req, res) => {
   }
 }
 
-exports.remove = async (req, res) => {
+exports.delete = (req, res) => {
   const sectionId = req.params.sectionId;
 
   try {
     if (sectionId) {
-      const response = await Section.remove(sectionId);
+      Section.delete(sectionId);
 
-      if (!response.error) {
-        res.json({ success: true });
-      }
-      else throw new Error('Erro ao remover uma section');
+      res.json({ success: true });
     }
     else throw new Error();
   }
@@ -77,18 +65,15 @@ exports.remove = async (req, res) => {
   }
 }
 
-exports.move = async (req, res) => {
+exports.move = (req, res) => {
   const sectionId = req.params.sectionId;
   const nextItemOrder = req.body.nextItemOrder;
 
   try {
     if (sectionId) {
-      const response = await Section.move(sectionId, nextItemOrder);
+      Section.move(sectionId, nextItemOrder);
 
-      if (!response.error) {
-        res.json({ success: true });
-      }
-      else throw new Error('Erro ao mover uma section');
+      res.json({ success: true });
     }
     else throw new Error();
   }
@@ -98,20 +83,17 @@ exports.move = async (req, res) => {
   }
 }
 
-exports.getLatestSections = async (req, res) => {
+exports.getLatestSections = (req, res) => {
   const lastSectionDate = req.params.lastSectionDate;
 
   try {
     if (lastSectionDate) {
-      const response = await Section.getLatestSections(lastSectionDate);
+      const sections = Section.getLatestSections(lastSectionDate);
 
-      if (!response.error) {
-        res.json({
-          data: response.data,
-          success: true
-        });
-      }
-      else throw new Error('Erro ao obter sections');
+      res.json({
+        data: sections,
+        success: true
+      });
     }
     else throw new Error();
   }

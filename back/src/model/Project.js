@@ -1,67 +1,40 @@
-const supabase = require("../db");
+const db = require('../db');
 
-const Project = {
-    uploadImage: async (name, buffer) => {
-        if(!buffer) return;
+db.prepare(`
+  CREATE TABLE IF NOT EXISTS project (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL UNIQUE,
+    created_at INTEGER NOT NULL,
+    slug TEXT NOT NULL UNIQUE,
+    image BLOB,
+    user_id INTEGER,
+    FOREIGN KEY (user_id) REFERENCES user(id)
+  );
+`).run();
 
-        const { data, error } = (await supabase.storage
-            .from('projects_icon')
-            .upload(name + '.webp', buffer, {
-                contentType: 'image/webp',
-                upsert: true
-            })
-        );
+class Project {
+  static getAll() {
+    const query = db.prepare(`SELECT * FROM project`);
+    return query.all();
+  }
 
-        if (error) throw new Error(error.message);
+  static create(name, slug, image, userId) {
+    const query = db.prepare(
+      `INSERT INTO project(name, slug, image, user_id, created_at)
+      VALUES (?, ?, ?, ?, ?)
+    `);
+    return query.run(name, slug, image, userId, Date.now());
+  }
 
-        const url = supabase.storage
-            .from('projects_icon')
-            .getPublicUrl(data.path);
+  static delete(id) {
+    const query = db.prepare(`DELETE FROM project WHERE id = ?`);
+    return query.run(id);
+  }
 
-        return {
-            url:url.data.publicUrl,
-            data: data
-        };
-    },
-
-    removeImage: async (paths) => {
-        return await supabase.storage
-            .from('projects icon')
-            .remove(paths);
-    },
-
-    getAll: async () => {
-        return await supabase
-            .from('project')
-            .select('*')
-    },
-
-    create: async (name, slug, iconURL, iconPaths, userId) => {
-        return await supabase
-            .from('project')
-            .insert({
-                name: name, 
-                slug: slug,
-                icon_url: iconURL,
-                icon_paths: iconPaths, 
-                user_id: userId 
-            })
-            .select()
-    },
-
-    delete: async (id) => {
-        return await supabase
-            .from('project')
-            .delete()
-            .eq('id', id)
-    },
-
-    getBySlug: async (slug) => {
-        return await supabase
-            .from('project')
-            .select()
-            .eq('slug', slug)
-    } 
+  static getBySlug(slug) {
+    const query = db.prepare(`SELECT * FROM project WHERE slug = ?`);
+    return query.get(slug);
+  }
 }
 
 module.exports = Project;

@@ -1,9 +1,8 @@
-require('dotenv').config({path: './src/.env'});
-const { createClient } = require('@supabase/supabase-js')
+const Database = require('better-sqlite3');
 
-const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseKey = process.env.SUPABASE_KEY;
+const db = new Database('./database.sqlite', {
+  verbose: console.log,
+});
+db.pragma('foreign_keys = ON');
 
-const supabase = createClient(supabaseUrl, supabaseKey);
-
-module.exports = supabase;
+module.exports = db;

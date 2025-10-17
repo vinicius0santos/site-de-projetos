@@ -1,23 +1,39 @@
 const Comment = require('../model/Comment');
 
-exports.post = async (req, res) => {
+exports.post = (req, res) => {
     const message = req.body.message;
     const postedBy = req.body.postedBy;
+    const userId = req.body.userId;
 
-    try{
-        if(message.trim() == ''){
+    try {
+        if (message.trim() == '') {
             throw new Error('Comentário em branco!');
         }
 
-        const comment = await Comment.post(message, postedBy);
+        Comment.post(message, postedBy, userId);
+
+        res.json({ success: true });
+    }
+    catch (err) {
+        console.error(err)
+        res.json({ success: false });
+    }
+}
+
+exports.getLatestComments = (req, res) => {
+    const lastCommentId = req.params.lastCommentId;
+
+    try {
+        const comments = Comment.getLatestComments(lastCommentId);
 
         res.json({
             success: true,
-            data: comment.data[0]
-        });
+            data: comments
+        })
     }
-    catch(err){
-        console.log(err.message)
+    catch (err) {
+        console.error(err)
+
         res.json({
             success: false,
             data: []
@@ -25,54 +41,21 @@ exports.post = async (req, res) => {
     }
 }
 
-exports.getLatestComments = async (req, res) => {
-    const lastId = req.body.id;
-    
-    try{
-        const comments = await Comment.getLatestComments(lastId);
+exports.getLatest50 = (req, res) => {
+    try {
+        const comments = Comment.getLatest50();
 
-        if(comments.data.length > 0){
-            res.json({
-                success: true,
-                data: comments.data
-            })
-        }
-        else{
-            res.json({
-                success: false,
-                data: [],
-            });
-        }
+        res.json({
+            success: true,
+            data: comments
+        })
     }
-    catch(err){
-        console.log(err.message)
-        
+    catch (err) {
+        console.error(err);
+
         res.json({
             success: false,
             data: []
-        });
-    }
-}
-
-exports.getLatest50 = async (req, res) => {
-    try{
-        const comments = await Comment.getLatest50();
-
-        if(comments.data.length > 0){
-            res.json({
-                success: true,
-                data: comments.data
-            })
-        }
-        else throw new Error('Nenhum comentário encontrado');
-        
-    }
-    catch(err){
-        console.log(err.message);
-
-        res.json({
-            success: false,
-            data: null
         })
     }
 }
