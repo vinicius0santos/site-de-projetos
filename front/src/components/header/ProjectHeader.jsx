@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import Chat from '../Chat';
 
 function ProjectHeader({ projectName, username, onLogout }) {
   const userInitial = username ? username.charAt(0).toUpperCase() : '?';
@@ -54,17 +55,8 @@ function ProjectHeader({ projectName, username, onLogout }) {
         </button>
 
         {/* Direita: botão do chat */}
-        <button
-          className="p-2 rounded-full hover:bg-neutral-800 transition duration-150 relative flex items-center justify-center"
-        >
-          <svg
-            className="w-6 h-6 text-gray-300"
-            fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-4l-4 4z"></path>
-          </svg>
-          <span className="absolute top-0 right-0 h-2 w-2 bg-[var(--logo)] rounded-full"></span>
-        </button>
+        <Chat />
+
       </div>
 
       {/* HEADER DESKTOP */}
@@ -129,15 +121,7 @@ function ProjectHeader({ projectName, username, onLogout }) {
         {/* Direita: chat e usuário */}
         <div className="flex items-center space-x-4">
           {/* Botão do Chat */}
-          <button className="p-2 rounded-full hover:bg-neutral-800 transition duration-150 relative">
-            <svg
-              className="w-6 h-6 text-gray-300"
-              fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-4l-4 4z"></path>
-            </svg>
-            <span className="absolute top-0 right-0 h-2 w-2 bg-[var(--logo)] rounded-full"></span>
-          </button>
+          <Chat />
 
           {/* Botão do usuário */}
           <div className="relative">

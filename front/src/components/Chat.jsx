@@ -99,11 +99,19 @@ export default function Chat(){
 
   return (
     <section className='chat'>
-      <button 
-        className='open-button' 
+      <button
+        className="p-2 rounded-full hover:bg-neutral-800 transition duration-150 relative flex items-center justify-center"
         onClick={handleOpenButton} 
-        id={isNewMessage ? 'new-message' : ''} 
-      />
+      >
+        <svg
+          className="w-6 h-6 text-gray-300"
+          fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-4l-4 4z"></path>
+        </svg>
+        {isNewMessage && <span className="absolute top-0 right-0 h-2 w-2 bg-[var(--logo)] rounded-full"></span>}
+      </button>
+
       {isOpen && 
       <article className='chat-container'>
         <div className='chat-comments' ref={commentsRef} onScroll={chatOnScroll}>
