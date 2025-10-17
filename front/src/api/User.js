@@ -56,6 +56,12 @@ class User {
             }
         }
     }
+
+    static logout() {
+        localStorage.removeItem('token');
+        localStorage.removeItem('userId');
+        localStorage.removeItem('username');
+    }
 }
 
 export default User;

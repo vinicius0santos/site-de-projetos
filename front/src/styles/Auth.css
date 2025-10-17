@@ -120,7 +120,7 @@
     font-size: 1.25rem;
   }
 
-  .container p, a {
+  .container p, .container a {
     font-size: 1.15rem;
   }
 
@@ -132,7 +132,7 @@
     font-size: 1.25rem;
   }
 
-  .container input, button {
+  .container input, .container button {
     padding: 0.6rem;
     margin-bottom: 1rem;
   }
