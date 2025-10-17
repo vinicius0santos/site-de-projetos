@@ -12,6 +12,7 @@ const User = require('./router/User');
 const Project = require('./router/Project');
 const Comment = require('./router/Comment');
 const Section = require('./router/Section');
+const List = require('./router/List');
 
 const origin = 'http://localhost:5173';
 const corsOption = {
@@ -33,6 +34,7 @@ const corsOption = {
   app.use('/project', authenticateToken, upload.single('file'), Project);
   app.use('/comment', authenticateToken, Comment);
   app.use('/section', authenticateToken, Section);
+  app.use('/list', authenticateToken, List);
   app.get('/auth', authenticateToken, (req, res) => {
     res.json({success: true});
   });

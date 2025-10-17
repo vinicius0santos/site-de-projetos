@@ -1,8 +1,8 @@
 import { apiUrl, headers } from "../global.js";
 
-class Section {
-    static async getAll(projectId){
-        const url = apiUrl + '/section/get-all/'+projectId;
+class List {
+    static async getAll(listId){
+        const url = apiUrl + '/list/get-all/'+listId;
     
         try {
             const response = await fetch(url, {
@@ -19,8 +19,8 @@ class Section {
         }
     }
 
-    static async getLatestSections(projectId, lastSectionDate){
-        const url = apiUrl + `/section/get-latest-sections/${projectId}/${lastSectionDate}`;
+    static async getLatestLists(sectionId, lastListDate){
+        const url = apiUrl + `/list/get-latest-lists/${sectionId}/${lastListDate}`;
     
         try {
             const response = await fetch(url, {
@@ -37,13 +37,13 @@ class Section {
         }
     }
 
-    static async create(title, projectId) {
-        const url = apiUrl + '/section/create';
+    static async create(title, sectionId) {
+        const url = apiUrl + '/list/create';
 
         try {
             const response = await fetch(url, {
                 method: 'POST',
-                body: JSON.stringify({ title: title, projectId: projectId }),
+                body: JSON.stringify({ title: title, sectionId: sectionId }),
                 headers: headers,
                 credentials: 'include'
             });
@@ -56,8 +56,8 @@ class Section {
         }
     }
 
-    static async rename(sectionId, newTitle) {
-        const url = apiUrl + '/section/rename/'+sectionId;
+    static async rename(listId, newTitle) {
+        const url = apiUrl + '/list/rename/'+listId;
 
         try {
             const response = await fetch(url, {
@@ -75,8 +75,8 @@ class Section {
         }
     }
 
-    static async move(sectionId, nextItemOrder) {
-        const url = apiUrl + '/section/move/'+sectionId;
+    static async move(listId, nextItemOrder) {
+        const url = apiUrl + '/list/move/'+listId;
 
         try {
             const response = await fetch(url, {
@@ -94,8 +94,8 @@ class Section {
         }
     }
 
-    static async delete(sectionId) {
-        const url = apiUrl + '/section/delete/'+sectionId;
+    static async delete(listId) {
+        const url = apiUrl + '/list/delete/'+listId;
 
         try {
             const response = await fetch(url, {
@@ -114,4 +114,4 @@ class Section {
 
 }
 
-export default Section;
+export default List;

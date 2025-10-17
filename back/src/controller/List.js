@@ -1,12 +1,12 @@
-const Section = require('../model/Section');
+const List = require('../model/List');
 
 exports.getAll = (req, res) => {
-  const projectId = req.params.projectId
-  
-  try {
-    const sections = Section.getAll(projectId);
+  const sectionId = req.params.sectionId
 
-    res.json({ data: sections, success: true });
+  try {
+    const lists = List.getAll(sectionId);
+
+    res.json({ data: lists, success: true });
   }
   catch (err) {
     console.error(err.message);
@@ -16,11 +16,11 @@ exports.getAll = (req, res) => {
 
 exports.create = (req, res) => {
   const title = req.body.title;
-  const projectId = req.body.projectId;
+  const sectionId = req.body.sectionId;
 
   try {
-    if (title.trim() != '' && projectId) {
-      Section.create(title, projectId);
+    if (title.trim() != '' && sectionId) {
+      List.create(title, sectionId);
 
       res.json({ success: true });
     }
@@ -33,12 +33,12 @@ exports.create = (req, res) => {
 };
 
 exports.rename = (req, res) => {
-  const sectionId = req.params.sectionId;
+  const listId = req.params.listId;
   const newTitle = req.body.newTitle;
 
   try {
-    if (newTitle.trim() != '' && sectionId) {
-      Section.rename(sectionId, newTitle);
+    if (newTitle.trim() != '' && listId) {
+      List.rename(listId, newTitle);
 
       res.json({ success: true });
     }
@@ -51,11 +51,11 @@ exports.rename = (req, res) => {
 }
 
 exports.delete = (req, res) => {
-  const sectionId = req.params.sectionId;
+  const listId = req.params.listId;
 
   try {
-    if (sectionId) {
-      Section.delete(sectionId);
+    if (listId) {
+      List.delete(listId);
 
       res.json({ success: true });
     }
@@ -68,12 +68,12 @@ exports.delete = (req, res) => {
 }
 
 exports.move = (req, res) => {
-  const sectionId = req.params.sectionId;
+  const listId = req.params.listId;
   const nextItemOrder = req.body.nextItemOrder;
 
   try {
-    if (sectionId) {
-      Section.move(sectionId, nextItemOrder);
+    if (listId) {
+      List.move(listId, nextItemOrder);
 
       res.json({ success: true });
     }
@@ -85,13 +85,13 @@ exports.move = (req, res) => {
   }
 }
 
-exports.getLatestSections = (req, res) => {
-  const projectId = req.params.projectId
-  const lastSectionDate = req.params.lastSectionDate;
+exports.getLatestLists = (req, res) => {
+  const sectionId = req.params.sectionId
+  const lastListDate = req.params.lastListDate;
 
   try {
-    if (lastSectionDate) {
-      const sections = Section.getLatestSections(lastSectionDate, projectId);
+    if (lastListDate) {
+      const sections = List.getLatestLists(lastSectionDate, sectionId);
 
       res.json({
         data: sections,

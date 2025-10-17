@@ -13,14 +13,14 @@ db.prepare(`
 `).run();
 
 class Section {
-  static getAll() {
-    const query = db.prepare(`SELECT * FROM section`);
-    return query.all();
+  static getAll(projectId) {
+    const query = db.prepare(`SELECT * FROM section WHERE project_id = ?`);
+    return query.all(projectId);
   }
 
-  static getLatestSections(lastSectionDate) {
-    const query = db.prepare(`SELECT * FROM section WHERE updated_at > ?`);
-    return query.all(lastSectionDate);
+  static getLatestSections(lastSectionDate, projectId) {
+    const query = db.prepare(`SELECT * FROM section WHERE updated_at > ? AND project_id = ?`);
+    return query.all(lastSectionDate, projectId);
   }
 
   static create(title, projectId) {
@@ -46,9 +46,6 @@ class Section {
   }
 
   static move(sectionId, nextItemOrder) {
-    console.log(nextItemOrder)
-    console.log(nextItemOrder - 1)
-
     const query = db.prepare(
       `UPDATE section SET _order = ?, updated_at = ? WHERE id = ?`
     );
