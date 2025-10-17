@@ -41,8 +41,6 @@ class User {
 
             const result = await user.json();
 
-            console.log(result)
-
             if (result && result.success) {
                 localStorage.setItem('userId', result.data.id);
                 localStorage.setItem('username', result.data.username);
@@ -57,10 +55,32 @@ class User {
         }
     }
 
-    static logout() {
-        localStorage.removeItem('token');
-        localStorage.removeItem('userId');
-        localStorage.removeItem('username');
+    static async logout() {
+        const url = apiUrl + '/user/logout';
+
+        try{
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: headers,
+                credentials: 'include'
+            });
+            
+            const result = await response.json();
+            
+            if(result.success){
+                localStorage.removeItem('userId');
+                localStorage.removeItem('username');
+                localStorage.removeItem('currentProject');
+
+                return result;
+            }
+            else throw new Error('Não foi possível deslogar');
+        }
+        catch(err){
+            return {
+                success: false
+            }
+        }
     }
 }
 

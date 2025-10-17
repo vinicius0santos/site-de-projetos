@@ -2,7 +2,7 @@ const Section = require('../model/Section');
 
 exports.getAll = (req, res) => {
   const projectId = req.params.projectId
-  
+
   try {
     const sections = Section.getAll(projectId);
 

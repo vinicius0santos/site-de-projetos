@@ -3,11 +3,14 @@ import ProjectHeader from './header/ProjectHeader';
 import ProjectsHeader from './header/ProjectsHeader';
 import User from '../api/User';
 import '../styles/Header.css';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { AlertContext } from '../context/AlertContext';
 
 export default function Header() {
   const path = useLocation().pathname;
   const navigate = useNavigate();
+  const { _alert } = useContext(AlertContext);
+  
 
   const [username, setUsername] = useState(null);
   const [currentProject, setCurrentProject] = useState(null);
@@ -20,12 +23,18 @@ export default function Header() {
     setCurrentProject(currentProject);
   }, [path]);
 
-  const handleLogout = () => {
-    User.logout();
-    setUsername(null);
-    setCurrentProject(null);
-
-    navigate('/');
+  const handleLogout = async () => {
+    const result = await User.logout();
+    console.log(result)
+    if(result.success){
+      setUsername(null);
+      setCurrentProject(null);
+      
+      navigate('/');
+    }
+    else{
+      _alert.show('Não foi possível deslogar');
+    }
   }
 
   if (path == '/login' || path == '/signup') return <></>

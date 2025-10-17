@@ -7,14 +7,14 @@ import { AlertProvider } from './context/AlertContext';
 export default function AppLayout(){
   return (
     <div className='app-layout'>
-      <Header />
       <AlertProvider>
+      <Header />
         <Alert />
         <main>
           <Outlet />
         </main>
-      </AlertProvider>
       <Footer />
+      </AlertProvider>
     </div>
   )
 }

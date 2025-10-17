@@ -66,3 +66,20 @@ exports.login = async (req, res) => {
     res.json({ success: false, data: null });
   }
 }
+
+exports.logout = (req, res) => {
+  try {
+    res.clearCookie('authorization', {
+      maxAge: EXPIRES * 1000 * 60 * 60,
+      sameSite: 'lax',
+      secure: false,
+      httpOnly: true
+    })
+
+    res.json({ success: true });
+  }
+  catch (err) {
+    console.error(err);
+    res.json({ success: false });
+  }
+}
