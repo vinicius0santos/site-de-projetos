@@ -11,12 +11,11 @@ class CompactedImage{
         this.#maxWidth = maxWidth;
         this.#quality = quality;
     }
-
+    
     async getBlob(){
         const data = this.file;
-        console.log(data)
 
-        if(data){
+        if(data?.name){
             const reader = new FileReader();
             reader.readAsDataURL(data);
 

@@ -42,7 +42,7 @@ export default function Signup(){
         navigate('/login');
       }
       else{
-        _alert.show('Erro ao criar a conta, tente novamente.')
+        _alert.show('O usuário digitado já existe.')
       }
     }
     target.disabled = false;

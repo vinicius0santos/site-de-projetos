@@ -5,11 +5,11 @@ function authenticateToken(req, res, next) {
   const token = req.cookies.authorization;
 
   if (!token) {
-    return res.status(401).json({success: false});
+    return res.json({success: false});
   }
 
   jwt.verify(token, SECRET, (err, user) => {
-    if (err) return res.status(403).json({success: false});
+    if (err) return res.json({success: false});
     req.user = user;
 
     next();

@@ -7,31 +7,33 @@ class Section {
         try {
             const response = await fetch(url, {
                 method: 'GET',
-                headers: headers
+                headers: headers,
+                credentials: 'include'
             });
     
-            return (await response.json());
+            return (await response.json()).data;
         }
         catch (err) {
             console.log(err.message);
-            return { data: [], success: false };
+            return [];
         }
     }
 
     static async getLatestSections(lastSectionDate){
-        const url = apiUrl + '/section/get-latest-sections/'+(new Date(lastSectionDate).getTime());
+        const url = apiUrl + '/section/get-latest-sections/'+lastSectionDate;
     
         try {
             const response = await fetch(url, {
                 method: 'GET',
-                headers: headers
+                headers: headers,
+                credentials: 'include'
             });
     
-            return (await response.json());
+            return (await response.json()).data;
         }
         catch (err) {
             console.log(err.message);
-            return { data: [], success: false };
+            return [];
         }
     }
 
@@ -42,7 +44,8 @@ class Section {
             const response = await fetch(url, {
                 method: 'POST',
                 body: JSON.stringify({ title: title, projectId: projectId }),
-                headers: headers
+                headers: headers,
+                credentials: 'include'
             });
 
             return (await response.json());
@@ -60,7 +63,8 @@ class Section {
             const response = await fetch(url, {
                 method: 'PUT',
                 body: JSON.stringify({ newTitle: newTitle }),
-                headers: headers
+                headers: headers,
+                credentials: 'include'
             });
 
             return (await response.json());
@@ -78,7 +82,8 @@ class Section {
             const response = await fetch(url, {
                 method: 'PUT',
                 body: JSON.stringify({nextItemOrder: nextItemOrder}),
-                headers: headers
+                headers: headers,
+                credentials: 'include'
             });
 
             return (await response.json());
@@ -89,13 +94,14 @@ class Section {
         }
     }
 
-    static async remove(sectionId) {
-        const url = apiUrl + '/section/remove/'+sectionId;
+    static async delete(sectionId) {
+        const url = apiUrl + '/section/delete/'+sectionId;
 
         try {
             const response = await fetch(url, {
                 method: 'DELETE',
-                headers: headers
+                headers: headers,
+                credentials: 'include'
             });
 
             return (await response.json());

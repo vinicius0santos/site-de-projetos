@@ -5,30 +5,23 @@ import { Link } from 'react-router-dom'
 import Chat from '../components/Chat';
 import NewProjectMenu from '../components/NewProjectMenu';
 import CompactedImage from '../utils/CompactedImage';
+import { bufferToBlob } from '../utils/bufferToBlob';
+import { useContext } from 'react';
+import { AlertContext } from '../context/AlertContext';
 
 export default function Projects(){
   const [projects, setProjects] = useState([]);
   const [showOverlay, setShowOverlay] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
+  const { _alert } = useContext(AlertContext);
   
   useEffect(() => {
     fetchProjects();
   }, []);
   
   const fetchProjects = async () => {
-    try{
       const result = await Project.getAll();
-  
-      if(result.success){
-        setProjects(result.data);
-      }
-      else{
-        //...
-      }
-    }
-    catch(err){
-      console.log(err);
-    }
+      setProjects(result);
   }
 
   const projectListElement = () => {
@@ -39,7 +32,7 @@ export default function Projects(){
         className='project-card'
       >
         <h3>{project.name}</h3>
-        <img src={project.icon_url || 'default_project_icon.png'} alt={`Ícone do projeto ${project.name}`}/>
+        <img src={bufferToBlob(project.image) || 'default_project_icon.png'} alt={`Ícone do projeto ${project.name}`}/>
       </Link>
     )
   }
@@ -53,13 +46,16 @@ export default function Projects(){
     if(result.success){
       setShowOverlay(false);
       fetchProjects();
-      setIsCreating(false);
     }
+    else{
+      _alert.show('Preencha todos os campos', _alert.styles.error);
+    }
+    setIsCreating(false);
   }
  
   return (
     <section className='projects'>
-      <Chat username={localStorage.getItem('username')}/>
+      <Chat/>
       {
         showOverlay && 
         <NewProjectMenu 

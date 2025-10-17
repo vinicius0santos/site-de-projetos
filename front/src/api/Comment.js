@@ -1,71 +1,61 @@
 import { apiUrl, headers } from "../global.js";
 
 class Comment {
-    constructor(postedBy) {
-        this.data = {
-            message: undefined,
-            postedBy: postedBy
-        }
-    }
-
-    async post(message) {
+    static async post(message) {
         const url = apiUrl + '/comment/post';
-        this.data.message = message;
+        const data = {
+            message: message,
+            postedBy: localStorage.getItem('username'),
+            userId: localStorage.getItem('userId'),
+        }
 
-        let comment;
         try{
             const response = await fetch(url, {
                 method: 'POST',
-                body: JSON.stringify(this.data),
-                headers: headers
+                body: JSON.stringify(data),
+                headers: headers,
+                credentials: 'include'
             });
 
-            comment = (await response.json()).data;
+            return (await response.json()).data;
         }
         catch(err){
-            comment = [];
+            return [];
         }
-
-        return comment || [];
     }
 
     static async getCommentsAfter(id) {
-        const url = apiUrl + '/comment/get-latest-comments';
+        const url = apiUrl + '/comment/get-latest-comments/'+id;
 
-        let comments;
         try{
             const response = await fetch(url, {
-                method: 'POST',
-                body: JSON.stringify({id: id}),
-                headers: headers
+                method: 'GET',
+                headers: headers,
+                credentials: 'include'
             })
 
-            comments = (await response.json()).data;
+            return (await response.json()).data;
         }
         catch(err){
-            comments = [];
+            return [];
         }
-        
-        return comments || [];
     }
 
     static async getLatest50(){
         const url = apiUrl + '/comment/get-latest50';
 
-        let comments = [];
         try{
             const response = await fetch(url, {
                 method: 'GET',
-                headers: headers
+                headers: headers,
+                credentials: 'include'
             })
 
-            comments = (await response.json()).data;
+            return (await response.json()).data;
         }
         catch(err){
-            comments = [];
+            return [];
         }
-
-        return comments || [];
     }
 }
 

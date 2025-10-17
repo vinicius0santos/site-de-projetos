@@ -15,7 +15,7 @@ exports.post = (req, res) => {
         res.json({ success: true });
     }
     catch (err) {
-        console.error(err)
+        console.error(err.message)
         res.json({ success: false });
     }
 }
@@ -32,7 +32,7 @@ exports.getLatestComments = (req, res) => {
         })
     }
     catch (err) {
-        console.error(err)
+        console.error(err.message)
 
         res.json({
             success: false,
@@ -51,7 +51,7 @@ exports.getLatest50 = (req, res) => {
         })
     }
     catch (err) {
-        console.error(err);
+        console.error(err.message);
 
         res.json({
             success: false,

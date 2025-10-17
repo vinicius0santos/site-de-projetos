@@ -9,7 +9,7 @@ export function AlertProvider({ children }) {
   const [alertStyle, setAlertStyle] = useState('error-alert');
   
   const _alert = {
-    show: (message, duration = alertDuration, style = alertStyle) => {
+    show: (message, style = alertStyle, duration = alertDuration) => {
       setAlertDuration(duration);
       setAlertMessage(message);
       setAlertStyle(style);

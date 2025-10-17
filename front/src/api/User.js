@@ -35,13 +35,15 @@ class User {
             const user = await fetch(url, {
                 method: 'POST',
                 body: JSON.stringify(this.data),
-                headers: headers
+                headers: headers,
+                credentials: 'include'
             })
 
             const result = await user.json();
 
-            if (result && result.success && result.token) {
-                localStorage.setItem('token', result.token);
+            console.log(result)
+
+            if (result && result.success) {
                 localStorage.setItem('userId', result.data.id);
                 localStorage.setItem('username', result.data.username);
             }
@@ -51,7 +53,6 @@ class User {
         catch (err) {
             return { 
                 success: false,
-                serverError: true, 
             }
         }
     }

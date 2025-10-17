@@ -3,9 +3,9 @@ import '../styles/Chat.css';
 import Comment from '../api/Comment';
 import TextAreaAutosize from 'react-textarea-autosize';
 
-const chatDelay = 2000;
+const chatDelay = 500;
 
-export default function Chat({username}){
+export default function Chat(){
   const [comments, setComments] = useState([]);
   const [message, setMessage] = useState('');
   const [isOpen, setIsOpen] = useState(false);
@@ -23,7 +23,7 @@ export default function Chat({username}){
         else{
           c = await Comment.getCommentsAfter(comments[comments.length - 1].id);
 
-          if(c.length > 0 && c[c.length-1].posted_by != username) {
+          if(c.length > 0 && c[c.length-1].posted_by != localStorage.getItem('username')) {
             setIsNewMessage(true);
           }
         }
@@ -37,8 +37,7 @@ export default function Chat({username}){
   }, [comments])
 
   const postComment = async () => {
-    const comment = new Comment(localStorage.getItem('username'));
-    await comment.post(message);
+    await Comment.post(message);
   }
 
   const chatOnScroll = () => {
@@ -69,7 +68,7 @@ export default function Chat({username}){
   }
 
   const isLoggedUser = (comment) => {
-    return username == comment.posted_by ? 'logged-user' : '';
+    return localStorage.getItem('username') == comment.posted_by ? 'logged-user' : '';
   }
 
   const handleKeyDown = (e) => {
@@ -85,12 +84,12 @@ export default function Chat({username}){
   }
 
   const formatMessage = (message) => {
-    let copy = message.split('\n');
-    if(copy.length > 1){
-      copy.pop()
+    let message2 = message.split('\n');
+    if(message2.length > 1){
+      message2.pop()
     }
 
-    return copy.map((c,i) => 
+    return message2.map((c,i) => 
       <span key={i}>
         {c}
         <br/>

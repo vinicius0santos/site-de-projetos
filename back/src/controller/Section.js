@@ -7,7 +7,7 @@ exports.getAll = (req, res) => {
     res.json({ data: sections, success: true });
   }
   catch (err) {
-    console.error(err);
+    console.error(err.message);
     res.json({ data: [], success: false });
   }
 };
@@ -25,7 +25,7 @@ exports.create = (req, res) => {
     else throw new Error('Campos inválidos');
   }
   catch (err) {
-    console.error(err);
+    console.error(err.message);
     res.json({ success: false });
   }
 };
@@ -43,7 +43,7 @@ exports.rename = (req, res) => {
     else throw new Error('Campos inválidos');
   }
   catch (err) {
-    console.error(err);
+    console.error(err.message);
     res.json({ success: false });
   }
 }
@@ -60,7 +60,7 @@ exports.delete = (req, res) => {
     else throw new Error();
   }
   catch (err) {
-    console.error(err);
+    console.error(err.message);
     res.json({ success: false });
   }
 }
@@ -78,7 +78,7 @@ exports.move = (req, res) => {
     else throw new Error();
   }
   catch (err) {
-    console.error(err);
+    console.error(err.message);
     res.json({ success: false });
   }
 }
@@ -98,7 +98,7 @@ exports.getLatestSections = (req, res) => {
     else throw new Error();
   }
   catch (err) {
-    console.error(err);
+    console.error(err.message);
     res.json({
       data: [],
       success: false

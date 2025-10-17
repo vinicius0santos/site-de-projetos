@@ -13,23 +13,18 @@ class Project {
 
     static async getAll() {
         const url = apiUrl + '/project/get-all';
-        const token = localStorage.getItem('token') || '';
 
         try {
             const projects = await fetch(url, {
                 method: 'GET',
-                headers: {
-                    ...headers,
-                    'Authorization': `Bearer ${token}`
-                }
+                headers: headers,
+                credentials: 'include'
             });
 
-            return projects.json();
+            return (await projects.json()).data;
         }
         catch (err) {
-            return { 
-                success: false,
-            }
+            return []
         }
     }
 
@@ -37,38 +32,27 @@ class Project {
         const url = apiUrl + '/project/' + slug;
 
         try{
-            const response = await fetch(url, {
+            const project = await fetch(url, {
                 method: 'GET',
-                headers: headers
+                headers: headers,
+                credentials: 'include'
             })
 
-            const project = await response.json()
-
-            if(project.success){
-                return project.data[0];
-            }
-            else throw new Error();
+            return (await project.json()).data;
         }
         catch(err){
             return null
         }
     }
 
-    static async delete(id, paths) {
-        const url = apiUrl + "/project/delete";
-        const body = JSON.stringify({
-            id: id,
-            paths: paths ? [
-                JSON.parse(paths).path,
-                JSON.parse(paths).fullPath,
-            ] : undefined
-        });
+    static async delete(id) {
+        const url = apiUrl + "/project/delete/"+id;
 
         try {
             const result = await fetch(url, {
                 method: 'DELETE',
                 headers: headers,
-                body: body
+                credentials: 'include'
             })
 
             return result.json();
@@ -93,6 +77,7 @@ class Project {
             const projects = await fetch(url, {
                 method: 'POST',
                 body: formData,
+                credentials: 'include'
             })
 
             return projects.json();

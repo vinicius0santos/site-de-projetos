@@ -19,7 +19,7 @@ exports.create = async (req, res) => {
     res.json({ success: true });
   }
   catch (err) {
-    console.error(err)
+    console.error(err.message)
     res.json({ success: false });
   }
 }
@@ -62,7 +62,7 @@ exports.login = async (req, res) => {
     else throw new Error('Usuário ou senha incorreta');
   }
   catch (err) {
-    console.error(err)
+    console.error(err.message)
     res.json({ success: false, data: null });
   }
 }

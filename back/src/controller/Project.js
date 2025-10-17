@@ -8,8 +8,9 @@ exports.getAll = (req, res) => {
       success: true,
       data: projects
     });
-  } catch (err) {
-    console.error(err);
+  } 
+  catch (err) {
+    console.error(err.message);
     res.status(500).json({ success: false });
   }
 };
@@ -34,7 +35,7 @@ exports.create = (req, res) => {
     });
   }
   catch (err) {
-    console.error(err);
+    console.error(err.message);
     res.status(500).json({ success: false, });
   }
 }
@@ -50,7 +51,7 @@ exports.delete = (req, res) => {
     });
   }
   catch (err) {
-    console.error(err);
+    console.error(err.message);
     res.status(500).json({ success: false });
   }
 }
@@ -69,7 +70,7 @@ exports.getBySlug = (req, res) => {
     });
   }
   catch (err) {
-    console.log(err);
+    console.log(err.message);
     res.json({ success: false })
   }
 }

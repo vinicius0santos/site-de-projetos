@@ -13,7 +13,7 @@ const Project = require('./router/Project');
 const Comment = require('./router/Comment');
 const Section = require('./router/Section');
 
-const origin = '*';
+const origin = 'http://localhost:5173';
 const corsOption = {
     origin: origin,
     methods: ['GET', 'POST', 'PUT','DELETE', 'OPTIONS'],
