@@ -1,6 +1,7 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import ProjectHeader from './header/ProjectHeader';
 import ProjectsHeader from './header/ProjectsHeader';
+import HomeHeader from './header/HomeHeader';
 import User from '../api/User';
 import '../styles/Header.css';
 import { useContext, useEffect, useState } from 'react';
@@ -10,29 +11,26 @@ export default function Header() {
   const path = useLocation().pathname;
   const navigate = useNavigate();
   const { _alert } = useContext(AlertContext);
-  
+
 
   const [username, setUsername] = useState(null);
   const [currentProject, setCurrentProject] = useState(null);
 
   useEffect(() => {
-    const username = localStorage.getItem('username');
-    const currentProject = localStorage.getItem('currentProject');
-
-    setUsername(username);
-    setCurrentProject(currentProject);
+    setUsername(localStorage.getItem('username'));
+    setCurrentProject(localStorage.getItem('currentProject'));
   }, [path]);
 
   const handleLogout = async () => {
     const result = await User.logout();
-    console.log(result)
-    if(result.success){
+
+    if (result.success) {
       setUsername(null);
       setCurrentProject(null);
-      
+
       navigate('/');
     }
-    else{
+    else {
       _alert.show('Não foi possível deslogar');
     }
   }
@@ -41,17 +39,11 @@ export default function Header() {
 
   if (path == '/') {
     return (
-      <header className='home-header'>
-        <div>
-          <h1><Link to="/" aria-label="Ir para página inicial do Bundello">Bundello</Link></h1>
-        </div>
-        <nav id="navLinks">
-          <ul>
-            <li><Link to="/signup">Crie a sua conta</Link></li>
-            <li><Link to="/login">Entre</Link></li>
-          </ul>
-        </nav>
-      </header>
+      <HomeHeader
+        username={username}
+        onLogout={handleLogout}
+      >
+      </HomeHeader>
     )
   }
 
