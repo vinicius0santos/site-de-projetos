@@ -1,14 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import ProjectApi from '../api/Project';
-import Header from '../components/header/ProjectHeader.jsx';
-import User from "../api/User.js";
+import { ProjectContext } from "../context/ProjectContext.jsx";
 
 function Project() {
   const { slug } = useParams();
   const navigate = useNavigate();
-  const [project, setProject] = useState(null);
   const [loading, setLoading] = useState(true);
+  const { project, setProject } = useContext(ProjectContext);
 
   useEffect(() => {
     setLoading(true);

@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import Chat from '../Chat';
 
-function ProjectsHeader({ username, onLogout }) {
-  const userInitial = username ? username.charAt(0).toUpperCase() : '?';
+function ProjectsHeader({ onLogout }) {
+  const userInitial = localStorage.username ? localStorage.username.charAt(0).toUpperCase() : '?';
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
   const toggleUserMenu = (e) => {
@@ -82,7 +82,7 @@ function ProjectsHeader({ username, onLogout }) {
                 {userInitial}
               </div>
               <span className="hidden lg:inline text-base font-semibold">
-                {username || "Usuário"}
+                {localStorage.username || "Usuário"}
               </span>
               <svg
                 id="user-dropdown-arrow"

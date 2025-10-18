@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import Chat from '../Chat';
 
-function ProjectHeader({ projectName, username, onLogout }) {
-  const userInitial = username ? username.charAt(0).toUpperCase() : '?';
+function ProjectHeader({ onLogout, project }) {
+  const userInitial = localStorage.username ? localStorage.username.charAt(0).toUpperCase() : '?';
   const [isProjectMenuOpen, setIsProjectMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
@@ -93,7 +93,7 @@ function ProjectHeader({ projectName, username, onLogout }) {
                 className="flex items-center space-x-1 p-1 rounded-lg"
               >
                 <h2 className="text-base font-semibold text-white cursor-pointer">
-                  {projectName || "Projeto não carregado"}
+                  {project?.name || "Projeto não carregado"}
                 </h2>
                 <svg
                   id="project-dropdown-arrow"
@@ -136,7 +136,7 @@ function ProjectHeader({ projectName, username, onLogout }) {
                 {userInitial}
               </div>
               <span className="hidden lg:inline text-base font-semibold">
-                {username || "Usuário"}
+                {localStorage.username || "Usuário"}
               </span>
               <svg
                 id="user-dropdown-arrow"

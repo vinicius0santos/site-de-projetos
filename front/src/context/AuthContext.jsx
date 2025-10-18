@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react';
+import { createContext } from 'react';
 import { apiUrl, headers } from '../global';
 
 export const AuthContext = createContext();

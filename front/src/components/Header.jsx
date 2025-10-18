@@ -4,29 +4,21 @@ import ProjectsHeader from './header/ProjectsHeader';
 import HomeHeader from './header/HomeHeader';
 import User from '../api/User';
 import '../styles/Header.css';
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import { AlertContext } from '../context/AlertContext';
+import { ProjectContext } from '../context/ProjectContext';
 
 export default function Header() {
   const path = useLocation().pathname;
   const navigate = useNavigate();
   const { _alert } = useContext(AlertContext);
-
-
-  const [username, setUsername] = useState(null);
-  const [currentProject, setCurrentProject] = useState(null);
-
-  useEffect(() => {
-    setUsername(localStorage.getItem('username'));
-    setCurrentProject(localStorage.getItem('currentProject'));
-  }, [path]);
+  const { project, setProject } = useContext(ProjectContext);
 
   const handleLogout = async () => {
     const result = await User.logout();
 
     if (result.success) {
-      setUsername(null);
-      setCurrentProject(null);
+      setProject(null);
 
       navigate('/');
     }
@@ -40,7 +32,6 @@ export default function Header() {
   if (path == '/') {
     return (
       <HomeHeader
-        username={username}
         onLogout={handleLogout}
       >
       </HomeHeader>
@@ -50,7 +41,6 @@ export default function Header() {
   if (path == '/projects') {
     return (
       <ProjectsHeader
-        username={username}
         onLogout={handleLogout}
       >
       </ProjectsHeader>
@@ -60,8 +50,7 @@ export default function Header() {
   if (path.startsWith('/projects/') && path.length > '/projects/'.length) {
     return (
       <ProjectHeader
-        projectName={currentProject}
-        username={username}
+        project={project}
         onLogout={handleLogout}
       >
       </ProjectHeader>

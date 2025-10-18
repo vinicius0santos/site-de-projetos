@@ -18,10 +18,10 @@ export default function Chat(){
     (async () => {
         let c = [];
         if(comments.length == 0){
-          c = await Comment.getLatest50();
+          c = await Comment.getLatest50() || [];
         }
         else{
-          c = await Comment.getCommentsAfter(comments[comments.length - 1].id);
+          c = await Comment.getCommentsAfter(comments[comments.length - 1].id) || [];
 
           if(c.length > 0 && c[c.length-1].posted_by != localStorage.getItem('username')) {
             setIsNewMessage(true);
@@ -32,7 +32,7 @@ export default function Chat(){
           setIsNewMessage(false);
         }
 
-        setTimeout(() => setComments([...comments, ...c.reverse()]), chatDelay);
+        setTimeout(() => setComments([...comments, ...c?.reverse()]), chatDelay);
     })()
   }, [comments])
 
