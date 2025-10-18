@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import ProjectApi from '../api/Project';
 import { ProjectContext } from "../context/ProjectContext.jsx";
+import { bufferToBlob } from "../utils/bufferToBlob.js";
 
 function Project() {
   const { slug } = useParams();
@@ -44,7 +45,7 @@ function Project() {
           <p>ID do projeto: {project.id}</p>
           <p>Ícone do projeto:</p>
           <img
-            src={project.icon_url}
+            src={bufferToBlob(project.image)}
             alt={`Ícone do projeto ${project.name}`}
             className="max-w-[150px] h-auto"
           />

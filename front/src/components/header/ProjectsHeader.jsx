@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react';
 import Chat from '../Chat';
+import DesktopUserButtons from '../DesktopUserButtons';
+import DesktopLogo from '../DesktopLogo';
+import MobileMenuButton from '../MobileMenuButton';
 
 function ProjectsHeader({ onLogout }) {
   const userInitial = localStorage.username ? localStorage.username.charAt(0).toUpperCase() : '?';
@@ -14,7 +17,7 @@ function ProjectsHeader({ onLogout }) {
     const handleClickOutside = () => {
       setIsUserMenuOpen(false);
     };
-    
+
     if (isUserMenuOpen) {
       document.addEventListener('click', handleClickOutside);
     }
@@ -25,90 +28,25 @@ function ProjectsHeader({ onLogout }) {
   }, [isUserMenuOpen]);
 
   return (
-    <header 
-      className="min-h-16 text-white shadow-xl flex items-center justify-between px-4 sm:px-6 sticky top-0 z-10 flex-shrink-0 bg-[var(--header-bg)]"
-    >
+    <header className="min-h-16 text-white shadow-xl flex items-center justify-between px-4 sm:px-6 sticky top-0 z-10 flex-shrink-0 bg-[var(--header-bg)]">
 
       {/* HEADER MOBILE */}
       <div id="mobile-only-header" className="flex items-center justify-between w-full md:hidden">
-        {/* Esquerda: botão do menu */}
-        <button
-          id="mobile-menu-toggle"
-          className="p-1 rounded-full hover:bg-neutral-800 transition duration-150 flex items-center justify-center"
-          title="Menu"
-        >
-          <svg
-            className="w-6 h-6 text-gray-300 block"
-            fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path>
-          </svg>
-        </button>
-
-        {/* Direita: botão do chat */}
+        <MobileMenuButton />
         <Chat />
       </div>
 
       {/* HEADER DESKTOP */}
       <div id="desktop-full-header" className="min-h-16 hidden md:flex items-center justify-between w-full">
-        {/* Esquerda: logo e nome do site */}
-        <div className="flex items-center space-x-3">
-          <a
-          href='/'
-          className="flex items-center space-x-3 group cursor-pointer transition duration-200"
-          >
-            <img src="/logo.svg" alt="Logo Bundello" className="logo-img group-hover:opacity-80 transition duration-200" />
-            <h1 className="text-2xl font-black tracking-wide text-white group-hover:text-[var(--logo)] transition duration-200">
-              Bundello
-            </h1>
-          </a>
-        </div>
-
-        {/* Direita: chat e usuário */}
+        <DesktopLogo />
         <div className="flex items-center space-x-4">
-          {/* Botão do Chat */}
           <Chat />
-
-          {/* Botão do usuário */}
-          <div className="relative">
-            <button
-              id="user-dropdown-button"
-              onClick={toggleUserMenu}
-              className="flex items-center space-x-2 p-1 rounded-lg cursor-pointer"
-            >
-              <div
-                className="w-8 h-8 rounded-full flex items-center justify-center font-bold text-lg text-white flex-shrink-0 bg-[var(--logo)]"
-              >
-                {userInitial}
-              </div>
-              <span className="hidden lg:inline text-base font-semibold">
-                {localStorage.username || "Usuário"}
-              </span>
-              <svg
-                id="user-dropdown-arrow"
-                className={`${isUserMenuOpen ? 'text-[var(--logo)]' : 'text-gray-400'} w-4 h-4 ml-1`}
-                fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
-              </svg>
-            </button>
-
-            {/* Opções dropdown do usuário */}
-            <div
-              id="user-dropdown-menu"
-              className={`${isUserMenuOpen ? '' : 'hidden'} absolute top-full right-0 mt-2 w-40 bg-neutral-900 rounded-lg shadow-xl z-20 border border-neutral-700/50`}
-            >
-              <a href="#" className="block px-4 py-2 text-base text-gray-200 hover:bg-neutral-800 rounded-t-lg">
-                Editar meu perfil
-              </a>
-              <button
-                onClick={onLogout}
-                className="block w-full text-left px-4 py-2 text-base text-red-400 hover:bg-neutral-800 rounded-b-lg"
-              >
-                Sair
-              </button>
-            </div>
-          </div>
+          <DesktopUserButtons
+            toggleUserMenu={toggleUserMenu}
+            onLogout={onLogout}
+            userInitial={userInitial}
+            isUserMenuOpen={isUserMenuOpen}
+          />
         </div>
       </div>
     </header>

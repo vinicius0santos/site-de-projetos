@@ -38,6 +38,7 @@ export default function Chat(){
 
   const postComment = async () => {
     await Comment.post(message);
+    setMessage('');
   }
 
   const chatOnScroll = () => {
