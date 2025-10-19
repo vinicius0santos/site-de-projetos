@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import '../styles/Chat.css';
-import Comment from '../api/Comment';
+import '../../../styles/Chat.css';
+import Comment from '../../../api/Comment';
 import TextAreaAutosize from 'react-textarea-autosize';
 
 const chatDelay = 500;

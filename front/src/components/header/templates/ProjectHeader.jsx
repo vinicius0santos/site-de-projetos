@@ -1,31 +1,42 @@
 import { useEffect, useState } from 'react';
-import Chat from '../Chat';
-import DesktopUserButtons from '../DesktopUserButtons';
-import DesktopLogo from '../DesktopLogo';
-import MobileMenuButton from '../MobileMenuButton';
+import Chat from '../subcomponents/Chat';
+import DesktopUserButtons from '../subcomponents/DesktopUserButtons';
+import Logo from '../subcomponents/Logo';
+import DesktopProjectsButton from '../subcomponents/DesktopProjectsButton';
+import DesktopProjectOptionsButton from '../subcomponents/DesktopProjectOptionsButton';
+import MobileMenuButton from '../subcomponents/MobileMenuButton';
 
-function ProjectsHeader({ onLogout }) {
+function ProjectHeader({ onLogout, project }) {
   const userInitial = localStorage.username ? localStorage.username.charAt(0).toUpperCase() : '?';
+  const [isProjectMenuOpen, setIsProjectMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+
+  const toggleProjectMenu = (e) => {
+    e.stopPropagation();
+    setIsUserMenuOpen(false);
+    setIsProjectMenuOpen(prev => !prev);
+  };
 
   const toggleUserMenu = (e) => {
     e.stopPropagation();
+    setIsProjectMenuOpen(false);
     setIsUserMenuOpen(prev => !prev);
   };
 
   useEffect(() => {
     const handleClickOutside = () => {
+      setIsProjectMenuOpen(false);
       setIsUserMenuOpen(false);
     };
 
-    if (isUserMenuOpen) {
+    if (isProjectMenuOpen || isUserMenuOpen) {
       document.addEventListener('click', handleClickOutside);
     }
 
     return () => {
       document.removeEventListener('click', handleClickOutside);
     };
-  }, [isUserMenuOpen]);
+  }, [isProjectMenuOpen, isUserMenuOpen]);
 
   return (
     <header className="min-h-16 text-white shadow-xl flex items-center justify-between px-4 sm:px-6 sticky top-0 z-10 flex-shrink-0 bg-[var(--header-bg)]">
@@ -38,7 +49,18 @@ function ProjectsHeader({ onLogout }) {
 
       {/* HEADER DESKTOP */}
       <div id="desktop-full-header" className="min-h-16 hidden md:flex items-center justify-between w-full">
-        <DesktopLogo />
+        <div className="flex items-center space-x-3">
+          <Logo />
+          <div className="flex items-center space-x-2 ml-4 pl-4">
+            <DesktopProjectsButton />
+            <DesktopProjectOptionsButton 
+              toggleProjectMenu={toggleProjectMenu} 
+              project={project} 
+              isProjectMenuOpen={isProjectMenuOpen}
+            />
+          </div>
+        </div>
+
         <div className="flex items-center space-x-4">
           <Chat />
           <DesktopUserButtons
@@ -53,4 +75,4 @@ function ProjectsHeader({ onLogout }) {
   );
 }
 
-export default ProjectsHeader;
+export default ProjectHeader;

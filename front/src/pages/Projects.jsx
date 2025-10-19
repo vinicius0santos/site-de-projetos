@@ -2,7 +2,6 @@ import '../styles/Projects.css'
 import { useEffect, useState } from 'react'
 import Project from '../api/Project'
 import { Link } from 'react-router-dom'
-import Chat from '../components/Chat';
 import NewProjectMenu from '../components/NewProjectMenu';
 import CompactedImage from '../utils/CompactedImage';
 import { bufferToBlob } from '../utils/bufferToBlob';

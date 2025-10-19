@@ -1,4 +1,4 @@
-export default function DesktopLogo(){
+export default function Logo(){
   return (
     <a
     href='/'

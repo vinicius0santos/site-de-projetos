@@ -1,12 +1,12 @@
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import ProjectHeader from './header/ProjectHeader';
-import ProjectsHeader from './header/ProjectsHeader';
-import HomeHeader from './header/HomeHeader';
-import User from '../api/User';
-import '../styles/Header.css';
+import '../../styles/Header.css';
+import { useLocation, useNavigate } from 'react-router-dom';
+import ProjectHeader from './templates/ProjectHeader';
+import ProjectsHeader from './templates/ProjectsHeader';
+import HomeHeader from './templates/HomeHeader';
+import User from '../../api/User';
 import { useContext } from 'react';
-import { AlertContext } from '../context/AlertContext';
-import { ProjectContext } from '../context/ProjectContext';
+import { AlertContext } from '../../context/AlertContext';
+import { ProjectContext } from '../../context/ProjectContext';
 
 export default function Header() {
   const path = useLocation().pathname;
@@ -17,7 +17,7 @@ export default function Header() {
   const handleLogout = async () => {
     const result = await User.logout();
 
-    if (result.success) {
+    if (result.success) {   
       setProject(null);
 
       navigate('/');

@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import Chat from '../Chat';
-import DesktopUserButtons from '../DesktopUserButtons';
-import DesktopProjectsButton from '../DesktopProjectsButton';
-import DesktopLogo from '../DesktopLogo';
-import MobileMenuButton from '../MobileMenuButton';
+import Chat from '../subcomponents/Chat';
+import DesktopUserButtons from '../subcomponents/DesktopUserButtons';
+import DesktopProjectsButton from '../subcomponents/DesktopProjectsButton';
+import Logo from '../subcomponents/Logo';
+import MobileMenuButton from '../subcomponents/MobileMenuButton';
 
 function HomeHeader({ onLogout }) {
   const isLoggedIn = !!localStorage.username;
@@ -43,7 +43,7 @@ function HomeHeader({ onLogout }) {
       {/* HEADER DESKTOP */}
       <div id="desktop-full-header" className="min-h-16 hidden md:flex items-center justify-between w-full">
         <div className="flex items-center space-x-3">
-          <DesktopLogo />
+          <Logo />
           {isLoggedIn && (
             <DesktopProjectsButton />
           )}

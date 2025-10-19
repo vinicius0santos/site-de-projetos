@@ -1,42 +1,31 @@
 import { useEffect, useState } from 'react';
-import Chat from '../Chat';
-import DesktopUserButtons from '../DesktopUserButtons';
-import DesktopLogo from '../DesktopLogo';
-import DesktopProjectsButton from '../DesktopProjectsButton';
-import DesktopProjectOptionsButton from '../DesktopProjectOptionsButton';
-import MobileMenuButton from '../MobileMenuButton';
+import Chat from '../subcomponents/Chat';
+import DesktopUserButtons from '../subcomponents/DesktopUserButtons';
+import Logo from '../subcomponents/Logo';
+import MobileMenuButton from '../subcomponents/MobileMenuButton';
 
-function ProjectHeader({ onLogout, project }) {
+function ProjectsHeader({ onLogout }) {
   const userInitial = localStorage.username ? localStorage.username.charAt(0).toUpperCase() : '?';
-  const [isProjectMenuOpen, setIsProjectMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
-
-  const toggleProjectMenu = (e) => {
-    e.stopPropagation();
-    setIsUserMenuOpen(false);
-    setIsProjectMenuOpen(prev => !prev);
-  };
 
   const toggleUserMenu = (e) => {
     e.stopPropagation();
-    setIsProjectMenuOpen(false);
     setIsUserMenuOpen(prev => !prev);
   };
 
   useEffect(() => {
     const handleClickOutside = () => {
-      setIsProjectMenuOpen(false);
       setIsUserMenuOpen(false);
     };
 
-    if (isProjectMenuOpen || isUserMenuOpen) {
+    if (isUserMenuOpen) {
       document.addEventListener('click', handleClickOutside);
     }
 
     return () => {
       document.removeEventListener('click', handleClickOutside);
     };
-  }, [isProjectMenuOpen, isUserMenuOpen]);
+  }, [isUserMenuOpen]);
 
   return (
     <header className="min-h-16 text-white shadow-xl flex items-center justify-between px-4 sm:px-6 sticky top-0 z-10 flex-shrink-0 bg-[var(--header-bg)]">
@@ -49,18 +38,7 @@ function ProjectHeader({ onLogout, project }) {
 
       {/* HEADER DESKTOP */}
       <div id="desktop-full-header" className="min-h-16 hidden md:flex items-center justify-between w-full">
-        <div className="flex items-center space-x-3">
-          <DesktopLogo />
-          <div className="flex items-center space-x-2 ml-4 pl-4">
-            <DesktopProjectsButton />
-            <DesktopProjectOptionsButton 
-              toggleProjectMenu={toggleProjectMenu} 
-              project={project} 
-              isProjectMenuOpen={isProjectMenuOpen}
-            />
-          </div>
-        </div>
-
+        <Logo />
         <div className="flex items-center space-x-4">
           <Chat />
           <DesktopUserButtons
@@ -75,4 +53,4 @@ function ProjectHeader({ onLogout, project }) {
   );
 }
 
-export default ProjectHeader;
+export default ProjectsHeader;
