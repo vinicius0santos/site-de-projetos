@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import ProjectApi from '../api/Project';
 import { ProjectContext } from "../context/ProjectContext.jsx";
 import { bufferToBlob } from "../utils/bufferToBlob.js";
+import SectionBar from "../components/project/section/SectionBar.jsx";
 
 function Project() {
   const { slug } = useParams();
@@ -34,10 +35,10 @@ function Project() {
 
   return (
     <div className="flex flex-col h-full app-layout">
-
       <main className="flex-1" style={{
         background: 'var(--board-bg))',
       }}>
+        <SectionBar></SectionBar>
         <div
           className="flex flex-col justify-center items-center text-center h-full gap-3 text-gray-300"
         >
