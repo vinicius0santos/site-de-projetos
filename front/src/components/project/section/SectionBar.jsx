@@ -20,7 +20,6 @@ const SectionBar = () => {
   const [reloadSections, setReloadSections] = useState(false);
   const [firstSectionsLoaded, setFirstSectionsLoaded] = useState(false);
   const [showRenameMenu, setShowRenameMenu] = useState(false);
-  const [tabHolding, setTabHolding] = useState(false);
 
   const activeSection = sections.find(s => s.id === activeSectionId);
 
@@ -127,20 +126,8 @@ const SectionBar = () => {
     };
   }, [isMobileSectionMenuOpen, isSectionMenuOpen]);
 
-  const scrollTab = (e) => {
-    
-  }
-
-  useEffect(() => {
-    
-  })
-
   return (
-    <div 
-      onMouseDown={(e) => scrollTab(e)}
-      id="section-bar" 
-      className="relative border-b border-gray-700/50 px-4 sm:px-6 bg-[--board-bg]"
-    >
+    <div id="section-bar" className="relative border-b border-gray-700/50 px-4 sm:px-6 bg-[--board-bg]">
       {
       showRenameMenu && 
       <RenameMenu 

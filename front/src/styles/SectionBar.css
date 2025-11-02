@@ -1,5 +1,5 @@
 #section-bar{
-  overflow-x: auto;
+  overflow-x: scroll;
   position: relative;
   overflow-y: hidden;
 }
@@ -8,8 +8,11 @@
 }
 #section-bar::-webkit-scrollbar{
   background-color: #333;
-  height: 5px;
+  border-top: 2px solid #1A1A1A;
+  height: 6px;
 }
 #section-bar::-webkit-scrollbar-thumb{
-  background-color: #beab9c;
+  border-top: 2px solid #1A1A1A;
+  background-color: #5e5651;
+  cursor: pointer;
 }
