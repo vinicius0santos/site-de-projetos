@@ -5,6 +5,7 @@
 }
 #section-bar #active-section-menu{
   position: fixed !important;
+  min-width: max-content;
 }
 #section-bar::-webkit-scrollbar{
   background-color: #333;

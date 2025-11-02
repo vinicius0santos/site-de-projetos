@@ -26,7 +26,7 @@ export default function SectionTab({
         if (isActive) {
             handleToggleSectionMenu();
         } else {
-            handleSelectSection(section.id);
+            handleSelectSection(section);
         }
       }}
     > 

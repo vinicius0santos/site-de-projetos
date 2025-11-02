@@ -8,6 +8,7 @@ db.prepare(`
     _order INTEGER NOT NULL,
     is_deleted INTEGER NOT NULL DEFAULT 0,
     project_id INTEGER NOT NULL,
+    created_by TEXT NOT NULL,
     FOREIGN KEY (project_id) REFERENCES project(id) ON DELETE CASCADE
   );
 `).run();
@@ -25,12 +26,12 @@ class Section {
     return query.all(lastSectionDate, projectId);
   }
 
-  static create(title, projectId) {
+  static create(title, projectId, createdBy) {
     const query = db.prepare(`
-      INSERT INTO section(title, project_id, updated_at, _order)
-      VALUES (?, ?, ?, ?)
+      INSERT INTO section(title, project_id, updated_at, _order, created_by)
+      VALUES (?, ?, ?, ?, ?)
     `);
-    return query.run(title, projectId, Date.now(), Date.now());
+    return query.run(title, projectId, Date.now(), Date.now(), createdBy);
   }
 
   static rename(sectionId, newTitle) {
@@ -38,7 +39,7 @@ class Section {
       `UPDATE section SET title = ?, updated_at = ? WHERE id = ?`
     );
     return query.run(newTitle, Date.now(), sectionId);
-  }
+  } 
 
   static delete(sectionId) {
     const query = db.prepare(

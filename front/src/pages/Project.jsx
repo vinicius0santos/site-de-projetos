@@ -9,7 +9,7 @@ function Project() {
   const { slug } = useParams();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
-  const { project, setProject } = useContext(ProjectContext);
+  const { project, setProject, section } = useContext(ProjectContext);
 
   useEffect(() => {
     setLoading(true);
@@ -50,6 +50,13 @@ function Project() {
             alt={`Ícone do projeto ${project.name}`}
             className="max-w-[150px] h-auto"
           />
+          {section && section.title ?
+            <>
+              <p>Título da seção: {section?.title}</p>  
+              <p>Id da seção: {section?.id}</p>
+            </>
+            : <></>
+          }
         </div>
       </main>
     </div>

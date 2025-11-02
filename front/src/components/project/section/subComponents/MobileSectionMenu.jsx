@@ -25,7 +25,7 @@ export default function MobileDropdown({
                                 : 'text-gray-400'
                             }`
             }
-            onClick={() => handleSelectSection(section.id)}
+            onClick={() => handleSelectSection(section)}
           >
             {section.name}
           </button>

@@ -37,13 +37,13 @@ class List {
         }
     }
 
-    static async create(title, sectionId) {
+    static async create(title, sectionId, createdBy) {
         const url = apiUrl + '/list/create';
 
         try {
             const response = await fetch(url, {
                 method: 'POST',
-                body: JSON.stringify({ title: title, sectionId: sectionId }),
+                body: JSON.stringify({ title: title, sectionId: sectionId, createdBy: createdBy }),
                 headers: headers,
                 credentials: 'include'
             });

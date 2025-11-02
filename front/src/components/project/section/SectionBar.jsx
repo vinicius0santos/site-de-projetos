@@ -1,5 +1,5 @@
 import '../../../styles/SectionBar.css'
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, Activity, act } from 'react';
 import SectionTab from './subComponents/SectionTab';
 import MobileSectionButton from './subComponents/MobileSectionButton';
 import MobileSectionMenu from './subComponents/MobileSectionMenu';
@@ -14,14 +14,13 @@ const SectionBar = () => {
   const { project } = useContext(ProjectContext);
   const [sections, setSections] = useState([]);
   const [selectedSection, setSelectedSection] = useState({});
-  const [activeSectionId, setActiveSectionId] = useState(false);
   const [isMobileSectionMenuOpen, setIsMobileSectionMenuOpen] = useState(false);
   const [isSectionMenuOpen, setIsSectionMenuOpen] = useState(false);
   const [reloadSections, setReloadSections] = useState(false);
   const [firstSectionsLoaded, setFirstSectionsLoaded] = useState(false);
   const [showRenameMenu, setShowRenameMenu] = useState(false);
-
-  const activeSection = sections.find(s => s.id === activeSectionId);
+  const [activeSection, setActiveSection] = useState({})
+  const { setSection } = useContext(ProjectContext);
 
   useEffect(() => {
     (async () => {
@@ -29,8 +28,9 @@ const SectionBar = () => {
         const allSections = await Section.getAll(project.id);
 
         if (allSections.length > 0) {
+          const selected = allSections.find(s => !s?.is_deleted);
           setSections(allSections);
-          setActiveSectionId(allSections[0].id);
+          setActiveSection(selected);
         }
       }
       setFirstSectionsLoaded(true);
@@ -43,28 +43,43 @@ const SectionBar = () => {
     }
   }, [reloadSections, firstSectionsLoaded])
 
+  useEffect(() => {
+    if(activeSection) setSection(activeSection);
+  }, [activeSection])
+
   const updateSections = async () => {
     if (project && project.id) {
       const lastSectionDate = sections[sections.length - 1]?.updated_at || 0;
       const latestSections = await Section.getLatestSections(project.id, lastSectionDate);
 
       if (latestSections.length > 0) {
-        setSections(s => {
-          let _sections = s;
-          const _latestSections = latestSections;
-
-          _latestSections.forEach((lSection, lsId) => _sections.forEach((section, sId) => {
-            if (section.id == lSection.id) {
-              _sections[sId] = lSection;
-              latestSections.splice(lsId, 1);
+        setSections(sections => {
+          [...latestSections]
+          .forEach((lSection, lSectionIndex) => [...sections]
+          .forEach((section, sectionIndex) => {
+            if(lSection.id == section.id){
+              sections[sectionIndex] = lSection;
+              latestSections.splice(lSectionIndex, 1);
+            }
+            if(activeSection?.id == lSection?.id && !lSection.is_deleted){
+              setActiveSection(lSection);
+            }
+            else if(activeSection?.id == lSection?.id && lSection.is_deleted){
+              if(activeSection.id == lSection.id){
+                setActiveSection({})
+              }
             }
           }))
-          if (latestSections.length > 0) {
-            _sections = [..._sections, ...latestSections];
+
+          if(latestSections.length > 0){
+            latestSections.forEach(s => {
+              if(s.created_by === localStorage.username){
+                setActiveSection(latestSections[latestSections.length - 1]);
+              }
+            })
+            sections = [...sections, ...latestSections];
           }
-
-
-          return _sections.sort((a, b) => a.updated_at - b.updated_at);
+          return sections.sort((a, b) => a.updated_at - b.updated_at);
         })
       }
     }
@@ -74,16 +89,16 @@ const SectionBar = () => {
 
   const handleAddSection = async () => {
     if (project && project.id) {
-      Section.create('Nova seção', project.id);
+      Section.create('Nova seção', project.id, localStorage.username);
 
       setIsMobileSectionMenuOpen(false);
       setIsSectionMenuOpen(false);
     }
   };
 
-  // Selecionar seção
-  const handleSelectSection = (id) => {
-    setActiveSectionId(id);
+  const handleSelectSection = (section) => {
+    setActiveSection(section);
+
     setIsMobileSectionMenuOpen(false);
     setIsSectionMenuOpen(false);
   };
@@ -95,7 +110,7 @@ const SectionBar = () => {
   };
 
   const handleRenameSection = async (id, newTitle) => {
-    if(newTitle.trim() != ''){
+    if (newTitle.trim() != '') {
       await Section.rename(id, newTitle)
       setShowRenameMenu(false)
     }
@@ -129,12 +144,12 @@ const SectionBar = () => {
   return (
     <div id="section-bar" className="relative border-b border-gray-700/50 px-4 sm:px-6 bg-[--board-bg]">
       {
-      showRenameMenu && 
-      <RenameMenu 
-        section={selectedSection} 
-        handleRename={handleRenameSection} 
-        setShowOverlay={setShowRenameMenu}
-      />
+        showRenameMenu &&
+        <RenameMenu
+          section={selectedSection}
+          handleRename={handleRenameSection}
+          setShowOverlay={setShowRenameMenu}
+        />
       }
 
       {/* DESKTOP */}
@@ -146,7 +161,7 @@ const SectionBar = () => {
             <SectionTab
               key={section.id}
               section={section}
-              isActive={section.id === activeSectionId}
+              isActive={section.id === activeSection?.id}
               isSectionMenuOpen={isSectionMenuOpen}
               handleSelectSection={handleSelectSection}
               handleRenameSection={handleShowRenameMenu}
@@ -168,7 +183,7 @@ const SectionBar = () => {
       <MobileSectionMenu
         isMobileSectionMenuOpen={isMobileSectionMenuOpen}
         sections={sections}
-        activeSectionId={activeSectionId}
+        activeSectionId={activeSection?.id}
         handleSelectSection={handleSelectSection}
         handleAddSection={handleAddSection}
       />

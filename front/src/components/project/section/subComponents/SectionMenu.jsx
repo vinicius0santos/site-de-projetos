@@ -11,7 +11,7 @@ export default function SectionMenu({
   useEffect(() => {
     const tabRect = sectionTab.current.getBoundingClientRect();
     sectionMenu.current.style.left = tabRect.left + 'px';
-    sectionMenu.current.style.top = tabRect.bottom + 'px';
+    sectionMenu.current.style.top = tabRect.bottom-2 + 'px';
     sectionMenu.current.style.width = tabRect.width + 'px';
   }, [])
 

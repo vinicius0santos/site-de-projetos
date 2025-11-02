@@ -17,10 +17,11 @@ exports.getAll = (req, res) => {
 exports.create = (req, res) => {
   const title = req.body.title;
   const sectionId = req.body.sectionId;
+  const createdBy = req.body.createdBy;
 
   try {
     if (title.trim() != '' && sectionId) {
-      List.create(title, sectionId);
+      List.create(title, sectionId, createdBy);
 
       res.json({ success: true });
     }

@@ -8,6 +8,7 @@ db.prepare(`
     _order INTEGER NOT NULL,
     is_deleted INTEGER NOT NULL DEFAULT 0,
     section_id INTEGER NOT NULL,
+    created_by TEXT NOT NULL,
     FOREIGN KEY (section_id) REFERENCES section(id) ON DELETE CASCADE
   );
 `).run();
@@ -23,12 +24,12 @@ class List {
     return query.all(lastListDate, sectionId);
   }
 
-  static create(title, sectionId) {
+  static create(title, sectionId, createdBy) {
     const query = db.prepare(`
-      INSERT INTO list(title, section_id, updated_at, _order)
+      INSERT INTO list(title, section_id, updated_at, _order, created_by)
       VALUES (?, ?, ?, ?)
     `);
-    return query.run(title, sectionId, Date.now(), Date.now());
+    return query.run(title, sectionId, Date.now(), Date.now(), createdBy);
   }
 
   static rename(listId, newTitle) {

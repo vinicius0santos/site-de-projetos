@@ -27,7 +27,6 @@ export default function PrivateRoute() {
   if (loading) return <></>
 
   else if (isAuth) {
-    console.log(1)
     return <Outlet />
   }
   else {
