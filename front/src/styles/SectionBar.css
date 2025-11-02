@@ -1,0 +1,15 @@
+#section-bar{
+  overflow-x: auto;
+  position: relative;
+  overflow-y: hidden;
+}
+#section-bar #active-section-menu{
+  position: fixed !important;
+}
+#section-bar::-webkit-scrollbar{
+  background-color: #333;
+  height: 5px;
+}
+#section-bar::-webkit-scrollbar-thumb{
+  background-color: #beab9c;
+}

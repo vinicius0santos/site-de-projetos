@@ -14,12 +14,14 @@ db.prepare(`
 
 class Section {
   static getAll(projectId) {
-    const query = db.prepare(`SELECT * FROM section WHERE project_id = ?`);
+    const query = db.prepare(`SELECT * FROM section WHERE project_id = ? ORDER BY updated_at ASC`);
     return query.all(projectId);
   }
 
   static getLatestSections(lastSectionDate, projectId) {
-    const query = db.prepare(`SELECT * FROM section WHERE updated_at > ? AND project_id = ?`);
+    const query = db.prepare(
+      `SELECT * FROM section WHERE updated_at > ? AND project_id = ? ORDER BY updated_at ASC`
+    );
     return query.all(lastSectionDate, projectId);
   }
 

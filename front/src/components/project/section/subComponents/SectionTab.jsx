@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import SectionMenu from './SectionMenu';
 
 export default function SectionTab({ 
@@ -9,8 +10,11 @@ export default function SectionTab({
   handleDeleteSection,
   handleToggleSectionMenu
 }) {
+  const sectionTab = useRef(null);
+
   return (
     <div 
+      ref={sectionTab}
       className={`flex items-center group relative cursor-pointer
                   ${isActive 
                       ? 'font-bold text-white border-b-2 border-[--logo]' 
@@ -28,12 +32,12 @@ export default function SectionTab({
     > 
       {/* Botão com o nome da seção */}
       <button 
-        data-section-name={section.name} 
+        data-section-name={section.title} 
         className={`${isActive ? 'text-white' : 'text-gray-400 hover:text-white'}
                     section-tab flex-grow px-3 py-2 text-sm transition duration-150 focus:outline-none`
                   }
       >
-        <span>{section.name}</span>
+        <span>{section.title}</span>
       </button>
 
       {/* Botão dropdown da seção */}
@@ -57,9 +61,11 @@ export default function SectionTab({
             
       {/* Menu da seção */}
       {isActive && isSectionMenuOpen && (
-        <SectionMenu 
+        <SectionMenu
+          sectionTab={sectionTab} 
           handleRenameSection={handleRenameSection}
           handleDeleteSection={handleDeleteSection}
+          section={section}
         />
       )}
     </div>

@@ -7,6 +7,8 @@ db.prepare(`
     created_at INTEGER NOT NULL,
     slug TEXT NOT NULL UNIQUE,
     image BLOB,
+    is_deleted INTEGER NOT NULL DEFAULT 0,
+    is_public INTEGER NOT NULL DEFAULT 1,
     user_id INTEGER,
     FOREIGN KEY (user_id) REFERENCES user(id)
   );
@@ -27,7 +29,9 @@ class Project {
   }
 
   static delete(id) {
-    const query = db.prepare(`DELETE FROM project WHERE id = ?`);
+    const query = db.prepare(
+      `UPDATE project SET is_deleted = 1 WHERE id = ? `
+    );
     return query.run(id);
   }
 
