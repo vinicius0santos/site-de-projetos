@@ -63,6 +63,7 @@ export default function SectionTab({
       {isActive && isSectionMenuOpen && (
         <SectionMenu
           sectionTab={sectionTab} 
+          isActive={isActive}
           handleRenameSection={handleRenameSection}
           handleDeleteSection={handleDeleteSection}
           section={section}

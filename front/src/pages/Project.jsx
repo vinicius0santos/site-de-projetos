@@ -4,12 +4,13 @@ import ProjectApi from '../api/Project';
 import { ProjectContext } from "../context/ProjectContext.jsx";
 import { bufferToBlob } from "../utils/bufferToBlob.js";
 import SectionBar from "../components/project/section/SectionBar.jsx";
+import Lists from "../components/project/list/Lists.jsx";
 
 function Project() {
   const { slug } = useParams();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
-  const { project, setProject, section } = useContext(ProjectContext);
+  const { project, setProject } = useContext(ProjectContext);
 
   useEffect(() => {
     setLoading(true);
@@ -38,11 +39,10 @@ function Project() {
       <main className="flex-1" style={{
         background: 'var(--board-bg))',
       }}>
-        <SectionBar></SectionBar>
-        <div
-          className="flex flex-col justify-center items-center text-center h-full gap-3 text-gray-300"
-        >
-          <h1>{project.name}</h1>
+        <SectionBar />
+        <div className="flex flex-col justify-center items-center text-center h-full gap-3 text-gray-300">
+          <Lists />
+          {/* <h1>{project.name}</h1>
           <p>ID do projeto: {project.id}</p>
           <p>Ícone do projeto:</p>
           <img
@@ -56,7 +56,7 @@ function Project() {
               <p>Id da seção: {section?.id}</p>
             </>
             : <></>
-          }
+          } */}
         </div>
       </main>
     </div>

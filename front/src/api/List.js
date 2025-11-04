@@ -1,8 +1,8 @@
 import { apiUrl, headers } from "../global.js";
 
 class List {
-    static async getAll(listId){
-        const url = apiUrl + '/list/get-all/'+listId;
+    static async getAll(sectionId){
+        const url = apiUrl + '/list/get-all/'+sectionId;
     
         try {
             const response = await fetch(url, {

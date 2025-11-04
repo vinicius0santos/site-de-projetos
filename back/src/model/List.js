@@ -27,7 +27,7 @@ class List {
   static create(title, sectionId, createdBy) {
     const query = db.prepare(`
       INSERT INTO list(title, section_id, updated_at, _order, created_by)
-      VALUES (?, ?, ?, ?)
+      VALUES (?, ?, ?, ?, ?)
     `);
     return query.run(title, sectionId, Date.now(), Date.now(), createdBy);
   }

@@ -92,7 +92,7 @@ exports.getLatestLists = (req, res) => {
 
   try {
     if (lastListDate) {
-      const sections = List.getLatestLists(lastSectionDate, sectionId);
+      const sections = List.getLatestLists(lastListDate, sectionId);
 
       res.json({
         data: sections,
