@@ -1,11 +1,13 @@
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import '../../../styles/Chat.css';
 import Comment from '../../../api/Comment';
 import TextAreaAutosize from 'react-textarea-autosize';
+import { ProjectContext } from '../../../context/ProjectContext';
+import { useNavigate } from 'react-router-dom';
 
 const chatDelay = 500;
 
-export default function Chat(){
+export default function Chat() {
   const [comments, setComments] = useState([]);
   const [message, setMessage] = useState('');
   const [isOpen, setIsOpen] = useState(false);
@@ -13,26 +15,29 @@ export default function Chat(){
   const commentsRef = useRef(null);
   const [isNewMessage, setIsNewMessage] = useState(false);
   const [isOnBottom, setIsOnBotton] = useState(false);
+  const { setProject, setSection, setList } = useContext(ProjectContext)
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     (async () => {
-        let c = [];
-        if(comments.length == 0){
-          c = await Comment.getLatest50() || [];
-        }
-        else{
-          c = await Comment.getCommentsAfter(comments[comments.length - 1].id) || [];
+      let c = [];
+      if (comments.length == 0) {
+        c = await Comment.getLatest50() || [];
+      }
+      else {
+        c = await Comment.getCommentsAfter(comments[comments.length - 1].id) || [];
 
-          if(c.length > 0 && c[c.length-1].posted_by != localStorage.getItem('username')) {
-            setIsNewMessage(true);
-          }
+        if (c.length > 0 && c[c.length - 1].posted_by != localStorage.getItem('username')) {
+          setIsNewMessage(true);
         }
-        if(isOnBottom){
-          scrollToBottom();
-          setIsNewMessage(false);
-        }
+      }
+      if (isOnBottom) {
+        scrollToBottom();
+        setIsNewMessage(false);
+      }
 
-        setTimeout(() => setComments([...comments, ...c?.reverse()]), chatDelay);
+      setTimeout(() => setComments([...comments, ...c?.reverse()]), chatDelay);
     })()
   }, [comments])
 
@@ -42,28 +47,28 @@ export default function Chat(){
   }
 
   const chatOnScroll = () => {
-      const elem = commentsRef.current;
-      const isScrollMax = elem.scrollHeight - elem.clientHeight <= Math.ceil(elem.scrollTop) + 3;
+    const elem = commentsRef.current;
+    const isScrollMax = elem.scrollHeight - elem.clientHeight <= Math.ceil(elem.scrollTop) + 3;
 
-      setIsOnBotton(isScrollMax);
-      if(isScrollMax) {
-          setIsNewMessage(false);
-      }
+    setIsOnBotton(isScrollMax);
+    if (isScrollMax) {
+      setIsNewMessage(false);
+    }
   }
 
   const scrollToBottom = () => {
-    if(commentsRef.current){
-        commentsRef.current.scrollBy(0, commentsRef.current.scrollHeight + 1000);
+    if (commentsRef.current) {
+      commentsRef.current.scrollBy(0, commentsRef.current.scrollHeight + 1000);
     }
   }
 
   const handleOpenButton = () => {
-    if(!isOpen){
+    if (!isOpen) {
       setIsOnBotton(true);
     }
-    else{
-        commentsRef.current.scrollBy(0, 0);
-        setIsOnBotton(false);
+    else {
+      commentsRef.current.scrollBy(0, 0);
+      setIsOnBotton(false);
     }
     setIsOpen(!isOpen);
   }
@@ -73,11 +78,11 @@ export default function Chat(){
   }
 
   const handleKeyDown = (e) => {
-    if(e.key == 'Shift') setIsShiftPressed(true);
+    if (e.key == 'Shift') setIsShiftPressed(true);
   }
   const handleKeyUp = (e) => {
-    if(e.key == 'Shift') setIsShiftPressed(false);
-    else if(e.key == 'Enter' && !isShiftPressed){
+    if (e.key == 'Shift') setIsShiftPressed(false);
+    else if (e.key == 'Enter' && !isShiftPressed) {
       postComment();
       setMessage('');
       e.target.innerHTML = '';
@@ -86,23 +91,50 @@ export default function Chat(){
 
   const formatMessage = (message) => {
     let message2 = message.split('\n');
-    if(message2.length > 1){
+    if (message2.length > 1) {
       message2.pop()
     }
 
-    return message2.map((c,i) => 
+    if (message.trim().startsWith('::') && message.trim().endsWith('::')) {
+      message = message.trim().replace(/\:\:/gi, '').split('[+]');
+
+      return (
+        <span
+          style={{ textDecoration: 'underline', color: '#44d', cursor: 'pointer' }}
+          onClick={() => redirectToPath(message[1])}
+        >
+          {message[0].replace(/\</gi, ' - ').replace(/- $/gi, '')}
+        </span>
+      )
+    }
+
+    return message2.map((c, i) =>
       <span key={i}>
         {c}
-        <br/>
+        <br />
       </span>
     )
+  }
+
+  const redirectToPath = (path) => {
+
+    try {
+      let jsonPath = JSON.parse(path);
+
+      if (!jsonPath.project?.d) navigate('/projects/' + jsonPath.project.s);
+      if (!jsonPath.section?.d) setSection({ id: jsonPath.section.i });
+      if (!jsonPath.list?.d) setList({ id: jsonPath.list.i });
+    }
+    catch (err) {
+      console.log(err)
+    }
   }
 
   return (
     <section className='chat'>
       <button
         className="p-2 rounded-full hover:bg-neutral-800 transition duration-150 relative flex items-center justify-center"
-        onClick={handleOpenButton} 
+        onClick={handleOpenButton}
       >
         <svg
           className="w-6 h-6 text-gray-300"
@@ -113,28 +145,29 @@ export default function Chat(){
         {isNewMessage && <span className="absolute top-0 right-0 h-2 w-2 bg-[var(--logo)] rounded-full"></span>}
       </button>
 
-      {isOpen && 
-      <article className='chat-container'>
-        <div className='chat-comments' ref={commentsRef} onScroll={chatOnScroll}>
-          {comments.map((c, index) => 
-            <div className='comment' id={isLoggedUser(c)} key={index}>
-              <div>{c.posted_by}</div>
-              <p>{formatMessage(c.message)}</p>
-            </div>
-          )}
-        </div>
-        <div className='chat-input-container'>
-          <TextAreaAutosize 
-            className='chat-textarea' 
-            maxRows={3} 
-            value={message}
-            onKeyDown={handleKeyDown}
-            onKeyUp={handleKeyUp}
-            onChange={({target}) => setMessage(target.value)}
-          />
-          <button className='chat-send-message' type='submit' onClick={postComment}></button>
-        </div>
-      </article>
+      {isOpen &&
+        <article className='chat-container'>
+          <div className='chat-comments' ref={commentsRef} onScroll={chatOnScroll}>
+            {comments.map((c, index) =>
+              <div className='comment' id={isLoggedUser(c)} key={index}>
+                <div>{c.posted_by}</div>
+                <p>{formatMessage(c.message)}</p>
+              </div>
+            )}
+          </div>
+          <div className='chat-input-container'>
+            <TextAreaAutosize
+              className='chat-textarea'
+              maxRows={3}
+              value={message}
+              onKeyDown={handleKeyDown}
+              onKeyUp={handleKeyUp}
+              onChange={({ target }) => setMessage(target.value)}
+              autoFocus
+            />
+            <button className='chat-send-message' type='submit' onClick={postComment}></button>
+          </div>
+        </article>
       }
     </section>
   )

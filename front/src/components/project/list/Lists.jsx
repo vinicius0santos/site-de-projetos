@@ -13,7 +13,7 @@ export default function Lists() {
   const [activeList, setActiveList] = useState({});
   const [reloadLists, setReloadLists] = useState(false);
   const [firstListsLoaded, setFirstListsLoaded] = useState(false);
-  const { section } = useContext(ProjectContext);
+  const { section, setList, list } = useContext(ProjectContext);
   const [showMenuRename, setShowMenuRename] = useState(false);
   const [showMenuCreate, setShowMenuCreate] = useState(false);
 
@@ -27,6 +27,39 @@ export default function Lists() {
       })()
     }
   }, [section])
+
+  useEffect(() => {
+    if (activeList && firstListsLoaded){
+      setList(activeList);
+    } 
+  }, [activeList]) 
+
+  useEffect(() => {
+    if(!firstListsLoaded) return
+    awaitToUpdatePath();
+
+  }, [list, firstListsLoaded])
+  
+  const awaitToUpdatePath = (selected = {}) => {
+    try{
+      if(lists && list && lists.length > 0 ){
+        const find = lists.find(l => l?.id == list?.id);
+    
+        if(find?.id){
+          if(!find?.is_deleted){
+            setActiveList(find);
+          }
+          else setList({})
+        }
+      }
+      else if(!list){
+        setActiveList(selected)
+      }
+    }
+    catch(err){
+      console.log(err.message);
+    }
+  }
 
   useEffect(() => {
     if (firstListsLoaded) {

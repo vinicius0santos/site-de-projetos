@@ -93,6 +93,7 @@
 .chat-comments .comment p {
     margin: 7px;
     margin-right: 10px;
+    text-align: end;
 }
 
 .chat-input-container {

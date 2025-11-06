@@ -12,7 +12,7 @@ import MenuCreate from '../section_list_menus/MenuCreate';
 const SERVER_DELAY = 1 * 200;
 
 const SectionBar = () => {
-  const { project } = useContext(ProjectContext);
+  const { project, section, setSection } = useContext(ProjectContext);
   const [sections, setSections] = useState([]);
   const [isMobileSectionMenuOpen, setIsMobileSectionMenuOpen] = useState(false);
   const [isSectionMenuOpen, setIsSectionMenuOpen] = useState(false);
@@ -21,7 +21,6 @@ const SectionBar = () => {
   const [showMenuRename, setShowMenuRename] = useState(false);
   const [showMenuCreate, setShowMenuCreate] = useState(false);
   const [activeSection, setActiveSection] = useState({})
-  const { setSection } = useContext(ProjectContext);
 
   useEffect(() => {
     (async () => {
@@ -31,12 +30,12 @@ const SectionBar = () => {
         if (allSections.length > 0) {
           const selected = allSections.find(s => !s?.is_deleted);
           setSections(allSections);
-          setActiveSection(selected);
+          awaitToUpdatePath(selected)
         }
       }
       setFirstSectionsLoaded(true);
     })()
-  }, []);
+  }, [firstSectionsLoaded]);
 
   useEffect(() => {
     if (firstSectionsLoaded) {
@@ -45,8 +44,37 @@ const SectionBar = () => {
   }, [reloadSections, firstSectionsLoaded])
 
   useEffect(() => {
-    if (activeSection) setSection(activeSection);
-  }, [activeSection])
+    if (activeSection && firstSectionsLoaded){
+      setSection(activeSection);
+    }
+  }, [activeSection]) 
+
+  useEffect(() => {
+    if(!firstSectionsLoaded) return
+    awaitToUpdatePath();
+
+  }, [section, firstSectionsLoaded])
+  
+  const awaitToUpdatePath = (selected = {}) => {
+    try{
+      if(sections && section && sections.length > 0 ){
+        const find = sections.find(s => s?.id == section?.id);
+    
+        if(find?.id){
+          if(!find?.is_deleted){
+            setActiveSection(find);
+          }
+          else setSection({})
+        }
+      }
+      else if(!section){
+        setActiveSection(selected)
+      }
+    }
+    catch(err){
+      console.log(err.message);
+    }
+  }
 
   const updateSections = async () => {
     if (project && project.id) {

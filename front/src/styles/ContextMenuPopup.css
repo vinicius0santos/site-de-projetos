@@ -1,0 +1,19 @@
+.context-menu-popup{
+  position: fixed;
+  width: max-content;
+  min-height: max-content;
+  z-index: 100;
+  background-color: #252525;
+  padding: 5px 0;
+  box-shadow: 3px 3px 4px #000;
+  border-radius: 5px;
+}
+.context-menu-popup .context-menu-button{
+  padding: 5px 15px;
+  color: #ddd;
+  cursor: pointer;
+  display: flex ;
+}
+.context-menu-popup .context-menu-button:hover{
+  background-color: #555;
+}
