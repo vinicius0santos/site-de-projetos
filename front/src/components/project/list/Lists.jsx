@@ -5,6 +5,7 @@ import List from '../../../api/List';
 import { ProjectContext } from '../../../context/ProjectContext';
 import MenuRename from '../section_list_menus/MenuRename';
 import MenuCreate from '../section_list_menus/MenuCreate';
+import MenuDelete from '../MenuDelete';
 
 const SERVER_DELAY = 1 * 200;
 
@@ -16,8 +17,14 @@ export default function Lists() {
   const { section, setList, list } = useContext(ProjectContext);
   const [showMenuRename, setShowMenuRename] = useState(false);
   const [showMenuCreate, setShowMenuCreate] = useState(false);
+  const [showMenuDelete, setShowMenuDelete] = useState(false);
 
+  //CARREGAR TODAS AS LISTAS
   useEffect(() => {
+    loadAllListsBySection();
+  }, [section])
+
+  const loadAllListsBySection = () => {
     setFirstListsLoaded(false);
     if (section && section?.id) {
       (async () => {
@@ -26,18 +33,20 @@ export default function Lists() {
         setFirstListsLoaded(true);
       })()
     }
-  }, [section])
+  }
 
+  // MODIFICAR CONTEXTO GLOBAL AO ATUALIZAR A activeList
   useEffect(() => {
     if (activeList && firstListsLoaded){
       setList(activeList);
-    } 
+    }
   }, [activeList]) 
 
+  // REDIRECIONAR PARA UMA LISTA COM BASE NO LINK CLICADO
   useEffect(() => {
-    if(!firstListsLoaded) return
-    awaitToUpdatePath();
-
+    if(firstListsLoaded){
+      awaitToUpdatePath();
+    }
   }, [list, firstListsLoaded])
   
   const awaitToUpdatePath = (selected = {}) => {
@@ -61,6 +70,7 @@ export default function Lists() {
     }
   }
 
+  // ATUALIZAR LISTAS CONSTANTEMENTE PARA VERIFICAR MODIFICAÇÕES
   useEffect(() => {
     if (firstListsLoaded) {
       updateLists();
@@ -116,23 +126,30 @@ export default function Lists() {
   const handleShowMenuCreate = () => {
     setShowMenuCreate(true);
   }
-
+  
   // CRIAR NOVA LISTA
-  const handleAddList = async (title) => {
+  const handleCreateList = async (title) => {
     if (section && section?.id && title.trim() != '') {
       await List.create(title, section.id, localStorage.username)
       setShowMenuCreate(false);
     }
   }
+  
+  // ABRIR POPUP PARA DELETAR LISTA
+  const handleShowMenuDelete = (list) => {
+    setActiveList(list);
+    setShowMenuDelete(true);
+  };
 
   // DELETAR LISTA
   const handleDeleteList = async (id) => {
     await List.delete(id);
+    setShowMenuDelete(false);
   }
 
   // ABRIR POPUP PARA RENOMEAR LISTA
   const handleShowMenuRename = (list) => {
-    setActiveList(list)
+    setActiveList(list);
     setShowMenuRename(true);
   }
 
@@ -153,7 +170,7 @@ export default function Lists() {
         <DesktopList
           list={list}
           key={list.id}
-          handleDeleteList={handleDeleteList}
+          handleDeleteList={handleShowMenuDelete}
           handleSelectList={handleSelectList}
           handleRenameList={handleShowMenuRename}
           isActive={list.id == activeList?.id}
@@ -174,9 +191,17 @@ export default function Lists() {
       {showMenuCreate &&
         <MenuCreate
           activeComponent={activeList}
-          handleCreate={handleAddList}
+          handleCreate={handleCreateList}
           setShowOverlay={setShowMenuCreate}
           label={'Título da lista'}
+        />
+      }
+      {showMenuDelete &&
+        <MenuDelete
+          activeComponent={activeList}
+          handleDelete={handleDeleteList}
+          setShowOverlay={setShowMenuDelete}
+          label={'lista'}
         />
       }
 

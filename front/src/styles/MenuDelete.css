@@ -1,4 +1,4 @@
-.rename-menu{
+.menu-delete{
   position: fixed;
   top: 0;
   left: 0;
@@ -10,7 +10,7 @@
   z-index: 10;
   color: #eee;
 }
-.rename-menu .overlay{
+.menu-delete .overlay{
   background-color: #000;
   top: 0;
   position: absolute;
@@ -18,7 +18,10 @@
   width: 100%;
   opacity: 0.7;
 }
-.rename-menu .rename-form{
+.menu-delete h3{
+  font-size: 22px;
+}
+.menu-delete .container{
   z-index: 4;
   background-color: #222;
   border: solid 4px #888;
@@ -26,36 +29,19 @@
   padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 5px;
   position: relative;
   align-items: center;
-  width: 30vw;
   height: max-content;
   text-align: center;
 }
-.rename-menu .rename-form .input{
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.rename-menu .rename-form label{
-  font-size: 20px;
-}
-.rename-menu .rename-form input{
-  text-align: center;
-  color: #333;
-  outline: none;
-  border-radius: 5px;
-  /* padding: 2px; */
-}
-.rename-menu .rename-form .buttons{
-  margin-top: 20px;
+.menu-delete .buttons-delete{
+  width: 100%;
   display: flex;
   gap: 20px;
 }
-.rename-menu .rename-form button{
+.menu-delete button{
   background-color: rgb(197, 76, 32);
   border-radius: 5px;
   padding: 5px 10px;
 }
-

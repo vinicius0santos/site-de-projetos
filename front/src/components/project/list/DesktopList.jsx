@@ -16,7 +16,7 @@ export default function DesktopList({
         {list.title}
       </label>
       <label> --- </label>
-      <button onClick={() => handleDeleteList(list.id)} style={buttonStyle}>deletar</button>
+      <button onClick={() => handleDeleteList(list)} style={buttonStyle}>deletar</button>
       <label> --- </label>
       <button onClick={() => handleRenameList(list)} style={buttonStyle}>renomear</button>
     </div>

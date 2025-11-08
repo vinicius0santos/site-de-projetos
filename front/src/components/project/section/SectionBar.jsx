@@ -8,6 +8,7 @@ import Section from '../../../api/Section';
 import { ProjectContext } from '../../../context/ProjectContext';
 import MenuRename from '../section_list_menus/MenuRename';
 import MenuCreate from '../section_list_menus/MenuCreate';
+import MenuDelete from '../MenuDelete';
 
 const SERVER_DELAY = 1 * 200;
 
@@ -20,8 +21,10 @@ const SectionBar = () => {
   const [firstSectionsLoaded, setFirstSectionsLoaded] = useState(false);
   const [showMenuRename, setShowMenuRename] = useState(false);
   const [showMenuCreate, setShowMenuCreate] = useState(false);
+  const [showMenuDelete, setShowMenuDelete] = useState(false);
   const [activeSection, setActiveSection] = useState({})
 
+  // CARREGAR TODAS AS SEÇÕES
   useEffect(() => {
     (async () => {
       if (project && project.id) {
@@ -37,22 +40,18 @@ const SectionBar = () => {
     })()
   }, [firstSectionsLoaded]);
 
-  useEffect(() => {
-    if (firstSectionsLoaded) {
-      updateSections();
-    }
-  }, [reloadSections, firstSectionsLoaded])
-
+  // MODIFICAR CONTEXTO GLOBAL AO ATUALIZAR A activeSection
   useEffect(() => {
     if (activeSection && firstSectionsLoaded){
       setSection(activeSection);
     }
   }, [activeSection]) 
 
+  // REDIRECIONAR PARA UMA SEÇÃO COM BASE NO LINK CLICADO
   useEffect(() => {
-    if(!firstSectionsLoaded) return
-    awaitToUpdatePath();
-
+    if(firstSectionsLoaded){
+      awaitToUpdatePath();
+    }
   }, [section, firstSectionsLoaded])
   
   const awaitToUpdatePath = (selected = {}) => {
@@ -75,6 +74,13 @@ const SectionBar = () => {
       console.log(err.message);
     }
   }
+
+  // ATUALIZAR SEÇÕES CONSTANTEMENTE PARA VERIFICAR MODIFICAÇÕES
+  useEffect(() => {
+    if (firstSectionsLoaded) {
+      updateSections();
+    }
+  }, [reloadSections, firstSectionsLoaded])
 
   const updateSections = async () => {
     if (project && project.id) {
@@ -116,41 +122,61 @@ const SectionBar = () => {
     setTimeout(() => setReloadSections(!reloadSections), SERVER_DELAY);
   }
 
+  // ABRIR POPUP PARA CRIAR SEÇÕES
   const handleShowMenuCreate = () => {
     setShowMenuCreate(true);
+    setIsSectionMenuOpen(false);
+    setIsMobileSectionMenuOpen(false);
   }
 
-  const handleAddSection = async (title) => {
+  // CRIAR NOVA SEÇÃO
+  const handleCreateSection = async (title) => {
     if (project && project.id && title.trim() != '') {
       await Section.create(title, project.id, localStorage.username);
 
-      setIsMobileSectionMenuOpen(false);
-      setIsSectionMenuOpen(false);
       setShowMenuCreate(false);
     }
+    setIsMobileSectionMenuOpen(false);
+    setIsSectionMenuOpen(false);
   };
 
+  // SELECIONAR SEÇÃO
   const handleSelectSection = (section) => {
     setActiveSection(section);
     setIsMobileSectionMenuOpen(false);
     setIsSectionMenuOpen(false);
   };
 
+  // ABRIR POPUP PARA RENOMEAR SEÇÕES
   const handleShowMenuRename = () => {
     setShowMenuRename(true);
     setIsSectionMenuOpen(false);
+    setIsMobileSectionMenuOpen(false);
   };
 
+  // RENOMEAR SEÇÕES
   const handleRenameSection = async (id, newTitle) => {
     if (newTitle.trim() != '') {
       await Section.rename(id, newTitle)
       setShowMenuRename(false)
     }
+    setIsSectionMenuOpen(false);
+    setIsMobileSectionMenuOpen(false);
   };
 
+  // ABRIR POPUP PARA DELETAR SEÇÕES
+  const handleShowMenuDelete = () => {
+    setShowMenuDelete(true);
+    setIsSectionMenuOpen(false);
+    setIsMobileSectionMenuOpen(false);
+  };
+
+  // DELETAR SEÇÕES
   const handleDeleteSection = async (id) => {
     await Section.delete(id)
+    setShowMenuDelete(false);
     setIsSectionMenuOpen(false);
+    setIsMobileSectionMenuOpen(false);
   };
 
   const handleToggleSectionMenu = () => {
@@ -176,6 +202,7 @@ const SectionBar = () => {
   return (
     <div id="section-bar" className="relative border-b border-gray-700/50 px-4 sm:px-6 bg-[--board-bg]">
 
+      {/* MENUS */}
       {showMenuRename && activeSection && activeSection?.id &&
         <MenuRename
           activeComponent={activeSection}
@@ -187,9 +214,18 @@ const SectionBar = () => {
 
       {showMenuCreate &&
         <MenuCreate
-        handleCreate={handleAddSection}
+        handleCreate={handleCreateSection}
         setShowOverlay={setShowMenuCreate}
         label={'Título da seção'}
+        />
+      }
+
+      {showMenuDelete &&
+        <MenuDelete 
+          activeComponent={activeSection}
+          handleDelete={handleDeleteSection}
+          setShowOverlay={setShowMenuDelete}
+          label={'seção'}
         />
       }
 
@@ -206,11 +242,11 @@ const SectionBar = () => {
               isSectionMenuOpen={isSectionMenuOpen}
               handleSelectSection={handleSelectSection}
               handleRenameSection={handleShowMenuRename}
-              handleDeleteSection={handleDeleteSection}
+              handleDeleteSection={handleShowMenuDelete}
               handleToggleSectionMenu={handleToggleSectionMenu}
             />
           ))}
-        <NewSectionButton handleAddSection={handleShowMenuCreate} />
+        <NewSectionButton handleCreateSection={handleShowMenuCreate} />
       </div>
 
       {/* MOBILE */}
@@ -226,7 +262,7 @@ const SectionBar = () => {
         sections={sections}
         activeSectionId={activeSection?.id}
         handleSelectSection={handleSelectSection}
-        handleAddSection={handleAddSection}
+        handleCreateSection={handleCreateSection}
       />
     </div>
   );

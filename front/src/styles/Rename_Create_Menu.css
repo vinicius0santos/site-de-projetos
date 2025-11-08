@@ -1,0 +1,61 @@
+.section_list-menu{
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  color: #eee;
+}
+.section_list-menu .overlay{
+  background-color: #000;
+  top: 0;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  opacity: 0.7;
+}
+.section_list-menu form{
+  z-index: 4;
+  background-color: #222;
+  border: solid 4px #888;
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+  align-items: center;
+  width: 30vw;
+  height: max-content;
+  text-align: center;
+}
+.section_list-menu form .input{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.section_list-menu form label{
+  font-size: 20px;
+}
+.section_list-menu form input{
+  text-align: center;
+  color: #333;
+  outline: none;
+  border-radius: 5px;
+  /* padding: 2px; */
+}
+.section_list-menu form .buttons{
+  margin-top: 20px;
+  display: flex;
+  gap: 20px;
+}
+.section_list-menu form button{
+  background-color: rgb(197, 76, 32);
+  border-radius: 5px;
+  padding: 5px 10px;
+}
+
