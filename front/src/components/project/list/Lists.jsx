@@ -1,5 +1,5 @@
 import { act, useContext, useEffect, useState } from 'react';
-import '../../../styles/List.css';
+import '../../../styles/Lists.css';
 import DesktopList from './DesktopList';
 import List from '../../../api/List';
 import { ProjectContext } from '../../../context/ProjectContext';
@@ -209,7 +209,10 @@ export default function Lists() {
         {section && section?.id &&
           <>
             {getDesktopListComponents()}
-            <button onClick={() => handleShowMenuCreate()}>adicionar</button>
+            <button onClick={() => handleShowMenuCreate()} className="add-list-button">
+              <span className="plus-icon">+</span>
+              Adicionar uma lista
+            </button>
           </>
         }
       </div>

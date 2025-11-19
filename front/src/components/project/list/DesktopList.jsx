@@ -1,3 +1,5 @@
+import ListOptions from "./ListOptions";
+import "../../../styles/DesktopList.css"
 export default function DesktopList({
   list, 
   handleDeleteList, 
@@ -5,20 +7,41 @@ export default function DesktopList({
   isActive,
   handleRenameList,
 }){
-  const activeStyle = isActive ? {backgroundColor: '#555'} : {};
-  const buttonStyle = {
-    border: 'solid 2px #444'
-  }
-
   return (
-    <div className="desktop-list">
-      <label onClick={() => handleSelectList(list)} style={activeStyle}>
-        {list.title}
-      </label>
-      <label> --- </label>
-      <button onClick={() => handleDeleteList(list)} style={buttonStyle}>deletar</button>
-      <label> --- </label>
-      <button onClick={() => handleRenameList(list)} style={buttonStyle}>renomear</button>
+    <div className="list-container">
+      <header className="list-header">
+        <label 
+          onClick={() => handleSelectList(list)}
+          className="list-title"
+        >
+          {list.title}
+        </label>
+        <ListOptions 
+          list={list}
+          handleRenameList={handleRenameList}
+          handleDeleteList={handleDeleteList}
+        />
+      </header>
+
+      <div className="card-area">
+
+      </div>
+
+      <footer className="add-card-footer">
+        <button 
+          onClick={() => {}}
+          className="add-card-button"
+        >
+          <span className="plus-icon">+</span>
+          Adicionar um card
+        </button>
+        <button 
+          onClick={() => {}}
+          className="image-icon"
+        >
+          <img src="../../../../public/image.svg" width="22"></img>
+        </button>
+      </footer>
     </div>
   )
 }

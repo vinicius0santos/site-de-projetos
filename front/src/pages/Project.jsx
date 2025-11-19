@@ -40,24 +40,7 @@ function Project() {
         background: 'var(--board-bg))',
       }}>
         <SectionBar />
-        <div className="flex flex-col justify-center items-center text-center h-full gap-3 text-gray-300">
-          <Lists />
-          {/* <h1>{project.name}</h1>
-          <p>ID do projeto: {project.id}</p>
-          <p>Ícone do projeto:</p>
-          <img
-            src={bufferToBlob(project.image)}
-            alt={`Ícone do projeto ${project.name}`}
-            className="max-w-[150px] h-auto"
-          />
-          {section && section.title ?
-            <>
-              <p>Título da seção: {section?.title}</p>  
-              <p>Id da seção: {section?.id}</p>
-            </>
-            : <></>
-          } */}
-        </div>
+        <Lists />
       </main>
     </div>
   );

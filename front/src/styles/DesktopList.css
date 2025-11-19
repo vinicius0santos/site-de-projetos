@@ -1,0 +1,78 @@
+:root {
+    --list-container-bg-color: #111;
+    --list-title-color: #f2f2f2;
+    --add-card-button-color: #aaa;
+    --add-card-button-hover-color: #eee;
+    --add-card-button-hover-bg-color: rgba(100, 100, 100, 0.1);
+}
+
+/* Div principal */
+.list-container {
+    background-color: var(--list-container-bg-color);
+    border-radius: 16px;
+    width: 280px;
+    padding: 10px; 
+    display: flex;
+    flex-direction: column;
+}
+
+/* Cabeçalho com título e botão options */
+.list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+    padding: 0 5px; 
+}
+
+/* Título da lista */
+.list-title {
+    margin-left: 5px;
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--list-title-color);
+}
+
+/* Footer com botão de adicionar um card*/
+.add-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+}
+
+/* Botão para adicionar um card */
+.add-card-button {
+    display: flex;
+    align-items: center;
+    color: var(--add-card-button-color);
+    font-size: 15px;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 16px;
+    width: 100%;
+    margin-right: 10px;
+    transition: background-color 0.1s, color 0.1s;
+}
+
+.add-card-button:hover {
+    background-color: var(--add-card-button-hover-bg-color);
+    color: var(--add-card-button-hover-color);
+}
+
+/* Ícone de + do botão de adicionar um card */
+.plus-icon {
+    font-size: 24px;
+    line-height: 1;
+    margin-right: 5px;
+}
+
+/* Ícone da miniatura do botão de adicionar imagem no lado direito do footer */
+.image-icon img {
+    filter: invert(60%);
+    transition: background-color 0.1s, color 0.1s;
+}
+
+.image-icon img:hover {
+    filter: invert(90%);
+}

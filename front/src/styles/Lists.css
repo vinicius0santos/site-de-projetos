@@ -1,0 +1,39 @@
+:root {
+    --add-list-button-color: #bbb;
+    --add-list-button-bg-color: rgba(100, 100, 100, 0.1);
+    --add-list-button-hover-color: white;
+}
+
+
+/* Div contendo as listas e botão adicionar uma lista (para organizar horizontalmente como se fosse grid) */
+.lists-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Botão para adicionar uma lista */
+.add-list-button {
+    display: flex;
+    align-items: center;
+    border-radius: 16px;
+    background-color: var(--add-list-button-bg-color);
+    color: var(--add-list-button-color);
+    font-size: 15px;
+    cursor: pointer;
+    padding: 8px 10px 8px 10px;
+    transition: background-color 0.1s, color 0.1s;
+}
+
+.add-list-button:hover {
+    color: var(--add-list-button-hover-color);
+}
+
+/* Ícone de + do botão de adicionar uma lista */
+.plus-icon {
+    font-size: 24px;
+    line-height: 1;
+    margin-right: 5px;
+}
